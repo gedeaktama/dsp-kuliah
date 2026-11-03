@@ -1,0 +1,346 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-6. Hari ini kita akan mengkaji secara komprehensif topik utama: Konvolusi Diskrit & Analisis Korelasi Sinyal. Operasi Konvolusi Linear (Formula, Grafis, Tabular/Matriks Toeplitz), Sifat-Sifat Aljabar Konvolusi, serta Analisis Korelasi Sinyal (Cross-Correlation & Auto-Correlation). Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK2 (CPL-A, CPL-B) dengan bobot evaluasi sebesar 7 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Konvolusi Diskrit & Analisis Korela"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK2 (CPL-A, CPL-B)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Konvolusi Diskrit: Jantung Komputasi Pemfilteran Digital",
+    "script": "Pada slide ini, kita membahas Konvolusi Diskrit: Jantung Komputasi Pemfilteran Digital. Mari kita perhatikan kolom sebelah kiri mengenai Makna Konseptual Konvolusi Diskrit. Konvolusi adalah mekanisme matematis fundamental di mana setiap sampel sinyal masukan x[k] menghasilkan replika respons impuls h[n-k] yang diskalakan oleh nilai amplitudo masukan tersebut. Output akhir y[n] adalah hasil jumlahan superposisi dari seluruh salinan respons impuls terboboti tersebut seiring berjalannya waktu. Konvolusi bukan sekadar perkalian, melainkan proses 'pencampuran dinamis' (blending/filtering) antara sinyal dengan karakteristik sistem. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Aplikasi Spektakuler Konvolusi di Industri. Mengapa hal ini sangat fundamental? Convolution Reverb Audio: Merekam respons impuls akustik Katedral Kuno atau Gedung Opera Sydney, lalu mengkonvolusikannya dengan rekaman vokal kering di studio untuk menghasilkan gema akustik autentik! Denoising & Smoothing Sinyal: Mengkonvolusikan sinyal sensor IoT dengan window moving average untuk meredam noise fluktuasi tajam. Convolutional Neural Networks (CNN): Operasi konvolusi 2D diskrit menjadi blok bangunan utama kecerdasan buatan visi komputer modern. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Makna Konseptual Konvolusi Dis"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Aplikasi Spektakuler Konvolusi"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Empat Langkah Metode Konvolusi Grafis",
+    "script": "Pada slide ini, kita membahas Empat Langkah Metode Konvolusi Grafis. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Folding (Pencerminan). Ubah variabel independen menjadi indeks dummy k. Gambarkan x[k] dan h[k]. Cerminkan respons impuls terhadap sumbu origin k = 0 untuk membentuk sekuens h[-k]. Pilar ke-2 adalah 2. Shifting (Pergeseran). Geser sekuens h[-k] sejauh n sampel ke kanan (jika n > 0) atau ke kiri (jika n < 0) untuk menghasilkan h[n - k]. Variabel n menentukan titik waktu evaluasi output y[n]. Pilar ke-3 adalah 3. Multiplication & Summation. Perkalian: Kalikan sinyal x[k] dengan sinyal tergeser h[n - k] pada setiap titik k yang saling bertumpuk (overlap). Penjumlahan: Jumlahkan seluruh hasil kali tersebut untuk memperoleh satu nilai skalar output: y[n] = sum x[k] h[n-k]. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Folding (Pencerminan)"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Shifting (Pergeseran)"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Multiplication & Summa"
+      }
+    ]
+  },
+  "4": {
+    "title": "Metode Tabular & Matriks Toeplitz untuk Perhitungan Cepat",
+    "script": "Pada slide ini, kita membahas Metode Tabular & Matriks Toeplitz untuk Perhitungan Cepat. Perhatikan persamaan matematika inti untuk Representasi Perkalian Matriks Konvolusi Diskrit di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. Lx: Panjang jumlah sampel sinyal input x[n]. Lh: Panjang jumlah sampel respons impuls h[n]. Ly: Panjang sekuens hasil konvolusi: Ly = Lx + Lh - 1. Rentang Waktu Output: Jika x[n] dimulai pada n_x_start dan h[n] pada n_h_start, maka output y[n] dimulai tepat pada n_y_start = n_x_start + n_h_start. Matriks Toeplitz H: Matriks khusus di mana elemen pada setiap diagonal menurun bernilai konstan. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Contoh: x[n] = { [1], 2, 3 } (Lx = 3) dan h[n] = { [2], 1 } (Lh = 2). Hitung panjang output: Ly = 3 + 2 - 1 = 4 sampel. Metode Tabular Grid (Tabel Perkalian Silang): Baris x[k] dikalikan kolom h[n]: Baris 0 (h[0]=2): 2*1=2, 2*2=4, 2*3=6. Baris 1 (h[1]=1): 1*1=1, 1*2=2, 1*3=3 (bergeser satu kolom). Jumlahkan diagonal miring: y[0] = 2; y[1] = 4+1 = 5; y[2] = 6+2 = 8; y[3] = 3. Hasil Konvolusi: y[n] = { [2], 5, 8, 3 }. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Representasi Perkalian Matriks"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "5": {
+    "title": "Sifat-Sifat Aljabar Konvolusi Diskrit",
+    "script": "Pada slide ini, kita membahas Sifat-Sifat Aljabar Konvolusi Diskrit. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Sifat Komutatif (Pertukaran). x[n] * h[n] = h[n] * x[n]. Secara fisik: Melewatkan sinyal x melalui filter h memberikan hasil yang sama persis dengan melewatkan sinyal h melalui filter x. Sangat memudahkan perhitungan analitis (pilih sekuens yang lebih pendek untuk dilipat/digeser). Pilar ke-2 adalah 2. Sifat Asosiatif (Pengelompokan). (x[n] * h1[n]) * h2[n] = x[n] * (h1[n] * h2[n]). Sistem Kaskade (Seri): Dua filter yang dihubungkan secara seri dapat digabungkan menjadi satu filter ekuivalen tunggal: h_eq[n] = h1[n] * h2[n]. Pilar ke-3 adalah 3. Sifat Distributif. x[n] * (h1[n] + h2[n]) = (x[n] * h1[n]) + (x[n] * h2[n]). Sistem Paralel: Dua filter yang dihubungkan secara paralel dapat dijumlahkan respons impulsnya: h_eq[n] = h1[n] + h2[n]. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Sifat Komutatif (Pertu"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Sifat Asosiatif (Penge"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Sifat Distributif"
+      }
+    ]
+  },
+  "6": {
+    "title": "Analisis Korelasi Sinyal: Cross-Correlation & Auto-Correlation",
+    "script": "Pada slide ini, kita membahas Analisis Korelasi Sinyal: Cross-Correlation & Auto-Correlation. Perhatikan persamaan matematika inti untuk Formulasi Matematis Korelasi Diskrit di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. r_xy[l]: Cross-correlation antara dua sinyal x[n] dan y[n] pada lag pergeseran l. r_xx[l]: Auto-correlation dari sinyal x[n] dengan dirinya sendiri yang digeser sejauh l sampel. l (Lag): Parameter pergeseran waktu bilangan bulat. Perbedaan Mutlak dengan Konvolusi: Pada korelasi TIDAK ADA operasi pencerminan/folding (tidak ada tanda minus pada variabel dummy). Hubungan dengan Konvolusi: r_xy[l] = x[l] * y[-l]. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Aplikasi Cross-Correlation: Pengukuran Kemiripan & Estimasi Keterlambatan Waktu (Time-of-Flight / Delay Estimation). Contoh Radar / Sonar: Pancarkan pulsa x[n]. Tangkap pantulan gema y[n] = alpha * x[n - D] + noise. Hitung r_xy[l]: Titik puncak tertinggi (peak) dari kurva r_xy[l] terjadi tepat pada nilai lag l = D! Dengan mengalikan D dengan periode sampling Ts dan kecepatan rambat gelombang, jarak objek target dapat dihitung dengan presisi milimeter! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Formulasi Matematis Korelasi D"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "7": {
+    "title": "Auto-Correlation & Teorema Wiener-Khinchin",
+    "script": "Pada slide ini, kita membahas Auto-Correlation & Teorema Wiener-Khinchin. Mari kita perhatikan kolom sebelah kiri mengenai Sifat Unik Auto-Correlation r_xx[l]. Nilai Maksimum Selalu di Origin (l = 0): Nilai r_xx[0] merepresentasikan Total Energi Sinyal (r_xx[0] = sum |x[n]|^2 = E). Kaidah Batas Atas: |r_xx[l]| <= r_xx[0] untuk seluruh lag l != 0. Simetri Genap: r_xx[-l] = r_xx[l] (untuk sinyal real). Deteksi Periodisitas Tersembunyi: Jika sinyal tertutup noise sangat lebat sehingga bentuk gelombangnya tidak terlihat, auto-correlation akan memunculkan puncak berulang periodik pada interval lag kelipatan periode dasar N0! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Teorema Wiener-Khinchin. Mengapa hal ini sangat fundamental? Salah satu teorema paling agung dalam teori probabilitas dan pengolahan sinyal digital: Transformasi Fourier dari fungsi auto-correlation sebuah sinyal adalah sama persis dengan Power Spectral Density (PSD) dari sinyal tersebut: FT{ r_xx[l] } = S_xx(e^(j omega)) = |X(e^(j omega))|^2. Fondasi utama analisis spektrum daya pada radar, astronomi radio, dan analisis getaran mesin industri. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Sifat Unik Auto-Correlation r_"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Teorema Wiener-Khinchin"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "8": {
+    "title": "Perbedaan Ringkas: Konvolusi vs Korelasi",
+    "script": "Pada slide ini, kita membahas Perbedaan Ringkas: Konvolusi vs Korelasi. Mari kita perhatikan kolom sebelah kiri mengenai Operasi Konvolusi Diskrit (x * h). Tujuan Utama: Pemfilteran (Filtering) dan pemodelan transformasi sistem LTI. Operasi Waktu: Ada pencerminan sumbu (folding) sinyal kedua sebelum digeser: h[n - k]. Sifat Komutatif: Ya, berlaku mutlak (x * h = h * x). Domain Transformasi: Berkorespondensi dengan perkalian spektrum frekuensi: Y(w) = X(w) * H(w). Sekarang, mari kita tinjau kolom sebelah kanan mengenai Operasi Korelasi Diskrit (r_xy). Mengapa hal ini sangat fundamental? Tujuan Utama: Mengukur derajat kemiripan sinyal, deteksi pola (pattern matching), dan estimasi time delay. Operasi Waktu: Tanpa pencerminan sumbu (direct shifting): y[n - l]. Sifat Komutatif: Tidak komutatif secara langsung (r_xy[l] = r_yx[-l]). Domain Transformasi: Berkorespondensi dengan perkalian spektrum dengan konjugat kompleksnya: S_xy(w) = X(w) * Y*(w). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Operasi Konvolusi Diskrit (x *"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Operasi Korelasi Diskrit (r_xy"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "9": {
+    "title": "Implementasi Python: Konvolusi Manual vs NumPy",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Konvolusi Manual vs NumPy. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Algoritma Konvolusi Diskrit O(N*M). Memahami algoritma konvolusi dari loop tingkat dasar (scratch implementation) memperdalam pemahaman mengenai pergeseran indeks. Fungsi np.convolve(x, h, mode='full') dioptimasi dalam bahasa C untuk eksekusi vektor berkecepatan tinggi. Panjang output selalu sama dengan len(x) + len(h) - 1. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Algoritma Konvolusi Diskrit O("
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "10": {
+    "title": "Praktikum Mandiri Lab 06: Deteksi Delay & Gema Radar",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 06: Deteksi Delay & Gema Radar. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 06. Judul: Estimasi Keterlambatan Waktu (Time-Delay Estimation) Menggunakan Cross-Correlation. Langkah 1: Bangkitkan pulsa chirp x[n] sepanjang 100 sampel sebagai sinyal radar transmisi. Langkah 2: Buat sinyal pantulan penerima y[n] yang mengalami keterlambatan D = 45 sampel dan tertutup noise Gaussian acak (SNR = 0 dB). Langkah 3: Hitung cross-correlation r_xy menggunakan scipy.signal.correlate(y, x, mode='full'). Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Laporan. Mengapa hal ini sangat fundamental? Tantangan Praktik: Cari indeks puncak argmax(r_xy). Tentukan berapa sampel estimasi delay yang diperoleh program Anda. Apakah tepat mendeteksi D = 45 meskipun noise sangat kuat? Eksperimen Tambahan: Turunkan SNR hingga -10 dB (noise 10x lebih kuat dari sinyal). Apakah korelasi masih mampu mendeteksi keberadaan target? Output: Dokumentasikan grafik perbandingan sinyal tercemar noise vs kurva puncak korelasi yang tajam. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 06"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Laporan"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "11": {
+    "title": "Integrasi AI: Debugging Logika Boundary Indexing",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Debugging Logika Boundary Indexing. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Optimasi Komputasi. Prompt AI: 'Bagaimana cara mengubah algoritma loop konvolusi diskrit O(N^2) menjadi komputasi berbasis FFT O(N log N) menggunakan metode Overlap-Add pada Python?' Boundary Debugging: 'Script korelasi saya menghasilkan indeks lag negatif yang bergeser. Bagaimana cara membuat array sumbu lag yang simetris dari -(N-1) hingga +(N-1)?' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Validasi Mahasiswa. Mengapa hal ini sangat fundamental? Verifikasi Padding FFT: Jika menggunakan FFT untuk konvolusi, ukuran FFT wajib minimal N1 + N2 - 1 untuk mencegah circular convolution aliasing. Pemeriksaan Zero-Lag Alignment: Pastikan titik tengah array korelasi tepat berkorespondensi dengan lag l = 0. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI untuk Optimasi "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Validasi Mahasiswa"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Latihan Soal HOTS Pertemuan 06",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 06. Mari kita perhatikan kolom sebelah kiri mengenai Soal 1: Perhitungan Konvolusi Tabular. Diberikan dua sekuens diskrit: x[n] = { [3], -1, 2, 4 } (origin pada n = 0) h[n] = { 2, [1], -2 } (origin pada n = 0, dimulai dari n = -1) a) Tentukan indeks awal dan indeks akhir dari sekuens y[n]! b) Susun tabel matriks perhitungan konvolusi! c) Tuliskan sekuens hasil y[n] lengkap dengan penanda origin [ ]! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal 2: Analisis Auto-Correlation. Mengapa hal ini sangat fundamental? Sebuah sekuens pulsa kotak didefinisikan sebagai x[n] = 1 untuk n in [0, 4] dan 0 di tempat lain (panjang 5 sampel). a) Hitung total energi sinyal E! b) Hitung dan plot fungsi auto-correlation r_xx[l] untuk lag l in [-6, 6]! c) Buktikan bahwa bentuk kurva auto-correlation dari pulsa kotak adalah pulsa segitiga simetris! ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal 1: Perhitungan Konvolusi "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal 2: Analisis Auto-Correlat"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "13": {
+    "title": "Rangkuman Pertemuan 06 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 06 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa konvolusi adalah jembatan fundamental yang merealisasikan respons filter terhadap sinyal apapun. Saya memahami bahwa korelasi adalah 'detektif' yang mampu mengekstraksi sinyal lemah dari dalam lautan derau. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Aplikasi praktis seperti GPS navigasi satelit dan radar penerbangan beroperasi menggunakan jutaan komputasi korelasi per detik untuk mengunci sinyal. Convolution reverb membuat produksi musik digital terdengar hidup di ruangan nyata. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Menyaksikan puncak korelasi yang sangat tajam menjulang keluar dari sinyal radar yang tertutup derau acak lebat memberikan pengalaman eureka yang sangat memuaskan. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "14": {
+    "title": "Tindak Lanjut & Referensi Perkuliahan",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-6: Konvolusi linear y[n] = x[n] * h[n] menghasilkan sekuens berdurasi Lx + Lh - 1. Metode tabular dan matriks Toeplitz menyederhanakan perhitungan sekuens berhingga. Cross-correlation mengukur kemiripan dan delay waktu tanpa operasi folding. Auto-correlation r_xx[0] sama dengan energi sinyal, mendeteksi periodisitas. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kumpulkan Laporan Praktikum Lab 06 ke LMS tepat waktu. Baca materi Bab 5 Oppenheim mengenai Respons Frekuensi Sistem Diskrit. Siapkan ringkasan rumus bilangan kompleks Euler (e^j theta = cos theta + j sin theta). Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

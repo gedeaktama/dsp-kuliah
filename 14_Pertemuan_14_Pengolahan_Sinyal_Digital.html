@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arsitektur Pipeline Pengolahan Sinyal Digital End-to-End - Pengolahan Sinyal Digital UN Manado</title>
+  
+  <!-- Fonts: Inter, Fira Code & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for crisp mathematical formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <!-- Prism.js for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #050B14;
+      --bg-surface: #0A1322;
+      --bg-card: rgba(14, 26, 47, 0.78);
+      --border-card: #1E3252;
+      --primary: #00B4D8;
+      --primary-light: #90E0EF;
+      --accent-blue: #0077B6;
+      --accent-emerald: #10B981;
+      --accent-amber: #F59E0B;
+      --accent-red: #EF4444;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --code-bg: #050B14;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 180, 216, 0.35);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      user-select: none;
+    }
+
+    /* Presentation Viewport - 100% Fullscreen Canvas */
+    .presentation-viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 25%, #0E1A2E 0%, #050B14 100%);
+    }
+
+    /* Top Global Slim Progress Indicator */
+    .top-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 999;
+    }
+
+    .top-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent-emerald) 100%);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+
+    /* Base Slide Definition (Strict Display Control) */
+    .slide {
+      display: none !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      padding: 2.2rem 4rem 4.8rem 4rem;
+      box-sizing: border-box;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .slide.active {
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    /* Title Slide Specific Full Screen Centering */
+    .slide-title-view {
+      display: none !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      padding: 3rem 6rem 5.5rem 6rem;
+      box-sizing: border-box;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .slide-title-view.active {
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    .title-badge-univ {
+      color: var(--primary);
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+      background: rgba(0, 180, 216, 0.12);
+      border: 1px solid rgba(0, 180, 216, 0.35);
+      padding: 6px 18px;
+      border-radius: 30px;
+      display: inline-block;
+    }
+
+    .title-meeting-badge {
+      color: var(--accent-amber);
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .title-main {
+      font-size: clamp(2.4rem, 4.2vw, 4.2rem);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.18;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF 30%, #90E0EF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      max-width: 1200px;
+    }
+
+    .title-sub {
+      font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+      color: #94A3B8;
+      max-width: 1100px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .title-meta-box {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.2rem 2.2rem;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 2.2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: left;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .meta-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .lecturer-signature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #F1F5F9;
+      font-size: 1.12rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .title-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-cta-start {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%);
+      color: #050B14;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 12px 28px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0, 180, 216, 0.35);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-cta-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(0, 180, 216, 0.5);
+    }
+
+    .btn-cta-fullscreen {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 1.02rem;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Slide Header on Content Slides */
+    .slide-header {
+      margin-bottom: 1.3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .slide-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.35rem;
+    }
+
+    .badge-univ-sm {
+      background: rgba(0, 180, 216, 0.12);
+      border: 1px solid rgba(0, 180, 216, 0.35);
+      color: var(--primary);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .slide-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+    }
+
+    .badge-cpmk-sm {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--accent-emerald);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .slide-title {
+      font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .slide-header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .slide-counter-badge {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .slide-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Full-Screen Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 14px;
+      padding: 1.6rem 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      overflow-y: auto;
+      backdrop-filter: blur(12px);
+    }
+
+    .card.accent-blue { border-top: 4px solid var(--primary); }
+    .card.accent-green { border-top: 4px solid var(--accent-emerald); }
+    .card.accent-amber { border-top: 4px solid var(--accent-amber); }
+
+    .card-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .card-title.blue { color: var(--primary); }
+    .card-title.green { color: var(--accent-emerald); }
+    .card-title.amber { color: var(--accent-amber); }
+
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .card-list li {
+      font-size: clamp(0.95rem, 1.1vw, 1.08rem);
+      line-height: 1.55;
+      color: #E2E8F0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .card-list li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.3rem;
+      line-height: 1.2;
+    }
+
+    /* Formula Banner */
+    .formula-banner {
+      background: linear-gradient(135deg, rgba(0, 180, 216, 0.14) 0%, rgba(14, 26, 47, 0.95) 100%);
+      border: 1px solid rgba(0, 180, 216, 0.45);
+      border-radius: 14px;
+      padding: 1.1rem 2.2rem;
+      margin-bottom: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-shrink: 0;
+      box-shadow: 0 8px 24px rgba(0, 180, 216, 0.12);
+    }
+
+    .formula-banner h4 {
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .formula-banner .katex-display {
+      margin: 0.45rem 0;
+      color: #FFFFFF;
+      font-size: clamp(1.4rem, 2.2vw, 2.0rem);
+    }
+
+    /* Code Container Full Height */
+    .code-container {
+      background: var(--code-bg);
+      border: 1px solid #1E3252;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .code-header {
+      background: #0E1A2D;
+      padding: 9px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1E3252;
+      flex-shrink: 0;
+    }
+
+    .code-title {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      color: var(--primary-light);
+      font-weight: 600;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #E2E8F0;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    pre[class*="language-"] {
+      margin: 0;
+      padding: 1.2rem 1.5rem;
+      background: transparent !important;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      overflow-x: auto;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    /* Floating Presenter Control HUD */
+    .presenter-bar {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 19, 34, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 40px;
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .presenter-bar.autohide {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(20px);
+    }
+
+    .presenter-bar:hover {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: translateX(-50%) translateY(0) !important;
+    }
+
+    .bar-btn {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #CBD5E1;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .bar-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #050B14;
+    }
+
+    .bar-btn-record {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #EF4444;
+      color: #FCA5A5;
+      font-weight: 700;
+    }
+    .bar-btn-record:hover {
+      background: #EF4444;
+      color: #FFF;
+    }
+    .bar-btn-record.recording {
+      background: #EF4444;
+      color: #FFF;
+      animation: recordBlink 1s infinite alternate;
+    }
+    @keyframes recordBlink {
+      0% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+
+    .bar-btn-primary {
+      background: var(--primary);
+      border: 1px solid var(--primary);
+      color: #050B14;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .bar-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      margin: 0 4px;
+    }
+
+    .bar-indicator {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      padding: 4px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* Edge Click Zones */
+    .edge-nav-zone {
+      position: fixed;
+      top: 0;
+      bottom: 70px;
+      width: 5vw;
+      z-index: 50;
+      cursor: pointer;
+      opacity: 0;
+    }
+    .edge-nav-left { left: 0; }
+    .edge-nav-right { right: 0; }
+
+    /* Virtual Laser Pointer */
+    .virtual-laser {
+      position: fixed;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #FF0055;
+      box-shadow: 0 0 12px #FF0055, 0 0 24px #FF0055, 0 0 38px #FF5588;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: top 0.75s cubic-bezier(0.22, 1, 0.36, 1), left 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+      opacity: 0;
+    }
+    .virtual-laser.active {
+      opacity: 1;
+      animation: laserPulse 1.2s infinite alternate;
+    }
+    @keyframes laserPulse {
+      0% { transform: translate(-50%, -50%) scale(0.85); box-shadow: 0 0 8px #FF0055; }
+      100% { transform: translate(-50%, -50%) scale(1.35); box-shadow: 0 0 24px #FF0055, 0 0 40px #FF0055; }
+    }
+
+    .laser-label {
+      position: fixed;
+      background: rgba(10, 19, 34, 0.95);
+      border: 1px solid #FF0055;
+      color: #FFF;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(18px, -18px);
+      transition: top 0.75s cubic-bezier(0.22, 1, 0.36, 1), left 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+      opacity: 0;
+      white-space: nowrap;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    }
+    .laser-label.active {
+      opacity: 1;
+    }
+
+    .lecture-focus-target {
+      outline: 2px solid var(--primary) !important;
+      box-shadow: 0 0 35px rgba(0, 180, 216, 0.55) !important;
+      transition: all 0.35s ease;
+    }
+
+    /* Floating Lecture Teleprompter / Subtitles Panel - HIDDEN BY DEFAULT! */
+    .lecture-panel {
+      position: fixed;
+      bottom: 74px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1040px, 94vw);
+      background: rgba(8, 16, 29, 0.96);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 180, 216, 0.45);
+      border-radius: 18px;
+      padding: 12px 22px;
+      z-index: 950;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .lecture-panel.collapsed {
+      transform: translateX(-50%) translateY(calc(100% + 35px));
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .lecture-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 6px;
+    }
+
+    .lecturer-info-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lecturer-avatar {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent-emerald) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+    .lecturer-name-badge {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #F8FAFC;
+    }
+    .lecturer-voice-badge {
+      background: rgba(0, 180, 216, 0.15);
+      color: var(--primary-light);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 180, 216, 0.3);
+    }
+
+    .lecture-panel-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .audio-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #E2E8F0;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .audio-btn:hover {
+      background: var(--primary);
+      color: #050B14;
+    }
+    .audio-btn.active {
+      background: #10B981;
+      border-color: #10B981;
+      color: #050B14;
+    }
+
+    .auto-advance-label {
+      font-size: 0.78rem;
+      color: #94A3B8;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .lecture-transcript-text {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #E2E8F0;
+      max-height: 75px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    /* Slide Jump Menu / Drawer */
+    .drawer-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+    }
+
+    .drawer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 440px;
+      height: 100%;
+      background: #0B1526;
+      border-right: 1px solid var(--border-card);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      box-shadow: 10px 0 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-card);
+      padding-bottom: 1rem;
+    }
+
+    .drawer-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .drawer-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .drawer-list {
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer-item {
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #CBD5E1;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .drawer-item:hover, .drawer-item.active {
+      background: rgba(0, 180, 216, 0.15);
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(16, 185, 129, 0.95);
+      color: #050B14;
+      padding: 8px 22px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      z-index: 3000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+<!-- Gate Keamanan Akses Mahasiswa (PIN: UN2026) -->
+<style id="authGateStyle">
+  body > *:not(#authGateModal) { filter: blur(14px); pointer-events: none !important; user-select: none !important; }
+</style>
+<div id="authGateModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(5,11,20,0.96);backdrop-filter:blur(16px);z-index:9999999;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans','Inter',sans-serif;color:#F8FAFC;">
+  <div style="background:#0E1A2D;border:1px solid #1E3252;box-shadow:0 25px 50px -12px rgba(0,0,0,0.7),0 0 40px rgba(0,180,216,0.15);padding:2.5rem 2rem;border-radius:20px;max-width:440px;width:90%;text-align:center;">
+    <div style="width:64px;height:64px;background:rgba(0,180,216,0.12);border:1px solid rgba(0,180,216,0.3);border-radius:18px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </div>
+    <div style="display:inline-block;background:rgba(0,180,216,0.15);border:1px solid rgba(0,180,216,0.3);color:#00B4D8;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.75rem;">Universitas Nusantara Manado</div>
+    <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:0.5rem;color:#FFF;">Portal Perkuliahan Terkunci</h2>
+    <p style="font-size:0.88rem;color:#94A3B8;line-height:1.5;margin-bottom:1.5rem;">Materi perkuliahan ini dilindungi hak cipta khusus untuk mahasiswa kelas Pengolahan Sinyal Digital. Silakan masukkan PIN kelas.</p>
+    <form id="authGateForm" onsubmit="handleAuthSubmit(event)" style="display:flex;flex-direction:column;gap:12px;">
+      <input type="password" id="authGateInput" placeholder="Masukkan PIN Akses Kelas..." autofocus style="padding:12px 16px;border-radius:10px;background:#050B14;border:1px solid #2A4365;color:#FFF;font-size:1rem;text-align:center;letter-spacing:0.1em;outline:none;transition:border-color 0.2s;" />
+      <div id="authGateError" style="color:#EF4444;font-size:0.8rem;display:none;font-weight:500;">PIN salah! Silakan tanyakan PIN ke Dosen Pengampu (Pak Erik).</div>
+      <button type="submit" style="padding:12px;border-radius:10px;background:linear-gradient(135deg, #00B4D8 0%, #0077B6 100%);color:#FFF;border:none;font-weight:700;font-size:0.95rem;cursor:pointer;box-shadow:0 8px 20px rgba(0,180,216,0.3);">Buka Materi Kuliah 🔓</button>
+    </form>
+    <div style="margin-top:1.25rem;font-size:0.78rem;color:#64748B;">Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const TARGET_HASH = "c9c2169ba17de848a2d68b050b46f77f1c7e05256a6361ee338f4b9507b239be";
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+  function unlock() {
+    const style = document.getElementById("authGateStyle");
+    const modal = document.getElementById("authGateModal");
+    if (style) style.remove();
+    if (modal) modal.remove();
+  }
+  function checkAuth() {
+    const saved = localStorage.getItem("DSP_AUTH_TOKEN_UN");
+    if (saved === TARGET_HASH) {
+      unlock();
+      return true;
+    }
+    return false;
+  }
+  window.handleAuthSubmit = async function(e) {
+    e.preventDefault();
+    const input = document.getElementById("authGateInput");
+    const err = document.getElementById("authGateError");
+    if (!input) return;
+    const val = input.value.trim().toUpperCase();
+    const hash = await sha256(val);
+    if (hash === TARGET_HASH) {
+      localStorage.setItem("DSP_AUTH_TOKEN_UN", TARGET_HASH);
+      const modal = document.getElementById("authGateModal");
+      if (modal) {
+        modal.style.transition = "opacity 0.25s ease";
+        modal.style.opacity = "0";
+        setTimeout(() => {
+          unlock();
+        }, 250);
+      }
+    } else {
+      err.style.display = "block";
+      input.value = "";
+      input.focus();
+    }
+  };
+  checkAuth();
+})();
+</script>
+
+
+  <!-- Top Progress Bar -->
+  <div class="top-progress-bar">
+    <div class="top-progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Edge Navigation Zones -->
+  <div class="edge-nav-zone edge-nav-left" onclick="prevSlide()" title="Slide Sebelumnya (⬅ / PageUp)"></div>
+  <div class="edge-nav-zone edge-nav-right" onclick="nextSlide()" title="Slide Berikutnya (➔ / Space / PageDown)"></div>
+
+  <!-- Virtual Laser Pointer & Floating Label -->
+  <div class="virtual-laser" id="virtualLaser"></div>
+  <div class="laser-label" id="laserLabel">Penjelasan Dosen</div>
+
+  <!-- Audio Player for Lectures -->
+  <audio id="lectureAudio" preload="auto"></audio>
+
+  <!-- Presentation Viewport (Full Bleed Edge-to-Edge) -->
+  <main class="presentation-viewport" id="viewport">
+    
+    <div class="slide-title-view active">
+      <div class="title-badge-univ">Universitas Nusantara Manado • Fakultas Ilmu Komputer</div>
+      <div class="title-meeting-badge">PENGOLAHAN SINYAL DIGITAL — PERTEMUAN 14</div>
+      <h1 class="title-main">Arsitektur Pipeline Pengolahan Sinyal Digital End-to-End</h1>
+      <p class="title-sub">Integrasi Sistem Utuh: Akuisisi Data, Preprocessing (Detrending & Normalisasi), Denoising, Framing & Windowing, Ekstraksi Fitur Domain Waktu/Frekuensi, dan Metrik Kinerja (SNR, MSE, THD)</p>
+      
+      <div class="title-meta-box">
+        <div class="meta-item">
+          <span class="meta-label">Capaian Pembelajaran</span>
+          <span class="meta-value">CPMK5 (CPL-B, CPL-C)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Bobot Asesmen RPS</span>
+          <span class="meta-value">6%</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Pendekatan Pedagogis</span>
+          <span class="meta-value">Outcome-Based Education (OBE) & Deep Learning</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Integrasi AI</span>
+          <span class="meta-value">Prompting, Debugging & Verifikasi Matematis</span>
+        </div>
+      </div>
+
+      <div class="lecturer-signature">
+        <span>👨‍🏫 Dosen Pengampu: <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong> (NIDN: 0902109201)</span>
+      </div>
+
+      <div class="title-cta-group">
+        <button class="btn-cta-start" onclick="nextSlide()">▶ Mulai Perkuliahan (Spasi / ➔)</button>
+        <button class="btn-cta-fullscreen" onclick="toggleFullScreen()">⛶ Layar Penuh (F5 / F)</button>
+      </div>
+    </div>
+    
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">ARSITEKTUR PIPELINE</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Menyatukan Seluruh Konsep: Dari Teori Menjadi Solusi Utuh</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 2 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Tantangan Rekayasa Sistem Nyata</h3>
+                <ul class="card-list"><li>Dalam aplikasi industri riil, kita tidak pernah hanya menerapkan satu fungsi filter terisolasi. Data sinyal di lapangan selalu terkontaminasi berbagai macam gangguan simultan:</li><li>1. DC-Offset dan Baseline Drift akibat karakteristik transduser sensor.</li><li>2. Noise frekuensi tinggi dan interferensi jala-jala listrik.</li><li>3. Fluktuasi amplitudo antar rekaman yang tidak seragam.</li><li>Solusi: Membangun Arsitektur Pipeline DSP End-to-End yang modular, teruji, dan siap diintegrasikan dengan sistem AI/Machine Learning.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Enam Tahap Utama Pipeline DSP Standar Industri</h3>
+                <ul class="card-list"><li>Tahap 1: Data Acquisition & Validation (Pemeriksaan laju Fs, bit-depth, integritas data).</li><li>Tahap 2: Preprocessing (DC Removal, Linear Detrending, Peak/RMS Normalization).</li><li>Tahap 3: Filtering & Denoising (Band-pass filtering, Notch 50/60 Hz, Median Filter).</li><li>Tahap 4: Segmentation & Windowed Framing (Short-time analysis dengan overlap 50%).</li><li>Tahap 5: Feature Extraction (Fitur domain waktu dan domain spektral frekuensi).</li><li>Tahap 6: Performance Evaluation & Output Formatting (SNR, MSE, THD, Export).</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">PREPROCESSING</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Tahap 1 & 2: Preprocessing Sinyal (Detrending & Normalisasi)</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 3 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+                <div class="card accent-blue">
+                  <h3 class="card-title blue">📌 DC-Offset Removal</h3>
+                  <ul class="card-list"><li>Sinyal analog seringkali membawa pergeseran tegangan rata-rata bukan nol (mean != 0) yang memboroskan rentang dinamis ADC.</li><li>Metode Pengurangan Rata-Rata: x_clean[n] = x[n] - np.mean(x).</li><li>Metode Filter Notch DC: High-Pass Filter IIR orde-1 dengan pole sangat dekat ke z = 1 (misal H(z) = (1 - z^-1) / (1 - 0.995 z^-1)).</li></ul>
+                </div>
+                
+                <div class="card accent-green">
+                  <h3 class="card-title green">📌 Linear Detrending</h3>
+                  <ul class="card-list"><li>Mengoreksi pergeseran garis dasar (baseline wander) akibat perubahan suhu sensor atau pernapasan pasien.</li><li>Mengestimasi tren linier menggunakan regresi kuadrat terkecil (least-squares line fitting) lalu menguranginya dari sinyal: scipy.signal.detrend(x).</li></ul>
+                </div>
+                
+                <div class="card accent-amber">
+                  <h3 class="card-title amber">📌 Normalisasi Amplitudo</h3>
+                  <ul class="card-list"><li>Peak Normalization: Membagi seluruh sinyal dengan amplitudo maksimum mutlak: x_norm = x / np.max(np.abs(x)). Menjamin rentang ketat [-1.0, +1.0].</li><li>RMS Normalization (Z-Score Standard): Mengatur rata-rata = 0 dan variansi energi = 1, sangat krusial sebagai masukan model AI / Neural Network.</li></ul>
+                </div>
+                </div>
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">SEGMENTASI WAKTU</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Tahap 3 & 4: Denoising, Framing & Windowing</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 4 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Filtering & Denoising Terpadu</h3>
+                <ul class="card-list"><li>Filtering Bertingkat: Kombinasi High-Pass (menghilangkan drift) + Low-Pass (menghilangkan noise frekuensi tinggi) + Notch Filter (menghilangkan interferensi listrik 50 Hz).</li><li>Median Filtering: Menggantikan setiap sampel dengan nilai median dari tetangga sekitarnya. Sangat efektif menghilangkan derau bintik impulsif (Salt-and-Pepper Noise / Spike Noise) tanpa mengaburkan tepi transisi sinyal yang tajam.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Framing & Overlapping Analysis</h3>
+                <ul class="card-list"><li>Sinyal nyata seperti suara bicara manusia (speech) bersifat Non-Stasioner (karakteristik frekuensinya berubah seiring waktu).</li><li>Prinsip Quasi-Stationary: Dalam selang waktu sangat pendek (10 s.d. 30 milidetik), sinyal suara dapat diasumsikan stasioner.</li><li>Framing: Memotong sinyal panjang menjadi potongan frame-frame berdurasi N_frame (misal 25 ms).</li><li>Overlap (Hop Size): Menggeser frame sebesar 50% panjang frame agar transisi informasi antar frame tidak terputus di perbatasan window.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">EKSTRAKSI FITUR</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Tahap 5: Ekstraksi Fitur Domain Waktu (Temporal Features)</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 5 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+                <div class="card accent-blue">
+                  <h3 class="card-title blue">📌 1. Zero-Crossing Rate (ZCR)</h3>
+                  <ul class="card-list"><li>Menghitung berapa kali sinyal memotong sumbu nol (berubah polaritas dari positif ke negatif atau sebaliknya) dalam satu frame waktu.</li><li>Aplikasi: Membedakan antara suara berdesis tanpa getaran pita suara (Unvoiced Speech / Fricatives seperti 's', 'f', 't') yang memiliki ZCR sangat tinggi, dengan suara vokal (Voiced) yang ber-ZCR rendah.</li></ul>
+                </div>
+                
+                <div class="card accent-green">
+                  <h3 class="card-title green">📌 2. Short-Time Energy (STE)</h3>
+                  <ul class="card-list"><li>STE = sum_{m=0}^{N-1} (x[m] * w[m])^2.</li><li>Mengukur kekuatan energi sesaat sinyal pada setiap frame waktu.</li><li>Aplikasi Utama: Voice Activity Detection (VAD) untuk mendeteksi kapan seseorang mulai berbicara dan kapan jeda hening (silence detection) pada asisten suara cerdas.</li></ul>
+                </div>
+                
+                <div class="card accent-amber">
+                  <h3 class="card-title amber">📌 3. Root Mean Square (RMS)</h3>
+                  <ul class="card-list"><li>RMS = sqrt( (1/N) * sum x[m]^2 ).</li><li>Merepresentasikan intensitas kenyaringan (loudness) perseptual sinyal audio.</li><li>Digunakan untuk normalisasi dinamika sinyal pada sistem broadcast radio/podcast.</li></ul>
+                </div>
+                </div>
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">EKSTRAKSI FITUR</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Tahap 5 Lanjut: Ekstraksi Fitur Domain Frekuensi (Spectral Features)</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 6 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="formula-banner">
+              <h4>Formulasi Fitur Spektral Berbasis FFT Frame</h4>
+              <div class="katex-eq">$$\text{Spectral Centroid} = \frac{\sum_{k=0}^{N/2} f_k \cdot |X[k]|}{\sum_{k=0}^{N/2} |X[k]|} \qquad \text{Spectral Rolloff} = \min(f_c) \text{ s.t. } \sum_{k=0}^{k_c} |X[k]| \ge 0.85 \sum_{k=0}^{N/2} |X[k]|$$</div>
+            </div>
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📐 Keterangan Variabel & Makna Fisik</h3>
+                <ul class="card-list"><li>|X[k]|: Magnitudo koefisien spektrum FFT frame ke-m.</li><li>f_k: Frekuensi fisik bin ke-k dalam Hertz.</li><li>Spectral Centroid (Pusat Massa Spektrum): Mengukur derajat 'kecerahan' akustik (brightness/timbre) suatu suara. Suara bernada tajam memiliki centroid tinggi.</li><li>Spectral Rolloff: Frekuensi batas bawah di mana 85% akumulasi energi spektral terkonsentrasi.</li><li>Mel-Frequency Cepstral Coefficients (MFCC): Representasi spektrum skala persepsi pendengaran manusia Mel-scale, fitur nomor satu pada Speech Recognition dan Klasifikasi Musik AI.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🔢 Contoh Perhitungan Bertahap</h3>
+                <ul class="card-list"><li>Mengapa Fitur Spektral Sangat Penting untuk AI?</li><li>Memberikan representasi data yang kompak (dimensionality reduction): dari 1000 sampel mentah per frame direduksi menjadi hanya 13 koefisien MFCC bermakna tinggi!</li><li>Memudahkan model klasifikasi (SVM, Random Forest, CNN) mengenali jenis kerusakan getaran mesin atau emosi suara manusia secara akurat.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">METRIK VALIDASI</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Tahap 6: Metrik Kuantitatif Evaluasi Kinerja Pemrosesan</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 7 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+                <div class="card accent-blue">
+                  <h3 class="card-title blue">📌 Signal-to-Noise Ratio (SNR)</h3>
+                  <ul class="card-list"><li>SNR = 10 * log10( P_signal / P_noise ) dB.</li><li>SNR Improvement: Delta SNR = SNR_output - SNR_input.</li><li>Mengukur keberhasilan filter dalam mengangkat sinyal bersih keluar dari derau latar belakang. Kenaikan Delta SNR > 10 dB menandakan pembersihan yang sangat efektif.</li></ul>
+                </div>
+                
+                <div class="card accent-green">
+                  <h3 class="card-title green">📌 Mean Squared Error (MSE)</h3>
+                  <ul class="card-list"><li>MSE = (1 / N) * sum_{n=0}^{N-1} (x_clean[n] - y_filtered[n])^2.</li><li>Mengukur derajat kemiripan numerik antara sinyal hasil filtering dengan sinyal referensi murni (ground-truth).</li><li>Semakin kecil nilai MSE mendekati nol, semakin sempurna restorasi sinyal.</li></ul>
+                </div>
+                
+                <div class="card accent-amber">
+                  <h3 class="card-title amber">📌 Total Harmonic Distortion (THD)</h3>
+                  <ul class="card-list"><li>THD = sqrt( sum_{i=2}^inf V_i^2 ) / V_1 * 100%.</li><li>Mengukur persentase distorsi harmonisa yang timbul akibat ketidaklinieran sistem audio atau perangkat keras.</li><li>Sistem Hi-Fi berkualitas tinggi menuntut THD < 0.1%.</li></ul>
+                </div>
+                </div>
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">KOMPUTASI & KODE</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Implementasi Python: Arsitektur Kelas Pipeline Berorientasi Objek</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 8 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📖 Desain Modular SignalProcessingPipeline</h3>
+                <ul class="card-list"><li>Membangun kelas Python berorientasi objek (OOP) SignalProcessingPipeline yang membungkus seluruh tahapan pengolahan secara modular.</li><li>Memudahkan integrasi dengan pipeline pemelajaran mesin (scikit-learn / PyTorch).</li><li>Mendukung chaining method: pipe.remove_dc().bandpass_filter().extract_features().</li></ul>
+              </div>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="code-title">Python Implementation (NumPy / SciPy)</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Salin Kode</button>
+                </div>
+                <pre><code class="language-python">import numpy as np
+from scipy.signal import butter, sosfilt, detrend
+
+class DSPPipeline:
+    def __init__(self, Fs):
+        self.Fs = float(Fs)
+        self.sos = butter(4, [100, 2000], btype='bandpass', fs=self.Fs, output='sos')
+        
+    def process(self, raw_signal):
+        # 1. DC Removal & Linear Detrend
+        sig_dc = raw_signal - np.mean(raw_signal)
+        sig_detrend = detrend(sig_dc)
+        
+        # 2. Filtering Bandpass Biquad SOS
+        sig_filtered = sosfilt(self.sos, sig_detrend)
+        
+        # 3. Peak Normalization
+        sig_norm = sig_filtered / (np.max(np.abs(sig_filtered)) + 1e-9)
+        
+        # 4. Ekstraksi Fitur Temporal (ZCR & STE)
+        zcr = np.mean(np.abs(np.diff(np.sign(sig_norm)))) / 2.0
+        ste = np.mean(sig_norm ** 2)
+        
+        return {
+            'clean_signal': sig_norm,
+            'features': {'ZCR': zcr, 'STE': ste}
+        }
+
+# Uji Pipeline dengan Sinyal Acak
+pipeline = DSPPipeline(Fs=8000)
+raw_test = np.random.randn(800) + 2.5 # Sinyal bising ber-offset DC
+output = pipeline.process(raw_test)
+print('Fitur Hasil Ekstraksi:', output['features'])</code></pre>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">PRAKTIKUM & HANDS-ON</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Praktikum Mandiri Lab 14: Restorasi Sinyal Wicara Berderau</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 9 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Lembar Instruksi Praktikum 14</h3>
+                <ul class="card-list"><li>Judul: Membangun Pipeline Pengolahan Sinyal Wicara (Speech Enhancement & Feature Extraction).</li><li>Dataset: Rekaman suara ucapan manusia 'speech_noisy.wav' yang tertutup derau jalan raya (street traffic noise).</li><li>Tugas 1: Bangun modul pipeline lengkap yang melakukan detrending, pemfilteran bandpass (300 - 3400 Hz standar telephony), dan normalisasi amplitudo.</li><li>Tugas 2: Hitung metrik SNR sebelum dan sesudah filtering.</li><li>Tugas 3: Lakukan framing 20 ms dengan overlap 50% dan ekstraksi profil kontur Energy STE dan ZCR sepanjang waktu.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Tantangan Analisis & Evaluasi</h3>
+                <ul class="card-list"><li>Tantangan Praktik: Gunakan kontur Short-Time Energy (STE) untuk membuat segmentasi otomatis Voice Activity Detection (VAD). Berikan tanda kotak merah pada grafik pada rentang waktu di mana manusia sedang berbicara!</li><li>Uji Dengar Perseptual: Simpan audio hasil pemfilteran dan putar di kelas. Apakah suara ucapan menjadi lebih mudah dipahami (intelligible)?</li><li>Output: Unggah script class Python modular dan notebook laporan ke LMS.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">INTEGRASI AI</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Integrasi AI: Refactoring Clean Code Pipeline</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 10 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Pemanfaatan AI untuk Peningkatan Arsitektur Kode</h3>
+                <ul class="card-list"><li>Prompt AI: 'Lakukan refactoring pada kelas DSPPipeline Python berikut agar memenuhi prinsip Clean Code SOLID, menyertakan Type Hints (typing.NDArray), docstrings Google Style, dan penanganan exception input yang kuat.'</li><li>Optimasi Vektorisasi: 'Bagaimana cara mengubah loop ekstraksi frame audio Python menjadi operasi vektor menggunakan numpy.lib.stride_tricks.sliding_window_view?'</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Kewajiban Validasi Mahasiswa</h3>
+                <ul class="card-list"><li>Pemeriksaan Konsistensi Memori: Waspadai penggunaan sliding_window_view yang menghasilkan array non-contiguous yang dapat memicu silent memory error jika dimodifikasi in-place.</li><li>Verifikasi Independensi Modul: Pastikan setiap fungsi tahapan preprocessing dapat diuji secara terisolasi (Unit Testing) dengan input sinyal sintetis sederhana.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">EVALUASI PEMBELAJARAN</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Latihan Soal HOTS Pertemuan 14</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 11 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Soal Analisis Metrik SNR</h3>
+                <ul class="card-list"><li>Sinyal masukan memiliki daya sinyal P_sig = 0.5 Watt dan daya derau P_noise = 0.05 Watt.</li><li>a) Hitung nilai SNR masukan dalam decibel (dB)!</li><li>b) Setelah melewati filter pipeline, daya sinyal menjadi 0.48 Watt dan daya derau berhasil ditekan menjadi 0.001 Watt. Hitung nilai SNR keluaran!</li><li>c) Berapa nilai peningkatan SNR (Delta SNR) yang dicapai oleh pipeline tersebut?</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Soal Desain Framing Audio</h3>
+                <ul class="card-list"><li>Sebuah sinyal audio wicara direkam dengan frekuensi sampling Fs = 16 kHz.</li><li>a) Berapa jumlah sampel N_frame yang terkandung dalam satu frame waktu berdurasi 25 ms?</li><li>b) Jika digunakan skema overlapping 50%, berapa jumlah sampel pergeseran (hop size) antar frame?</li><li>c) Jika total durasi audio adalah 2 detik, berapa jumlah frame total yang dihasilkan oleh proses segmentasi tersebut?</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">REFLEKSI & RANGKUMAN</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Rangkuman Pertemuan 14 & Refleksi Pembelajaran</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 12 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-3">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">💡 Berkesadaran (Mindful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Memahami tujuan belajar, proses berpikir, dan evaluasi pemahaman.</p>
+                <ul class="card-list"><li>Saya menyadari bahwa kehebatan sebuah algoritma DSP ditentukan oleh kebersihan tahapan pra-pemrosesan (garbage in, garbage out).</li><li>Saya memahami bahwa segmentasi waktu-frekuensi adalah cara jitu menangani sinyal non-stasioner di dunia nyata.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🌍 Bermakna (Meaningful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Kaitan konkret dengan industri teknologi, telekomunikasi & AI.</p>
+                <ul class="card-list"><li>Arsitektur pipeline modular yang dibangun hari ini adalah cetak biru yang sama persis dengan yang digunakan di industri asisten suara (Siri, Google Assistant), mobil otonom, dan pemantauan kesehatan cerdas.</li><li>Fitur spektral menjembatani DSP tradisional dengan era Modern AI.</li></ul>
+              </div>
+              <div class="card accent-amber">
+                <h3 class="card-title amber">✨ Menggembirakan (Joyful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Eksplorasi interaktif, visualisasi sinyal, dan tantangan kode.</p>
+                <ul class="card-list"><li>Melihat seluruh modul dari pertemuan 1 hingga 13 terangkai harmonis dalam satu kelas Python tunggal yang bersih dan otomatis menghasilkan laporan analisis memberikan kepuasan rekayasa tingkat tinggi.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">REFERENSI & TUGAS</span>
+                <span class="badge-cpmk-sm">CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Tindak Lanjut & Persiapan Proyek Terapan</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 13 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📋 Rangkuman Inti Pertemuan 14</h3>
+                <ul class="card-list"><li>Pipeline DSP end-to-end mengintegrasikan Preprocessing, Filtering SOS, Framing, dan Ekstraksi Fitur.</li><li>Fitur temporal (ZCR, STE, RMS) memetakan dinamika domain waktu.</li><li>Fitur spektral (Centroid, Rolloff, MFCC) memetakan warna suara timbre.</li><li>Evaluasi kuantitatif divalidasi melalui metrik SNR, MSE, dan THD.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🎯 Tugas Mandiri & Ketercapaian OBE</h3>
+                <ul class="card-list"><li>Kumpulkan Laporan Praktikum Lab 14 ke LMS.</li><li>Pelajari panduan Proyek Pembelajaran Berdampak (Klaster Audio, Getaran, IoT, Biosinyal) untuk Pertemuan 15.</li><li>Finalisasi pembagian peran kelompok dan pemilihan dataset berlisensi terbuka.</li></ul>
+                <h4 style="font-size:1.05rem; color:#F1F5F9; margin-top:1.2rem; margin-bottom:0.6rem;">Referensi Akademik Terverifikasi:</h4>
+                <ul class="card-list"><li style='font-size:0.92rem; color:#CBD5E1;'>📖 Oppenheim, A. V., & Schafer, R. W. (2010). Discrete-Time Signal Processing (3rd ed.). Pearson, Bab 10 (Short-Time Fourier Analysis).</li><li style='font-size:0.92rem; color:#CBD5E1;'>📖 Rabiner, L. R., & Schafer, R. W. (2010). Theory and Applications of Digital Speech Processing. Prentice Hall.</li><li style='font-size:0.92rem; color:#CBD5E1;'>📖 McClellan, J. H., Schafer, R. W., & Yoder, M. A. (2016). DSP First (2nd ed.). Pearson, Bab 11.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+  </main>
+
+  <!-- Floating Presenter HUD -->
+  <div class="presenter-bar" id="presenterBar">
+    <button class="bar-btn" onclick="prevSlide()" title="Slide Sebelumnya (⬅)">◀ Prev</button>
+    <span class="bar-indicator" id="slideIndicator" onclick="toggleDrawer()" title="Klik untuk daftar slide (M)">Slide 1 / 13</span>
+    <button class="bar-btn-primary" onclick="nextSlide()" title="Slide Berikutnya (➔ / Spasi)">Next ▶</button>
+    <div class="bar-divider"></div>
+    <button class="bar-btn" id="btnPresenterLecture" onclick="togglePlayLecture()" style="border-color:#10B981; color:#6EE7B7;" title="Putar Suara & Penjelasan Dosen (P)">🎙️ Dengar Penjelasan (P)</button>
+    <button class="bar-btn bar-btn-record" id="btnRecordVideo" onclick="toggleRecordLecture()" title="Rekam Layar + Suara Otomatis dari Menit 0 dan Auto-Download saat Selesai">🔴 Rekam Video (Auto)</button>
+    <button class="bar-btn" id="btnTogglePanel" onclick="toggleLecturePanel()" title="Tampilkan/Sembunyikan Naskah Dosen (T)">📜 Naskah</button>
+    <button class="bar-btn" onclick="toggleFullScreen()" title="Mode Layar Penuh (F5 / F)">⛶ Layar Penuh</button>
+    <button class="bar-btn" onclick="toggleDrawer()" title="Daftar Slide (M)">☰ Menu</button>
+    <a href="14_Pertemuan_14_Pengolahan_Sinyal_Digital.pptx" class="bar-btn" download title="Download file PowerPoint">📥 PPTX</a>
+    <a href="https://canva.link/0p27fg52m1k06l3" target="_blank" class="bar-btn" style="border-color:#7D2AE8; color:#D8B4FE;" title="Buka di Canva">🎨 Canva</a>
+    <a href="index.html" class="bar-btn" title="Kembali ke Hub Perkuliahan">🏠 Hub</a>
+  </div>
+
+  <!-- Floating Lecture Teleprompter Panel - COLLAPSED / HIDDEN BY DEFAULT! -->
+  <div class="lecture-panel collapsed" id="lecturePanel">
+    <div class="lecture-panel-header">
+      <div class="lecturer-info-bar">
+        <div class="lecturer-avatar">👨‍🏫</div>
+        <span class="lecturer-name-badge">Penjelasan Kuliah: <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong></span>
+        <span class="lecturer-voice-badge">Suara AI Ardi Neural</span>
+      </div>
+      <div class="lecture-panel-controls">
+        <button class="audio-btn active" id="btnPlayLecture" onclick="togglePlayLecture()">⏸ Jeda</button>
+        <button class="audio-btn" onclick="replaySlideLecture()">🔄 Ulangi</button>
+        <label class="auto-advance-label">
+          <input type="checkbox" id="autoAdvanceCheck" checked> Auto-Lanjut Slide
+        </label>
+        <button class="audio-btn" onclick="toggleLecturePanel()" title="Sembunyikan Panel (T)">✕ Tutup</button>
+      </div>
+    </div>
+    <div class="lecture-transcript-text" id="lectureTranscript">
+      Memuat naskah penjelasan dosen...
+    </div>
+  </div>
+
+  <!-- Slide Jump Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()">
+    <div class="drawer" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <h3 class="drawer-title">Daftar Slide Pertemuan 14</h3>
+        <button class="drawer-close" onclick="toggleDrawer()">✕</button>
+      </div>
+      <div class="drawer-list" id="drawerList">
+        <div class="drawer-item active" onclick="goToSlide(0)">1. Judul & Identitas Perkuliahan</div>
+<div class="drawer-item" onclick="goToSlide(1)">2. Menyatukan Seluruh Konsep: Dari Teori Menjadi Solusi Utuh</div>
+<div class="drawer-item" onclick="goToSlide(2)">3. Tahap 1 & 2: Preprocessing Sinyal (Detrending & Normalisasi)</div>
+<div class="drawer-item" onclick="goToSlide(3)">4. Tahap 3 & 4: Denoising, Framing & Windowing</div>
+<div class="drawer-item" onclick="goToSlide(4)">5. Tahap 5: Ekstraksi Fitur Domain Waktu (Temporal Features)</div>
+<div class="drawer-item" onclick="goToSlide(5)">6. Tahap 5 Lanjut: Ekstraksi Fitur Domain Frekuensi (Spectral Features)</div>
+<div class="drawer-item" onclick="goToSlide(6)">7. Tahap 6: Metrik Kuantitatif Evaluasi Kinerja Pemrosesan</div>
+<div class="drawer-item" onclick="goToSlide(7)">8. Implementasi Python: Arsitektur Kelas Pipeline Berorientasi Objek</div>
+<div class="drawer-item" onclick="goToSlide(8)">9. Praktikum Mandiri Lab 14: Restorasi Sinyal Wicara Berderau</div>
+<div class="drawer-item" onclick="goToSlide(9)">10. Integrasi AI: Refactoring Clean Code Pipeline</div>
+<div class="drawer-item" onclick="goToSlide(10)">11. Latihan Soal HOTS Pertemuan 14</div>
+<div class="drawer-item" onclick="goToSlide(11)">12. Rangkuman Pertemuan 14 & Refleksi Pembelajaran</div>
+<div class="drawer-item" onclick="goToSlide(12)">13. Tindak Lanjut & Persiapan Proyek Terapan</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide, .slide-title-view');
+    const totalSlides = slides.length;
+    const slideIndicator = document.getElementById('slideIndicator');
+    const progressFill = document.getElementById('progressFill');
+    const presenterBar = document.getElementById('presenterBar');
+    const toast = document.getElementById('toast');
+
+    // Lecture & Audio Elements
+    const LECTURE_DATA = {"1": {"title": "Judul & Identitas Perkuliahan", "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-14. Hari ini kita akan mengkaji secara komprehensif topik utama: Arsitektur Pipeline Pengolahan Sinyal Digital End-to-End. Integrasi Sistem Utuh: Akuisisi Data, Preprocessing (Detrending & Normalisasi), Denoising, Framing & Windowing, Ekstraksi Fitur Domain Waktu/Frekuensi, dan Metrik Kinerja (SNR, MSE, THD). Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK5 (CPL-B, CPL-C) dengan bobot evaluasi sebesar 6 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.", "laser_steps": [{"time": 2, "target": ".title-badge-univ", "text": "Universitas Nusantara Manado"}, {"time": 7, "target": ".title-main", "text": "Topik: Arsitektur Pipeline Pengolahan Siny"}, {"time": 14, "target": ".title-meta-box", "text": "Capaian CPMK5 (CPL-B, CPL-C)"}, {"time": 22, "target": ".lecturer-signature", "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."}, {"time": 28, "target": ".title-cta-group", "text": "Mulai Perkuliahan"}]}, "2": {"title": "Menyatukan Seluruh Konsep: Dari Teori Menjadi Solusi Utuh", "script": "Pada slide ini, kita membahas Menyatukan Seluruh Konsep: Dari Teori Menjadi Solusi Utuh. Mari kita perhatikan kolom sebelah kiri mengenai Tantangan Rekayasa Sistem Nyata. Dalam aplikasi industri riil, kita tidak pernah hanya menerapkan satu fungsi filter terisolasi. Data sinyal di lapangan selalu terkontaminasi berbagai macam gangguan simultan: 1. DC-Offset dan Baseline Drift akibat karakteristik transduser sensor. 2. Noise frekuensi tinggi dan interferensi jala-jala listrik. 3. Fluktuasi amplitudo antar rekaman yang tidak seragam. Solusi: Membangun Arsitektur Pipeline DSP End-to-End yang modular, teruji, dan siap diintegrasikan dengan sistem AI/Machine Learning. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Enam Tahap Utama Pipeline DSP Standar Industri. Mengapa hal ini sangat fundamental? Tahap 1: Data Acquisition & Validation (Pemeriksaan laju Fs, bit-depth, integritas data). Tahap 2: Preprocessing (DC Removal, Linear Detrending, Peak/RMS Normalization). Tahap 3: Filtering & Denoising (Band-pass filtering, Notch 50/60 Hz, Median Filter). Tahap 4: Segmentation & Windowed Framing (Short-time analysis dengan overlap 50%). Tahap 5: Feature Extraction (Fitur domain waktu dan domain spektral frekuensi). Tahap 6: Performance Evaluation & Output Formatting (SNR, MSE, THD, Export). ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Tantangan Rekayasa Sistem Nyat"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Enam Tahap Utama Pipeline DSP "}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "3": {"title": "Tahap 1 & 2: Preprocessing Sinyal (Detrending & Normalisasi)", "script": "Pada slide ini, kita membahas Tahap 1 & 2: Preprocessing Sinyal (Detrending & Normalisasi). Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah DC-Offset Removal. Sinyal analog seringkali membawa pergeseran tegangan rata-rata bukan nol (mean != 0) yang memboroskan rentang dinamis ADC. Metode Pengurangan Rata-Rata: x_clean[n] = x[n] - np.mean(x). Metode Filter Notch DC: High-Pass Filter IIR orde-1 dengan pole sangat dekat ke z = 1 (misal H(z) = (1 - z^-1) / (1 - 0.995 z^-1)). Pilar ke-2 adalah Linear Detrending. Mengoreksi pergeseran garis dasar (baseline wander) akibat perubahan suhu sensor atau pernapasan pasien. Mengestimasi tren linier menggunakan regresi kuadrat terkecil (least-squares line fitting) lalu menguranginya dari sinyal: scipy.signal.detrend(x). Pilar ke-3 adalah Normalisasi Amplitudo. Peak Normalization: Membagi seluruh sinyal dengan amplitudo maksimum mutlak: x_norm = x / np.max(np.abs(x)). Menjamin rentang ketat [-1.0, +1.0]. RMS Normalization (Z-Score Standard): Mengatur rata-rata = 0 dan variansi energi = 1, sangat krusial sebagai masukan model AI / Neural Network. ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "DC-Offset Removal"}, {"time": 14, "target": ".grid-3 .card:nth-child(2)", "text": "Linear Detrending"}, {"time": 25, "target": ".grid-3 .card:nth-child(3)", "text": "Normalisasi Amplitudo"}]}, "4": {"title": "Tahap 3 & 4: Denoising, Framing & Windowing", "script": "Pada slide ini, kita membahas Tahap 3 & 4: Denoising, Framing & Windowing. Mari kita perhatikan kolom sebelah kiri mengenai Filtering & Denoising Terpadu. Filtering Bertingkat: Kombinasi High-Pass (menghilangkan drift) + Low-Pass (menghilangkan noise frekuensi tinggi) + Notch Filter (menghilangkan interferensi listrik 50 Hz). Median Filtering: Menggantikan setiap sampel dengan nilai median dari tetangga sekitarnya. Sangat efektif menghilangkan derau bintik impulsif (Salt-and-Pepper Noise / Spike Noise) tanpa mengaburkan tepi transisi sinyal yang tajam. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Framing & Overlapping Analysis. Mengapa hal ini sangat fundamental? Sinyal nyata seperti suara bicara manusia (speech) bersifat Non-Stasioner (karakteristik frekuensinya berubah seiring waktu). Prinsip Quasi-Stationary: Dalam selang waktu sangat pendek (10 s.d. 30 milidetik), sinyal suara dapat diasumsikan stasioner. Framing: Memotong sinyal panjang menjadi potongan frame-frame berdurasi N_frame (misal 25 ms). Overlap (Hop Size): Menggeser frame sebesar 50% panjang frame agar transisi informasi antar frame tidak terputus di perbatasan window. ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Filtering & Denoising Terpadu"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Framing & Overlapping Analysis"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "5": {"title": "Tahap 5: Ekstraksi Fitur Domain Waktu (Temporal Features)", "script": "Pada slide ini, kita membahas Tahap 5: Ekstraksi Fitur Domain Waktu (Temporal Features). Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Zero-Crossing Rate (ZCR). Menghitung berapa kali sinyal memotong sumbu nol (berubah polaritas dari positif ke negatif atau sebaliknya) dalam satu frame waktu. Aplikasi: Membedakan antara suara berdesis tanpa getaran pita suara (Unvoiced Speech / Fricatives seperti 's', 'f', 't') yang memiliki ZCR sangat tinggi, dengan suara vokal (Voiced) yang ber-ZCR rendah. Pilar ke-2 adalah 2. Short-Time Energy (STE). STE = sum_{m=0}^{N-1} (x[m] * w[m])^2. Mengukur kekuatan energi sesaat sinyal pada setiap frame waktu. Aplikasi Utama: Voice Activity Detection (VAD) untuk mendeteksi kapan seseorang mulai berbicara dan kapan jeda hening (silence detection) pada asisten suara cerdas. Pilar ke-3 adalah 3. Root Mean Square (RMS). RMS = sqrt( (1/N) * sum x[m]^2 ). Merepresentasikan intensitas kenyaringan (loudness) perseptual sinyal audio. Digunakan untuk normalisasi dinamika sinyal pada sistem broadcast radio/podcast. ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "1. Zero-Crossing Rate (ZC"}, {"time": 14, "target": ".grid-3 .card:nth-child(2)", "text": "2. Short-Time Energy (STE"}, {"time": 25, "target": ".grid-3 .card:nth-child(3)", "text": "3. Root Mean Square (RMS)"}]}, "6": {"title": "Tahap 5 Lanjut: Ekstraksi Fitur Domain Frekuensi (Spectral Features)", "script": "Pada slide ini, kita membahas Tahap 5 Lanjut: Ekstraksi Fitur Domain Frekuensi (Spectral Features). Perhatikan persamaan matematika inti untuk Formulasi Fitur Spektral Berbasis FFT Frame di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. |X[k]|: Magnitudo koefisien spektrum FFT frame ke-m. f_k: Frekuensi fisik bin ke-k dalam Hertz. Spectral Centroid (Pusat Massa Spektrum): Mengukur derajat 'kecerahan' akustik (brightness/timbre) suatu suara. Suara bernada tajam memiliki centroid tinggi. Spectral Rolloff: Frekuensi batas bawah di mana 85% akumulasi energi spektral terkonsentrasi. Mel-Frequency Cepstral Coefficients (MFCC): Representasi spektrum skala persepsi pendengaran manusia Mel-scale, fitur nomor satu pada Speech Recognition dan Klasifikasi Musik AI. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Mengapa Fitur Spektral Sangat Penting untuk AI? Memberikan representasi data yang kompak (dimensionality reduction): dari 1000 sampel mentah per frame direduksi menjadi hanya 13 koefisien MFCC bermakna tinggi! Memudahkan model klasifikasi (SVM, Random Forest, CNN) mengenali jenis kerusakan getaran mesin atau emosi suara manusia secara akurat. ", "laser_steps": [{"time": 3, "target": ".formula-banner h4", "text": "Formulasi Fitur Spektral Berba"}, {"time": 9, "target": ".formula-banner .katex-display", "text": "Formulasi Matematis"}, {"time": 18, "target": ".grid-2 .card.accent-blue", "text": "Makna Fisis Variabel"}, {"time": 28, "target": ".grid-2 .card.accent-green", "text": "Langkah Perhitungan"}]}, "7": {"title": "Tahap 6: Metrik Kuantitatif Evaluasi Kinerja Pemrosesan", "script": "Pada slide ini, kita membahas Tahap 6: Metrik Kuantitatif Evaluasi Kinerja Pemrosesan. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Signal-to-Noise Ratio (SNR). SNR = 10 * log10( P_signal / P_noise ) dB. SNR Improvement: Delta SNR = SNR_output - SNR_input. Mengukur keberhasilan filter dalam mengangkat sinyal bersih keluar dari derau latar belakang. Kenaikan Delta SNR > 10 dB menandakan pembersihan yang sangat efektif. Pilar ke-2 adalah Mean Squared Error (MSE). MSE = (1 / N) * sum_{n=0}^{N-1} (x_clean[n] - y_filtered[n])^2. Mengukur derajat kemiripan numerik antara sinyal hasil filtering dengan sinyal referensi murni (ground-truth). Semakin kecil nilai MSE mendekati nol, semakin sempurna restorasi sinyal. Pilar ke-3 adalah Total Harmonic Distortion (THD). THD = sqrt( sum_{i=2}^inf V_i^2 ) / V_1 * 100%. Mengukur persentase distorsi harmonisa yang timbul akibat ketidaklinieran sistem audio atau perangkat keras. Sistem Hi-Fi berkualitas tinggi menuntut THD < 0.1%. ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "Signal-to-Noise Ratio (SN"}, {"time": 14, "target": ".grid-3 .card:nth-child(2)", "text": "Mean Squared Error (MSE)"}, {"time": 25, "target": ".grid-3 .card:nth-child(3)", "text": "Total Harmonic Distortion"}]}, "8": {"title": "Implementasi Python: Arsitektur Kelas Pipeline Berorientasi Objek", "script": "Pada slide ini, kita membahas Implementasi Python: Arsitektur Kelas Pipeline Berorientasi Objek. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Desain Modular SignalProcessingPipeline. Membangun kelas Python berorientasi objek (OOP) SignalProcessingPipeline yang membungkus seluruh tahapan pengolahan secara modular. Memudahkan integrasi dengan pipeline pemelajaran mesin (scikit-learn / PyTorch). Mendukung chaining method: pipe.remove_dc().bandpass_filter().extract_features(). Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.", "laser_steps": [{"time": 3, "target": ".grid-2 .card.accent-blue", "text": "Desain Modular SignalProcessin"}, {"time": 12, "target": ".code-container .code-header", "text": "Kode Python DSP"}, {"time": 20, "target": ".code-container pre", "text": "Implementasi Vektorisasi"}]}, "9": {"title": "Praktikum Mandiri Lab 14: Restorasi Sinyal Wicara Berderau", "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 14: Restorasi Sinyal Wicara Berderau. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 14. Judul: Membangun Pipeline Pengolahan Sinyal Wicara (Speech Enhancement & Feature Extraction). Dataset: Rekaman suara ucapan manusia 'speech_noisy.wav' yang tertutup derau jalan raya (street traffic noise). Tugas 1: Bangun modul pipeline lengkap yang melakukan detrending, pemfilteran bandpass (300 - 3400 Hz standar telephony), dan normalisasi amplitudo. Tugas 2: Hitung metrik SNR sebelum dan sesudah filtering. Tugas 3: Lakukan framing 20 ms dengan overlap 50% dan ekstraksi profil kontur Energy STE dan ZCR sepanjang waktu. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Evaluasi. Mengapa hal ini sangat fundamental? Tantangan Praktik: Gunakan kontur Short-Time Energy (STE) untuk membuat segmentasi otomatis Voice Activity Detection (VAD). Berikan tanda kotak merah pada grafik pada rentang waktu di mana manusia sedang berbicara! Uji Dengar Perseptual: Simpan audio hasil pemfilteran dan putar di kelas. Apakah suara ucapan menjadi lebih mudah dipahami (intelligible)? Output: Unggah script class Python modular dan notebook laporan ke LMS. ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Lembar Instruksi Praktikum 14"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Tantangan Analisis & Evaluasi"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "10": {"title": "Integrasi AI: Refactoring Clean Code Pipeline", "script": "Pada slide ini, kita membahas Integrasi AI: Refactoring Clean Code Pipeline. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Peningkatan Arsitektur Kode. Prompt AI: 'Lakukan refactoring pada kelas DSPPipeline Python berikut agar memenuhi prinsip Clean Code SOLID, menyertakan Type Hints (typing.NDArray), docstrings Google Style, dan penanganan exception input yang kuat.' Optimasi Vektorisasi: 'Bagaimana cara mengubah loop ekstraksi frame audio Python menjadi operasi vektor menggunakan numpy.lib.stride_tricks.sliding_window_view?' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Validasi Mahasiswa. Mengapa hal ini sangat fundamental? Pemeriksaan Konsistensi Memori: Waspadai penggunaan sliding_window_view yang menghasilkan array non-contiguous yang dapat memicu silent memory error jika dimodifikasi in-place. Verifikasi Independensi Modul: Pastikan setiap fungsi tahapan preprocessing dapat diuji secara terisolasi (Unit Testing) dengan input sinyal sintetis sederhana. ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Pemanfaatan AI untuk Peningkat"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Kewajiban Validasi Mahasiswa"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "11": {"title": "Latihan Soal HOTS Pertemuan 14", "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 14. Mari kita perhatikan kolom sebelah kiri mengenai Soal Analisis Metrik SNR. Sinyal masukan memiliki daya sinyal P_sig = 0.5 Watt dan daya derau P_noise = 0.05 Watt. a) Hitung nilai SNR masukan dalam decibel (dB)! b) Setelah melewati filter pipeline, daya sinyal menjadi 0.48 Watt dan daya derau berhasil ditekan menjadi 0.001 Watt. Hitung nilai SNR keluaran! c) Berapa nilai peningkatan SNR (Delta SNR) yang dicapai oleh pipeline tersebut? Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal Desain Framing Audio. Mengapa hal ini sangat fundamental? Sebuah sinyal audio wicara direkam dengan frekuensi sampling Fs = 16 kHz. a) Berapa jumlah sampel N_frame yang terkandung dalam satu frame waktu berdurasi 25 ms? b) Jika digunakan skema overlapping 50%, berapa jumlah sampel pergeseran (hop size) antar frame? c) Jika total durasi audio adalah 2 detik, berapa jumlah frame total yang dihasilkan oleh proses segmentasi tersebut? ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Soal Analisis Metrik SNR"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Soal Desain Framing Audio"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "12": {"title": "Rangkuman Pertemuan 14 & Refleksi Pembelajaran", "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 14 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa kehebatan sebuah algoritma DSP ditentukan oleh kebersihan tahapan pra-pemrosesan (garbage in, garbage out). Saya memahami bahwa segmentasi waktu-frekuensi adalah cara jitu menangani sinyal non-stasioner di dunia nyata. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Arsitektur pipeline modular yang dibangun hari ini adalah cetak biru yang sama persis dengan yang digunakan di industri asisten suara (Siri, Google Assistant), mobil otonom, dan pemantauan kesehatan cerdas. Fitur spektral menjembatani DSP tradisional dengan era Modern AI. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Melihat seluruh modul dari pertemuan 1 hingga 13 terangkai harmonis dalam satu kelas Python tunggal yang bersih dan otomatis menghasilkan laporan analisis memberikan kepuasan rekayasa tingkat tinggi. ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "Berkesadaran (Mindful)"}, {"time": 15, "target": ".grid-3 .card:nth-child(2)", "text": "Bermakna (Meaningful)"}, {"time": 27, "target": ".grid-3 .card:nth-child(3)", "text": "Menggembirakan (Joyful)"}]}, "13": {"title": "Tindak Lanjut & Persiapan Proyek Terapan", "script": "Pada slide ini, kita membahas Tindak Lanjut & Persiapan Proyek Terapan. Sebagai rangkuman perkuliahan Pertemuan ke-14: Pipeline DSP end-to-end mengintegrasikan Preprocessing, Filtering SOS, Framing, dan Ekstraksi Fitur. Fitur temporal (ZCR, STE, RMS) memetakan dinamika domain waktu. Fitur spektral (Centroid, Rolloff, MFCC) memetakan warna suara timbre. Evaluasi kuantitatif divalidasi melalui metrik SNR, MSE, dan THD. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kumpulkan Laporan Praktikum Lab 14 ke LMS. Pelajari panduan Proyek Pembelajaran Berdampak (Klaster Audio, Getaran, IoT, Biosinyal) untuk Pertemuan 15. Finalisasi pembagian peran kelompok dan pemilihan dataset berlisensi terbuka. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!", "laser_steps": [{"time": 3, "target": ".grid-2 .card.accent-blue", "text": "Rangkuman Inti Kuliah"}, {"time": 15, "target": ".grid-2 .card.accent-green", "text": "Tugas Mandiri OBE"}, {"time": 25, "target": ".grid-2 .card.accent-green h4", "text": "Referensi Akademik"}]}};
+    const lectureAudio = document.getElementById('lectureAudio');
+    const lecturePanel = document.getElementById('lecturePanel');
+    const lectureTranscript = document.getElementById('lectureTranscript');
+    const btnPlayLecture = document.getElementById('btnPlayLecture');
+    const btnPresenterLecture = document.getElementById('btnPresenterLecture');
+    const btnRecordVideo = document.getElementById('btnRecordVideo');
+    const autoAdvanceCheck = document.getElementById('autoAdvanceCheck');
+    const virtualLaser = document.getElementById('virtualLaser');
+    const laserLabel = document.getElementById('laserLabel');
+
+    let currentLaserTarget = null;
+    let isLecturePlaying = false;
+    let mouseTimer = null;
+
+    // Recording State (StudioRecorder Engine)
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecording = false;
+    let recordingStream = null;
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        s.classList.toggle('active', idx === currentSlide);
+      });
+      slideIndicator.textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+      progressFill.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+
+      document.querySelectorAll('.drawer-item').forEach((item, idx) => {
+        item.classList.toggle('active', idx === currentSlide);
+      });
+
+      virtualLaser.classList.remove('active');
+      laserLabel.classList.remove('active');
+      clearHighlight();
+
+      loadSlideLecture(currentSlide + 1, isLecturePlaying);
+
+      if (window.renderMathInElement) {
+        renderMathInElement(slides[currentSlide], {
+          delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: false}
+          ]
+        });
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentSlide = index;
+        updateSlide();
+        toggleDrawer(false);
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().then(() => {
+          showToast("Mode Layar Penuh Aktif (Tekan Esc / F untuk keluar)");
+        }).catch(err => console.warn(err));
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function toggleDrawer(forceState) {
+      const overlay = document.getElementById('drawerOverlay');
+      if (forceState !== undefined) {
+        overlay.style.display = forceState ? 'block' : 'none';
+      } else {
+        overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    function toggleLecturePanel() {
+      lecturePanel.classList.toggle('collapsed');
+    }
+
+    function moveLaserTo(targetSelector, labelText) {
+      clearHighlight();
+      if (!targetSelector) {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        return;
+      }
+
+      const activeSlide = slides[currentSlide];
+      const targetEl = activeSlide.querySelector(targetSelector) || document.querySelector(targetSelector);
+
+      if (targetEl) {
+        const rect = targetEl.getBoundingClientRect();
+        const laserX = rect.left + rect.width * 0.35;
+        const laserY = rect.top + rect.height * 0.45;
+
+        virtualLaser.style.left = `${laserX}px`;
+        virtualLaser.style.top = `${laserY}px`;
+        virtualLaser.classList.add('active');
+
+        laserLabel.style.left = `${laserX}px`;
+        laserLabel.style.top = `${laserY}px`;
+        laserLabel.textContent = labelText || "Poin Penjelasan";
+        laserLabel.classList.add('active');
+
+        targetEl.classList.add('lecture-focus-target');
+        currentLaserTarget = targetEl;
+      } else {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+      }
+    }
+
+    function clearHighlight() {
+      if (currentLaserTarget) {
+        currentLaserTarget.classList.remove('lecture-focus-target');
+        currentLaserTarget = null;
+      }
+    }
+
+    function loadSlideLecture(slideNum, autoStart = true) {
+      const data = LECTURE_DATA[slideNum];
+      if (!data) return;
+
+      lectureTranscript.innerHTML = data.script;
+      const audioFolder = "audio_pertemuan_14";
+      lectureAudio.src = `${audioFolder}/slide_${String(slideNum).padStart(2, '0')}.mp3`;
+      
+      if (autoStart && isLecturePlaying) {
+        lectureAudio.play().then(() => {
+          btnPlayLecture.textContent = "⏸ Jeda";
+          btnPresenterLecture.textContent = "⏸ Jeda Kuliah (P)";
+        }).catch(err => console.log(err));
+      } else {
+        btnPlayLecture.textContent = "▶ Lanjutkan";
+        btnPresenterLecture.textContent = "🎙️ Dengar Penjelasan (P)";
+      }
+    }
+
+    function togglePlayLecture() {
+      if (lectureAudio.paused) {
+        isLecturePlaying = true;
+        lectureAudio.play().then(() => {
+          btnPlayLecture.textContent = "⏸ Jeda";
+          btnPresenterLecture.textContent = "⏸ Jeda Kuliah (P)";
+          showToast("▶ Memutar Penjelasan Dosen & Kursor Laser Aktif");
+        }).catch(err => {
+          console.warn("Autoplay block:", err);
+        });
+      } else {
+        isLecturePlaying = false;
+        lectureAudio.pause();
+        btnPlayLecture.textContent = "▶ Lanjutkan";
+        btnPresenterLecture.textContent = "🎙️ Dengar Penjelasan (P)";
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        clearHighlight();
+        showToast("⏸ Penjelasan Dosen Dijeda");
+      }
+    }
+
+    function replaySlideLecture() {
+      lectureAudio.currentTime = 0;
+      isLecturePlaying = true;
+      lectureAudio.play();
+      btnPlayLecture.textContent = "⏸ Jeda";
+    }
+
+    lectureAudio.addEventListener('timeupdate', () => {
+      const currentTime = lectureAudio.currentTime;
+      const slideNum = currentSlide + 1;
+      const data = LECTURE_DATA[slideNum];
+      if (!data || !data.laser_steps) return;
+
+      let activeStep = null;
+      for (let i = data.laser_steps.length - 1; i >= 0; i--) {
+        if (currentTime >= data.laser_steps[i].time) {
+          activeStep = data.laser_steps[i];
+          break;
+        }
+      }
+
+      if (activeStep) {
+        moveLaserTo(activeStep.target, activeStep.text);
+      } else {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        clearHighlight();
+      }
+    });
+
+    lectureAudio.addEventListener('ended', () => {
+      virtualLaser.classList.remove('active');
+      laserLabel.classList.remove('active');
+      clearHighlight();
+
+      if (autoAdvanceCheck.checked && currentSlide < totalSlides - 1) {
+        showToast("✓ Slide selesai. Melanjutkan ke slide berikutnya...");
+        setTimeout(() => {
+          nextSlide();
+        }, 1400);
+      } else if (currentSlide >= totalSlides - 1) {
+        showToast("🎉 Seluruh materi perkuliahan selesai!");
+        if (isRecording) {
+          stopRecordingLecture();
+        }
+      }
+    });
+
+    // ==========================================
+    // STUDIO RECORDER ENGINE (AUTO-RECORD & AUTO-DOWNLOAD)
+    // ==========================================
+    async function toggleRecordLecture() {
+      if (isRecording) {
+        stopRecordingLecture();
+      } else {
+        await startRecordingLecture();
+      }
+    }
+
+    async function startRecordingLecture() {
+      try {
+        // Pastikan naskah teleprompter tertutup rapat agar rekaman 100% bersih
+        lecturePanel.classList.add('collapsed');
+
+        showToast("🎬 Pilih tab browser ini dan klik Share dengan Audio untuk mulai merekam!");
+        recordingStream = await navigator.mediaDevices.getDisplayMedia({
+          video: {
+            displaySurface: "browser",
+            frameRate: 60
+          },
+          audio: true,
+          preferCurrentTab: true
+        });
+
+        recordedChunks = [];
+        const mimeTypes = [
+          'video/webm;codecs=vp9,opus',
+          'video/webm;codecs=vp8,opus',
+          'video/webm',
+          'video/mp4'
+        ];
+        let selectedMime = mimeTypes.find(m => MediaRecorder.isTypeSupported(m)) || '';
+
+        mediaRecorder = new MediaRecorder(recordingStream, selectedMime ? { mimeType: selectedMime } : {});
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) {
+            recordedChunks.push(e.data);
+          }
+        };
+
+        mediaRecorder.onstop = () => {
+          downloadRecordedVideo();
+        };
+
+        // User stop stream manually
+        recordingStream.getVideoTracks()[0].onended = () => {
+          if (isRecording) stopRecordingLecture();
+        };
+
+        mediaRecorder.start(1000);
+        isRecording = true;
+
+        btnRecordVideo.classList.add('recording');
+        btnRecordVideo.innerHTML = "⏹ Berhenti Rekam";
+
+        // Rewind ke menit nol (Slide 1) dan mulai narasi
+        currentSlide = 0;
+        updateSlide();
+        autoAdvanceCheck.checked = true;
+        
+        setTimeout(() => {
+          isLecturePlaying = true;
+          lectureAudio.currentTime = 0;
+          lectureAudio.play().catch(e => console.log(e));
+          showToast("🔴 Merekam Aktif dari Menit 0! Video akan otomatis terunduh saat slide terakhir selesai.");
+        }, 1500);
+
+      } catch (err) {
+        console.error("Recording error:", err);
+        showToast("❌ Gagal memulai rekaman: " + err.message);
+      }
+    }
+
+    function stopRecordingLecture() {
+      if (!isRecording) return;
+      isRecording = false;
+
+      btnRecordVideo.classList.remove('recording');
+      btnRecordVideo.innerHTML = "🔴 Rekam Video (Auto)";
+
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+      }
+      if (recordingStream) {
+        recordingStream.getTracks().forEach(t => t.stop());
+      }
+      showToast("💾 Memproses berkas video... Mengunduh otomatis!");
+    }
+
+    function downloadRecordedVideo() {
+      const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      const safeTitle = "Arsitektur Pipeline Pengolahan Sinyal Digital End-to-End".replace(/[^a-zA-Z0-9]/g, '_');
+      a.download = `Pertemuan_14_${safeTitle}_Video_Kuliah.webm`;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast("✅ Video kuliah berhasil diunduh ke folder Downloads Anda!");
+      }, 500);
+    }
+
+    // Auto-hide presenter bar in fullscreen
+    function resetMouseTimer() {
+      presenterBar.classList.remove('autohide');
+      clearTimeout(mouseTimer);
+      if (document.fullscreenElement) {
+        mouseTimer = setTimeout(() => {
+          presenterBar.classList.add('autohide');
+        }, 3000);
+      }
+    }
+    document.addEventListener('mousemove', resetMouseTimer);
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F' || e.key === 'F5') {
+        e.preventDefault();
+        toggleFullScreen();
+      } else if (e.key === 'm' || e.key === 'M') {
+        toggleDrawer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        togglePlayLecture();
+      } else if (e.key === 't' || e.key === 'T') {
+        toggleLecturePanel();
+      } else if (e.key === 'Escape') {
+        toggleDrawer(false);
+      } else if (e.key === 'Home') {
+        currentSlide = 0;
+        updateSlide();
+      } else if (e.key === 'End') {
+        currentSlide = totalSlides - 1;
+        updateSlide();
+      }
+    });
+
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-container').querySelector('code');
+      navigator.clipboard.writeText(codeBlock.innerText).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Tersalin!';
+        btn.style.background = '#10B981';
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.style.background = '';
+        }, 2000);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      updateSlide();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Pembelajaran Pengolahan Sinyal Digital — Universitas Nusantara Manado</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #070D18;
+      --bg-surface: #0E1726;
+      --bg-card: #152238;
+      --border-card: #203354;
+      --primary: #00B4D8;
+      --primary-light: #90E0EF;
+      --accent-emerald: #10B981;
+      --accent-amber: #F59E0B;
+      --text-main: #F1F5F9;
+      --text-muted: #94A3B8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header.hero {
+      background: linear-gradient(135deg, rgba(14, 23, 38, 0.95) 0%, rgba(7, 13, 24, 0.98) 100%);
+      border-bottom: 1px solid var(--border-card);
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .univ-tag {
+      display: inline-block;
+      background: rgba(0, 180, 216, 0.15);
+      border: 1px solid rgba(0, 180, 216, 0.4);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero p.subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 850px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+
+    .lecturer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 18px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: #E2E8F0;
+    }
+
+    .hero-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-hero-primary {
+      background: var(--primary);
+      color: #070D18;
+    }
+    .btn-hero-primary:hover { background: var(--primary-light); }
+
+    .btn-hero-canva {
+      background: rgba(125, 42, 232, 0.2);
+      border: 1px solid #7D2AE8;
+      color: #D8B4FE;
+    }
+    .btn-hero-canva:hover { background: #7D2AE8; color: #FFF; }
+
+    .btn-hero-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #E2E8F0;
+    }
+    .btn-hero-outline:hover { background: rgba(255, 255, 255, 0.1); }
+
+    /* Filter Bar */
+    .filter-section {
+      max-width: 1300px;
+      margin: 2rem auto 1rem;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-card);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #070D18;
+    }
+
+    .search-box input {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-card);
+      color: #FFF;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      width: 260px;
+      outline: none;
+    }
+    .search-box input:focus { border-color: var(--primary); }
+
+    /* Cards Grid */
+    main.container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.5rem;
+      flex: 1;
+    }
+
+    .meeting-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-card);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .meeting-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+
+    .meeting-card.exam-card {
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, var(--bg-surface) 100%);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .meeting-number {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+    }
+
+    .badge-weight {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.35;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 1.2rem;
+    }
+
+    .meta-tag {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #CBD5E1;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-present {
+      flex: 1;
+      background: var(--primary);
+      color: #070D18;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-present:hover { background: var(--primary-light); }
+
+    .btn-download {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #E2E8F0;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-download:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--primary);
+    }
+
+    footer.site-footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-card);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body>
+<!-- Gate Keamanan Akses Mahasiswa (PIN: UN2026) -->
+<style id="authGateStyle">
+  body > *:not(#authGateModal) { filter: blur(14px); pointer-events: none !important; user-select: none !important; }
+</style>
+<div id="authGateModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(5,11,20,0.96);backdrop-filter:blur(16px);z-index:9999999;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans','Inter',sans-serif;color:#F8FAFC;">
+  <div style="background:#0E1A2D;border:1px solid #1E3252;box-shadow:0 25px 50px -12px rgba(0,0,0,0.7),0 0 40px rgba(0,180,216,0.15);padding:2.5rem 2rem;border-radius:20px;max-width:440px;width:90%;text-align:center;">
+    <div style="width:64px;height:64px;background:rgba(0,180,216,0.12);border:1px solid rgba(0,180,216,0.3);border-radius:18px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </div>
+    <div style="display:inline-block;background:rgba(0,180,216,0.15);border:1px solid rgba(0,180,216,0.3);color:#00B4D8;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.75rem;">Universitas Nusantara Manado</div>
+    <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:0.5rem;color:#FFF;">Portal Perkuliahan Terkunci</h2>
+    <p style="font-size:0.88rem;color:#94A3B8;line-height:1.5;margin-bottom:1.5rem;">Materi perkuliahan ini dilindungi hak cipta khusus untuk mahasiswa kelas Pengolahan Sinyal Digital. Silakan masukkan PIN kelas.</p>
+    <form id="authGateForm" onsubmit="handleAuthSubmit(event)" style="display:flex;flex-direction:column;gap:12px;">
+      <input type="password" id="authGateInput" placeholder="Masukkan PIN Akses Kelas..." autofocus style="padding:12px 16px;border-radius:10px;background:#050B14;border:1px solid #2A4365;color:#FFF;font-size:1rem;text-align:center;letter-spacing:0.1em;outline:none;transition:border-color 0.2s;" />
+      <div id="authGateError" style="color:#EF4444;font-size:0.8rem;display:none;font-weight:500;">PIN salah! Silakan tanyakan PIN ke Dosen Pengampu (Pak Erik).</div>
+      <button type="submit" style="padding:12px;border-radius:10px;background:linear-gradient(135deg, #00B4D8 0%, #0077B6 100%);color:#FFF;border:none;font-weight:700;font-size:0.95rem;cursor:pointer;box-shadow:0 8px 20px rgba(0,180,216,0.3);">Buka Materi Kuliah 🔓</button>
+    </form>
+    <div style="margin-top:1.25rem;font-size:0.78rem;color:#64748B;">Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const TARGET_HASH = "c9c2169ba17de848a2d68b050b46f77f1c7e05256a6361ee338f4b9507b239be";
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+  function unlock() {
+    const style = document.getElementById("authGateStyle");
+    const modal = document.getElementById("authGateModal");
+    if (style) style.remove();
+    if (modal) modal.remove();
+  }
+  function checkAuth() {
+    const saved = localStorage.getItem("DSP_AUTH_TOKEN_UN");
+    if (saved === TARGET_HASH) {
+      unlock();
+      return true;
+    }
+    return false;
+  }
+  window.handleAuthSubmit = async function(e) {
+    e.preventDefault();
+    const input = document.getElementById("authGateInput");
+    const err = document.getElementById("authGateError");
+    if (!input) return;
+    const val = input.value.trim().toUpperCase();
+    const hash = await sha256(val);
+    if (hash === TARGET_HASH) {
+      localStorage.setItem("DSP_AUTH_TOKEN_UN", TARGET_HASH);
+      const modal = document.getElementById("authGateModal");
+      if (modal) {
+        modal.style.transition = "opacity 0.25s ease";
+        modal.style.opacity = "0";
+        setTimeout(() => {
+          unlock();
+        }, 250);
+      }
+    } else {
+      err.style.display = "block";
+      input.value = "";
+      input.focus();
+    }
+  };
+  checkAuth();
+})();
+</script>
+
+
+  <!-- Hero Header -->
+  <header class="hero">
+    <div class="univ-tag">Universitas Nusantara Manado • Fakultas Ilmu Komputer</div>
+    <h1>Pengolahan Sinyal Digital (DSP)</h1>
+    <p class="subtitle">Paket Lengkap Bahan Ajar Perkuliahan Pertemuan 1–16 Berbasis Outcome-Based Education (OBE), Pembelajaran Mendalam (Deep Learning), dan Integrasi Kecerdasan Artifisial (AI).</p>
+    
+    <div class="lecturer-badge">
+      <span>👨‍🏫 Dosen Pengampu: <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong> (NIDN: 0902109201)</span>
+      <span>• S1 Teknik Informatika</span>
+    </div>
+
+    <div class="hero-links">
+      <a href="README.md" class="btn-hero btn-hero-outline">📖 Panduan & Silabus README</a>
+      <a href="REFERENSI.md" class="btn-hero btn-hero-outline">📚 Daftar Pustaka Terverifikasi</a>
+      <a href="https://canva.link/0p27fg52m1k06l3" target="_blank" class="btn-hero btn-hero-canva">🎨 Desain Canva Resmi</a>
+      <a href="praktikum_kode/" class="btn-hero btn-hero-primary">🐍 Folder Kode Praktikum</a>
+    </div>
+  </header>
+
+  <!-- Filter & Search Section -->
+  <div class="filter-section">
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterCards('ALL')">Semua Pertemuan (1-16)</button>
+      <button class="filter-btn" onclick="filterCards('CPMK1')">CPMK 1 (Sinyal & Sampling)</button>
+      <button class="filter-btn" onclick="filterCards('CPMK2')">CPMK 2 (Sistem LTI & Konvolusi)</button>
+      <button class="filter-btn" onclick="filterCards('CPMK3')">CPMK 3 (Fourier & Z-Transform)</button>
+      <button class="filter-btn" onclick="filterCards('CPMK4')">CPMK 4 (Desain Filter FIR/IIR)</button>
+      <button class="filter-btn" onclick="filterCards('CPMK5')">CPMK 5 (Pipeline & Python)</button>
+      <button class="filter-btn" onclick="filterCards('CPMK6')">CPMK 6 (Proyek & Sidang)</button>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Cari topik materi kuliah..." onkeyup="searchCards()">
+    </div>
+  </div>
+
+  <!-- Cards Grid Container -->
+  <main class="container" id="cardsGrid">
+    
+        <div class="meeting-card " data-cpmk="CPMK1 (CPL-A)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 01</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 3%</div>
+          </div>
+          <h3 class="card-title">Orientasi DSP, Konsep Dasar Sinyal & Sistem Diskrit, dan Aplikasi Modern</h3>
+          <p class="card-desc">Pengenalan Paradigma Pemrosesan Sinyal Digital, Taksonomi Sinyal, Arsitektur Sistem, dan Ekosistem Python DSP di Era Kecerdasan Artifisial</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK1 (CPL-A)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="01_Pertemuan_01_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="01_Pertemuan_01_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK1 (CPL-A)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 02</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 5%</div>
+          </div>
+          <h3 class="card-title">Representasi Sinyal Waktu Diskrit & Operasi Dasar Sinyal</h3>
+          <p class="card-desc">Karakteristik Sekuens Diskrit, Sinyal Elementer (Impuls, Step, Ramp, Sinusoid), Dekomposisi Genap-Ganjil, serta Operasi Transformasi Waktu & Amplitudo</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK1 (CPL-A)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="02_Pertemuan_02_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="02_Pertemuan_02_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK1 (CPL-A)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 03</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 6%</div>
+          </div>
+          <h3 class="card-title">Sampling, Kuantisasi, Rekonstruksi, dan Fenomena Aliasing</h3>
+          <p class="card-desc">Kaidah Konversi Analog ke Digital (ADC), Teorema Nyquist-Shannon, Analisis Spektrum Pencuplikan, Frequency Folding, dan Noise Kuantisasi</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK1 (CPL-A)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="03_Pertemuan_03_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="03_Pertemuan_03_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK2 (CPL-A, CPL-B)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 04</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 5%</div>
+          </div>
+          <h3 class="card-title">Sistem Waktu Diskrit & Sifat-Sifat Sistem</h3>
+          <p class="card-desc">Karakteristik Transformasi Input-Output, Pengujian Formal Linearitas (Prinsip Superposisi), Time-Invariance, Kausalitas, dan Stabilitas BIBO</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK2 (CPL-A, CPL-B)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="04_Pertemuan_04_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="04_Pertemuan_04_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK2 (CPL-A, CPL-B)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 05</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 6%</div>
+          </div>
+          <h3 class="card-title">Sistem LTI, Respons Impuls & Persamaan Beda (LCCDE)</h3>
+          <p class="card-desc">Karakterisasi Lengkap Sistem LTI Berbasis Respons Impuls h[n], Penurunan Integral Konvolusi Diskrit, Kausalitas/Stabilitas Sistem LTI, dan Persamaan Beda LCCDE</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK2 (CPL-A, CPL-B)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="05_Pertemuan_05_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="05_Pertemuan_05_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK2 (CPL-A, CPL-B)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 06</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 7%</div>
+          </div>
+          <h3 class="card-title">Konvolusi Diskrit & Analisis Korelasi Sinyal</h3>
+          <p class="card-desc">Operasi Konvolusi Linear (Formula, Grafis, Tabular/Matriks Toeplitz), Sifat-Sifat Aljabar Konvolusi, serta Analisis Korelasi Sinyal (Cross-Correlation & Auto-Correlation)</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK2 (CPL-A, CPL-B)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="06_Pertemuan_06_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="06_Pertemuan_06_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK3 (CPL-A, CPL-B)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 07</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 6%</div>
+          </div>
+          <h3 class="card-title">Respons Frekuensi Sistem Diskrit & Respon Steady-State</h3>
+          <p class="card-desc">Karakteristik Respon Sistem LTI Terhadap Sinyal Eigen Sinusoidal Kompleks, Pemisahan Magnitude & Phase Response, Group Delay, dan Analisis Steady-State</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK3 (CPL-A, CPL-B)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="07_Pertemuan_07_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="07_Pertemuan_07_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card exam-card" data-cpmk="CPMK1, CPMK2, CPMK3 (CPL-A, CPL-B)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 08</div>
+            <div class="badge-weight" style="background: rgba(245, 158, 11, 0.2); color: #F59E0B; border: 1px solid #F59E0B;">UTS 20%</div>
+          </div>
+          <h3 class="card-title">Evaluasi Tengah Semester (UTS): Asesmen Komprehensif Teori & Komputasi</h3>
+          <p class="card-desc">Pengukuran Ketercapaian Outcome-Based Education (OBE) untuk CPMK 1, CPMK 2, dan CPMK 3 Melalui Ujian Analitis Mandiri dan Hands-on Live Coding Python</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK1, CPMK2, CPMK3 (CPL-A, CPL-B)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="08_Pertemuan_08_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="08_Pertemuan_08_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK3 (CPL-A, CPL-B)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 09</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 6%</div>
+          </div>
+          <h3 class="card-title">Discrete-Time Fourier Transform (DTFT) & Analisis Spektral</h3>
+          <p class="card-desc">Representasi Sinyal Waktu Diskrit dalam Domain Frekuensi Kontinu, Pasangan Transformasi Analisis-Sintesis, Sifat Periodisitas, dan Teorema Konvolusi/Parseval</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK3 (CPL-A, CPL-B)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="09_Pertemuan_09_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="09_Pertemuan_09_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK3, CPMK5 (CPL-A, CPL-B, CPL-C)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 10</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 7%</div>
+          </div>
+          <h3 class="card-title">DFT, Fast Fourier Transform (FFT) & Windowing</h3>
+          <p class="card-desc">Diskritisasi Domain Frekuensi, Formulasi DFT N-Titik, Algoritma FFT Radix-2 Cooley-Tukey, Resolusi Frekuensi, Fenomena Spectral Leakage, dan Teknik Windowing</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK3, CPMK5 (CPL-A, CPL-B, CPL-C)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="10_Pertemuan_10_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="10_Pertemuan_10_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK3 (CPL-A, CPL-B)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 11</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 6%</div>
+          </div>
+          <h3 class="card-title">Transformasi-Z & Analisis Fungsi Sistem</h3>
+          <p class="card-desc">Generalisasi Transformasi Fourier pada Bidang Kompleks Z, Region of Convergence (ROC), Diagram Pole-Zero, Fungsi Transfer H(z), dan Evaluasi Kestabilan Sistem LTI</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK3 (CPL-A, CPL-B)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="11_Pertemuan_11_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="11_Pertemuan_11_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK4, CPMK5 (CPL-B, CPL-C)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 12</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 7%</div>
+          </div>
+          <h3 class="card-title">Perancangan Filter Digital Finite Impulse Response (FIR)</h3>
+          <p class="card-desc">Spesifikasi Toleransi Filter, Karakteristik Linear Phase Murni, Metode Windowing (Rectangular, Hann, Hamming, Blackman), dan Algoritma Optimasi Parks-McClellan</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="12_Pertemuan_12_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="12_Pertemuan_12_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK4, CPMK5 (CPL-B, CPL-C)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 13</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 7%</div>
+          </div>
+          <h3 class="card-title">Perancangan Filter Digital IIR & Komparasi Komprehensif FIR vs IIR</h3>
+          <p class="card-desc">Metode Transformasi Bilinear (BLT), Prototipe Filter Analog (Butterworth, Chebyshev, Elliptic), Frequency Pre-Warping, Struktur Biquad SOS, dan Matriks Komparasi Industri FIR vs IIR</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="13_Pertemuan_13_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="13_Pertemuan_13_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK5 (CPL-B, CPL-C)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 14</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 6%</div>
+          </div>
+          <h3 class="card-title">Arsitektur Pipeline Pengolahan Sinyal Digital End-to-End</h3>
+          <p class="card-desc">Integrasi Sistem Utuh: Akuisisi Data, Preprocessing (Detrending & Normalisasi), Denoising, Framing & Windowing, Ekstraksi Fitur Domain Waktu/Frekuensi, dan Metrik Kinerja (SNR, MSE, THD)</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK5 (CPL-B, CPL-C)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="14_Pertemuan_14_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="14_Pertemuan_14_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card " data-cpmk="CPMK5, CPMK6 (CPL-B, CPL-C, CPL-D)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 15</div>
+            <div class="badge-weight" style="background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4);">Bobot 6%</div>
+          </div>
+          <h3 class="card-title">Proyek Terapan DSP, Validasi Metrik & AI-Assisted Workflow</h3>
+          <p class="card-desc">Integrasi Metode DSP pada Permasalahan Nyata, Taksonomi 4 Klaster Proyek Unggulan, Baseline Pembanding, Validasi Empiris, dan Protokol Etika Pemanfaatan AI</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK5, CPMK6 (CPL-B, CPL-C, CPL-D)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="15_Pertemuan_15_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="15_Pertemuan_15_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+        <div class="meeting-card exam-card" data-cpmk="CPMK4, CPMK5, CPMK6 (CPL-B, CPL-C, CPL-D)">
+          <div class="card-top">
+            <div class="meeting-number">PERTEMUAN 16</div>
+            <div class="badge-weight" style="background: rgba(245, 158, 11, 0.2); color: #F59E0B; border: 1px solid #F59E0B;">UAS 35%</div>
+          </div>
+          <h3 class="card-title">Evaluasi Akhir Semester (UAS): Sidang Presentasi Proyek DSP Berdampak</h3>
+          <p class="card-desc">Sidang Akademik Demonstrasi Prototipe Mandiri, Pengujian Autentisitas Kode, Evaluasi Ketercapaian Mutu OBE CPMK 4-6, dan Refleksi Penutup Perkuliahan</p>
+          <div class="card-meta">
+            <span class="meta-tag">🎯 CPMK4, CPMK5, CPMK6 (CPL-B, CPL-C, CPL-D)</span>
+            <span class="meta-tag">📊 14-18 Slide</span>
+            <span class="meta-tag">🐍 Python Ready</span>
+          </div>
+          <div class="card-actions">
+            <a href="16_Pertemuan_16_Pengolahan_Sinyal_Digital.html" class="btn-present">🖥️ Buka Slide HTML</a>
+            <a href="16_Pertemuan_16_Pengolahan_Sinyal_Digital.pptx" class="btn-download" download>📥 PPTX</a>
+          </div>
+        </div>
+        
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Pengolahan Sinyal Digital — Universitas Nusantara Manado. Disusun oleh Gede Erik Aktama, S.Pd., M.Pd.</p>
+    <p style="font-size:0.78rem; margin-top:6px; color:#64748B;">Mendukung Kurikulum OBE Berbasis KKNI/APTIKOM dan Permendiktisaintek No. 39 Tahun 2025.</p>
+  </footer>
+
+  <script>
+    function filterCards(cpmkTag) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      const cards = document.querySelectorAll('.meeting-card');
+      cards.forEach(c => {
+        if (cpmkTag === 'ALL' || c.getAttribute('data-cpmk').includes(cpmkTag)) {
+          c.style.display = 'flex';
+        } else {
+          c.style.display = 'none';
+        }
+      });
+    }
+
+    function searchCards() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.meeting-card');
+      cards.forEach(c => {
+        const text = c.innerText.toLowerCase();
+        c.style.display = text.includes(query) ? 'flex' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Halo rekan-rekan mahasiswa sekalian! Selamat datang di pertemuan ke-9 mata kuliah Pengolahan Sinyal Digital. Setelah minggu lalu kita menuntaskan Evaluasi Tengah Semester, hari ini kita melangkah ke gerbang paling fundamental dalam dunia DSP, yaitu Discrete-Time Fourier Transform atau DTFT. Topik ini mengantarkan kita mencapai CPMK 3, di mana Anda akan diajak memahami sinyal bukan lagi dari sudut pandang waktu, melainkan dari spektrum frekuensi murni. Mari kita buka perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi!",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Discrete-Time Fourier Transform"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "CPMK 3 (CPL-A, CPL-B)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Urgensi DTFT: Jembatan Menuju Domain Frekuensi Murni",
+    "script": "Sebelum UTS kemarin, di Pertemuan 7 kita sudah belajar respons frekuensi H(e^jw) untuk menguji sebuah sistem LTI. Nah, sekarang muncul pertanyaan kritis: bagaimana kalau yang ingin kita bedah kandungan frekuensinya bukan sistemnya, melainkan sinyalnya sendiri? Misalnya rekaman audio manusia, data getaran sensor gempa, atau sinyal musik? Di sinilah kita membutuhkan DTFT. DTFT bekerja persis seperti prisma kaca yang membiaskan seberkas cahaya putih menjadi spektrum warna-warni pelangi. Sinyal diskrit di domain waktu akan diuraikan menjadi komponen gelombang sinusoidal pada frekuensi kontinu omega. Perhatikan karakteristik uniknya: meskipun sinyal di waktu itu diskrit, spektrum frekuensinya bersifat kontinu dan selalu berulang secara periodik setiap dua pi radian.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Mengapa Membutuhkan DTFT?"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Analogi Prisma & Sinyal Sembarang"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Karakteristik Unik Spektrum"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Kontinu & Periodik 2 Pi"
+      }
+    ]
+  },
+  "3": {
+    "title": "Pasangan Transformasi DTFT: Analisis & Sintesis",
+    "script": "Coba teman-teman perhatikan dua persamaan matematika inti di depan. Jangan memandang rumus ini sebagai deretan simbol yang menakutkan, mari kita pahami logika fisik di baliknya. Persamaan yang pertama disebut Persamaan Analisis. Kita mengalikan deretan sampel x[n] dengan faktor basis ortogonal e^(-j omega n), lalu menjumlahkannya. Ini operasi proyeksi untuk mengukur seberapa kuat sinyal beresonansi pada frekuensi tertentu. Sedangkan persamaan kedua adalah Persamaan Sintesis. Melalui integral dari minus pi sampai pi, kita merajut kembali seluruh frekuensi tadi untuk merekonstruksi sinyal aslinya. Satu catatan penting untuk kalkulasi: deret DTFT ini dijamin konvergen mulus jika sinyal bersifat absolutely summable, artinya jumlah total amplitudo mutlaknya berhingga. Semua sinyal praktis berdurasi terbatas dipastikan selalu memiliki DTFT yang kontinu.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Pasangan Transformasi DTFT"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Persamaan Analisis & Sintesis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Syarat Konvergensi Dirichlet"
+      }
+    ]
+  },
+  "4": {
+    "title": "Pasangan DTFT Standar yang Wajib Dikuasai",
+    "script": "Di slide ini, ada tiga bentuk sinyal dasar yang menjadi tolok ukur di seluruh buku teks DSP. Saya ingin Anda memahami intuisi di balik masing-masing bentuknya. Pertama, sinyal impuls satuan delta[n]. Jika di domain waktu sinyalnya hanya muncul satu kali sesaat, spektrum DTFT-nya bernilai konstan satu di seluruh rentang frekuensi! Di industri, ini kita sebut spektrum putih atau white spectrum, karena seluruh frekuensi dari rendah sampai tinggi mendapatkan energi yang sama rata. Kedua, sinyal eksponensial meluruh a^n u[n]. Kalau nilai a positif, sinyal ini akan meloloskan frekuensi rendah alias Low-Pass. Namun jika a negatif, spektrumnya bergeser menjadi High-Pass. Ketiga, pulsa persegi panjang. Ketika kita memotong sinyal menjadi jendela persegi sepanjang N sampel, spektrumnya berubah menjadi fungsi Dirichlet atau Sinc, dengan puncak main lobe dan gelombang bocoran side lobe.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Impuls Satuan (White Spectrum)"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Eksponensial Kausal (LPF / HPF)"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Pulsa Persegi (Fungsi Dirichlet/Sinc)"
+      }
+    ]
+  },
+  "5": {
+    "title": "Sifat-Sifat Kunci Aljabar DTFT",
+    "script": "Sekarang mari kita lihat sifat-sifat aljabar DTFT yang akan mempermudah hidup kita saat mendesain sistem komunikasi. Perhatikan sifat kedua, yaitu pergeseran waktu. Jika sinyal x[n] kita tunda atau kita geser sejauh n nol sampel, bentuk grafik magnitudonya sama sekali tidak berubah! Yang berubah hanyalah kemiringan fasenya secara linier. Telinga manusia bahkan tidak merasakan perbedaan bentuk suara saat hanya mengalami delay waktu murni. Lalu lihat sifat ketiga, modulasi frekuensi. Mengalikan sinyal dengan eksponensial kompleks e^(j omega nol n) akan menggeser pusat frekuensi sinyal sejauh omega nol. Rekan-rekan, inilah rahasia teknologi pemancar radio, Wi-Fi, dan Bluetooth! Suara manusia di frekuensi rendah kita tumpangkan dan kita geser ke frekuensi gigahertz agar bisa dipancarkan lewat gelombang elektromagnetik.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Linearitas & Pergeseran Waktu"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Modulasi & Pergeseran Frekuensi"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Diferensiasi Frekuensi"
+      }
+    ]
+  },
+  "6": {
+    "title": "Teorema Konvolusi Domain Waktu & Frekuensi",
+    "script": "Ini adalah salah satu slide terpenting dalam perkuliahan kita. Mengapa Teorema Konvolusi disebut sebagai revolusi dalam rekayasa komputer? Ingat kembali Pertemuan 6, betapa panjangnya kita mengalikan dan menggeser matriks untuk menghitung konvolusi waktu dengan kompleksitas O(N kuadrat). Nah, Fourier membuktikan bahwa operasi konvolusi yang rumit di domain waktu itu ekuivalen dengan perkalian aljabar biasa yang sangat instan di domain frekuensi! Bayangkan, jika Anda ingin menyaring derau suara pada rekaman audio: cukup ubah sinyal dan filter Anda ke domain Fourier, kalikan keduanya titik demi titik, lalu kembalikan hasilnya dengan Inverse DTFT. Itulah alasan mengapa semua software audio mixing dan filter digital di smartphone kita bisa memproses suara secara real-time tanpa jeda.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Dualitas Konvolusi & Perkalian"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Efisiensi Komputasi Filter Digital"
+      }
+    ]
+  },
+  "7": {
+    "title": "Teorema Parseval: Kekekalan Energi Sinyal",
+    "script": "Pernahkah Anda bertanya: apakah energi sinyal akan hilang atau bertambah saat kita mengubahnya dari domain waktu ke domain frekuensi? Teorema Parseval menjawab tegas: tidak sama sekali! Parseval membuktikan hukum kekekalan energi murni. Jika Anda menghitung jumlah kuadrat amplitudo sampel sinyal di domain waktu, nilainya dijamin sama persis dengan luas daerah di bawah kurva kuadrat spektrum di domain frekuensi dibagi dua pi. Di industri telekomunikasi, rumus ini dipakai setiap hari. Misalnya, saat regulator telekomunikasi menentukan aturan transmisi 4G atau 5G: para insinyur menggunakan Teorema Parseval untuk menghitung 99 persen batas bandwidth energi, memastikan sinyal transmisi kita rapi dan tidak menabrak saluran radio milik orang lain.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Teorema Parseval: Kekekalan Energi"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Energi Sinyal"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Energy Spectral Density (ESD)"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Aplikasi Bandwidth & Filter"
+      }
+    ]
+  },
+  "8": {
+    "title": "Implementasi Python: Komputasi DTFT Numerik Rapat",
+    "script": "Secara teori matematis, variabel frekuensi omega itu kontinu mulus dari minus pi sampai plus pi. Namun kita tahu komputer digital tidak bisa menyimpan bilangan kontinu tak terhingga. Lalu bagaimana Python mengevaluasinya? Coba perhatikan baris kode di sebelah kanan layar. Kita membuat pendekatan numerik dengan mendefinisikan vektor kisi rapat, misalnya seribu titik frekuensi antara minus pi hingga pi menggunakan np.linspace. Kemudian dengan operasi perkalian matriks eksponensial NumPy yang divektorisasi, kita bisa menghitung spektrum secara instan dalam sepersekian detik. Di grafik bawah, Anda bisa melihat bagaimana magnitude diplot dalam skala linier maupun desibel, serta grafik fase yang menunjukkan keterlambatan sudutnya. Anda akan mencoba langsung skrip ini di lab nanti.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Evaluasi Numerik Grid Rapat"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Operasi Vektorisasi NumPy"
+      }
+    ]
+  },
+  "9": {
+    "title": "Praktikum Mandiri Lab 09: Eksplorasi Spektrum DTFT",
+    "script": "Untuk sesi laboratorium minggu ini, Anda memiliki dua misi eksperimen utama di Google Colab atau Jupyter Notebook. Eksperimen pertama: Anda diminta memvariasikan parameter a pada sinyal eksponensial, mulai dari 0.5 hingga 0.9. Perhatikan bagaimana spektrumnya: semakin nilai a mendekati satu, puncak filternya akan semakin runcing dan tajam. Eksperimen kedua sangat menarik: Anda akan memotong pulsa persegi dengan panjang N sama dengan 4, 8, dan 16 sampel. Amati trade-off waktu dan frekuensi: semakin lebar jendela waktu yang Anda berikan, pita utama di domain frekuensi justru akan semakin menyempit. Jangan lupa kerjakan tantangan numerik Parseval dan unggah laporannya ke portal LMS sebelum pertemuan minggu depan.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Instruksi Praktikum Lab 09"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Eksperimen Eksponensial & Pulsa"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Laporan"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Validasi Teorema Parseval"
+      }
+    ]
+  },
+  "10": {
+    "title": "Integrasi AI: Solusi Simbolik DTFT dengan SymPy",
+    "script": "Sebagai mahasiswa informatika modern, kita diperbolehkan menggunakan asisten AI seperti ChatGPT atau Claude untuk mempercepat proses koding dan penurunan simbolik dengan modul SymPy di Python. Namun ingat prinsip etika dan profesionalisme kita: AI sering kali berasumsi diam-diam bahwa deret matematika selalu konvergen. Tugas Anda sebagai calon sarjana adalah melakukan validasi kritis. Pastikan batasan parameter konvergensi seperti nilai mutlak a lebih kecil dari satu terpenuhi, dan pastikan grafik magnitudo yang dihasilkan AI selalu bernilai real non-negatif serta memiliki simetri genap terhadap titik nol. Jangan menelan mentah-mentah keluaran kode AI tanpa verifikasi logika matematis.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI untuk Penurunan Simbolik"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Eksplorasi Modul SymPy"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Validasi Mahasiswa"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Pemeriksaan Batas Konvergensi"
+      }
+    ]
+  },
+  "11": {
+    "title": "Latihan Soal HOTS Pertemuan 09",
+    "script": "Di slide ini terdapat dua soal analisis HOTS untuk menguji ketajaman pemahaman Anda sebelum kita mengakhiri sesi teori hari ini. Soal pertama menguji keterampilan menurunkan DTFT dari sinyal ramp eksponensial n dikali a pangkat n u[n]. Petunjuk dari saya: jangan selesaikan dengan penjumlahan deret biasa yang panjang, melainkan manfaatkan sifat diferensiasi domain frekuensi yang sudah kita bahas tadi! Soal kedua menantang Anda membuktikan Teorema Parseval pada pulsa persegi berpanjang N sampel. Silakan diskusikan bersama rekan di sebelah Anda selama 5 menit, dan kita akan bahas bersama solusinya di papan tulis.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal 1: Turunan DTFT Sinyal Ramp"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Strategi Diferensiasi Frekuensi"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal 2: Teorema Parseval & Energi"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Kekekalan Energi Pulsa Persegi"
+      }
+    ]
+  },
+  "12": {
+    "title": "Rangkuman Pertemuan 09 & Refleksi Pembelajaran",
+    "script": "Mari kita renungkan perjalanan belajar kita hari ini melalui tiga pilar pembelajaran mendalam. Pertama, Berkesadaran: kita menyadari bahwa dunia fisik dan komputasi dihubungkan oleh spektrum frekuensi, dan kita memahami hukum alam bahwa sinyal yang sempit di domain waktu pasti melebar di domain frekuensi. Kedua, Bermakna: seluruh konsep modulasi frekuensi e^(jw nol n) yang kita pelajari hari ini bukan sekadar rumus di atas kertas, melainkan fondasi nyata dari miliaran smartphone, router Wi-Fi, dan radar di seluruh dunia. Dan ketiga, Menggembirakan: sangat memuaskan melihat persamaan integral yang rumit berubah menjadi visualisasi kurva warna-warni yang indah di layar komputer Anda saat kode Python dieksekusi.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "13": {
+    "title": "Tindak Lanjut & Referensi Perkuliahan",
+    "script": "Sebagai penutup pertemuan ke-9: kita sudah menguasai DTFT, sifat aljabarnya, serta keajaiban Teorema Konvolusi dan Parseval. Namun ada satu kelemahan besar DTFT yang harus kita selesaikan: karena frekuensi omega bersifat kontinu, prosesor komputer di kartu suara maupun DSP chip tidak bisa memproses data tak berhingga tersebut secara instan. Lalu bagaimana solusinya? Di Pertemuan 10 minggu depan, kita akan mendiskritisasi sumbu frekuensi tersebut menjadi N titik bin frekuensi melalui algoritma legendaris abad ke-20: Discrete Fourier Transform atau DFT, dan Fast Fourier Transform atau FFT. Pelajari materi bab 8 buku Oppenheim sebagai persiapan. Terima kasih atas antusiasme rekan-rekan sekalian, selamat belajar mandiri di laboratorium, dan sampai jumpa minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik Oppenheim"
+      }
+    ]
+  }
+}

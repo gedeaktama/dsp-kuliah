@@ -1,0 +1,346 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-5. Hari ini kita akan mengkaji secara komprehensif topik utama: Sistem LTI, Respons Impuls & Persamaan Beda (LCCDE). Karakterisasi Lengkap Sistem LTI Berbasis Respons Impuls h[n], Penurunan Integral Konvolusi Diskrit, Kausalitas/Stabilitas Sistem LTI, dan Persamaan Beda LCCDE. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK2 (CPL-A, CPL-B) dengan bobot evaluasi sebesar 6 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Sistem LTI, Respons Impuls & Persam"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK2 (CPL-A, CPL-B)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Kekuatan Luar Biasa Sistem LTI: 'Sidik Jari' Respons Impuls",
+    "script": "Pada slide ini, kita membahas Kekuatan Luar Biasa Sistem LTI: 'Sidik Jari' Respons Impuls. Mari kita perhatikan kolom sebelah kiri mengenai Mengapa Fokus Utama DSP Ada pada Sistem LTI?. Keajaiban Karakterisasi Total: Sebuah sistem LTI (Linear Time-Invariant), serumit apapun sirkuit atau algoritmanya di dalam black-box, dapat dipetakan 100% secara sempurna hanya dengan mengamati responsnya terhadap satu sinyal uji sederhana: Impuls Satuan delta[n]! Jika kita mengetahui respons impuls h[n], kita dijamin dapat memprediksi output y[n] terhadap masukan x[n] APAPUN di alam semesta ini tanpa terkecuali. Tidak ada kelas sistem lain di luar LTI yang memiliki sifat deterministik seanggun ini. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Dua Representasi Utama Sistem LTI. Mengapa hal ini sangat fundamental? 1. Representasi Non-Rekursif (Respons Impuls h[n]): Menggambarkan sistem melalui operasi penjumlahan berbobot sampel masa lalu dan sekarang (ciri khas filter FIR). 2. Representasi Rekursif (Persamaan Beda LCCDE): Menggambarkan sistem melalui hubungan masukan x[n] dan umpan balik riwayat keluaran masa lalu y[n-k] (ciri khas filter IIR). Kedua sudut pandang ini saling melengkapi dalam perancangan filter dan kontrol cerdas. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Mengapa Fokus Utama DSP Ada pa"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Dua Representasi Utama Sistem "
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Dekomposisi Masukan & Penurunan Formula Konvolusi",
+    "script": "Pada slide ini, kita membahas Dekomposisi Masukan & Penurunan Formula Konvolusi. Perhatikan persamaan matematika inti untuk Penurunan Matematis dari Impuls Menuju Konvolusi di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. x[n]: Sinyal masukan sebarang yang diuraikan menjadi rangkaian impuls terboboti x[k]*delta[n-k]. T[ . ]: Operator transformasi sistem yang bersifat Linear dan Time-Invariant. h[n] = T{ delta[n] }: Respons impuls (respons sistem ketika masukan adalah delta[n]). h[n - k] = T{ delta[n - k] }: Respons impuls yang bergeser sejauh k karena sifat Time-Invariance. Simbol bintang (*): Operator konvolusi diskrit (bukan perkalian biasa!). Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Langkah 1 (Representasi Sifting): Tuliskan input sebagai jumlahan impuls: x[n] = sum x[k] delta[n-k]. Langkah 2 (Sifat Linearitas): Masukkan operator T ke dalam jumlahan: y[n] = sum x[k] T{ delta[n-k] }. Langkah 3 (Sifat Time-Invariance): Karena T{ delta[n] } = h[n], maka T{ delta[n-k] } = h[n-k]. Langkah 4 (Hasil Akhir): y[n] = sum_{k=-inf}^{inf} x[k] h[n-k]. Inilah Persamaan Konvolusi Diskrit! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Penurunan Matematis dari Impul"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "4": {
+    "title": "Kausalitas & Kestabilan BIBO Sistem LTI Berbasis h[n]",
+    "script": "Pada slide ini, kita membahas Kausalitas & Kestabilan BIBO Sistem LTI Berbasis h[n]. Mari kita perhatikan kolom sebelah kiri mengenai Syarat Mutlak Kausalitas Sistem LTI. Teorema Kausalitas LTI: Sistem LTI bersifat kausal JIKA DAN HANYA JIKA respons impuls bernilai tepat nol untuk semua waktu sebelum origin: h[n] = 0 untuk seluruh n < 0. Makna Fisik: Sistem tidak boleh memberikan respons apapun sebelum rangsangan impuls diberikan pada waktu n = 0. Sekuens yang memenuhi h[n] = 0 untuk n < 0 disebut sebagai Sekuens Kausal. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Syarat Mutlak Kestabilan BIBO Sistem LTI. Mengapa hal ini sangat fundamental? Teorema Stabilitas BIBO: Sistem LTI stabil BIBO jika dan hanya jika respons impulsnya bersifat absolutely summable (dapat dijumlahkan mutlak secara berhingga): S = sum_{n=-inf}^{inf} |h[n]| < inf. Bukti Cepat: |y[n]| = |sum x[k] h[n-k]| <= sum |x[k]| |h[n-k]| <= Mx * sum |h[m]|. Karena Mx berhingga, maka y[n] dijamin berhingga jika sum |h[m]| < inf. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Syarat Mutlak Kausalitas Siste"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Syarat Mutlak Kestabilan BIBO "
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "5": {
+    "title": "Contoh Uji Kestabilan LTI: Filter Stabil vs Tidak Stabil",
+    "script": "Pada slide ini, kita membahas Contoh Uji Kestabilan LTI: Filter Stabil vs Tidak Stabil. Mari kita perhatikan kolom sebelah kiri mengenai Kasus A: h[n] = (0.5)^n u[n] (Filter Eksponensial Kausal). Langkah 1 (Uji Kausalitas): Karena terdapat perkalian u[n], maka h[n] = 0 untuk n < 0. Sistem TERBUKTI KAUSAL. Langkah 2 (Uji Stabilitas): Evaluasi jumlahan mutlak: sum_{n=-inf}^{inf} |h[n]| = sum_{n=0}^{inf} (0.5)^n. Langkah 3: Gunakan rumus deret geometri tak terhingga S = a / (1 - r): S = 1 / (1 - 0.5) = 2 < inf. Kesimpulan: Karena jumlahan berhingga (S = 2), SISTEM TERBUKTI STABIL BIBO! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kasus B: h[n] = u[n] (Sistem Akumulator Ideal). Mengapa hal ini sangat fundamental? Langkah 1 (Uji Kausalitas): h[n] = 0 untuk n < 0. Sistem bersifat kausal. Langkah 2 (Uji Stabilitas): Evaluasi jumlahan mutlak: sum_{n=0}^{inf} |u[n]| = sum_{n=0}^{inf} 1 = 1 + 1 + 1 + ... = inf. Langkah 3: Jumlahan menghasilkan nilai divergen tak hingga. Kesimpulan: Sistem Akumulator murni TIDAK STABIL BIBO secara umum (meskipun untuk input berenergi berhingga tertentu ia dapat menghasilkan nilai berhingga). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Kasus A: h[n] = (0.5)^n u[n] ("
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kasus B: h[n] = u[n] (Sistem A"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "6": {
+    "title": "Klasifikasi Durasi Sistem LTI: FIR vs IIR",
+    "script": "Pada slide ini, kita membahas Klasifikasi Durasi Sistem LTI: FIR vs IIR. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah FIR (Finite Impulse Response). Respons impuls h[n] bernilai tepat nol di luar interval waktu berhingga 0 <= n <= M. Panjang koefisien berhingga (jumlah tap = M + 1). Selalu Stabil BIBO: Karena jumlahan berhingga dari bilangan terbatas pasti selalu berhingga! Mampu memiliki karakteristik Linear Phase murni (tanpa distorsi bentuk gelombang). Pilar ke-2 adalah IIR (Infinite Impulse Response). Respons impuls h[n] berlangsung selamanya (tak terhingga) seiring berjalannya waktu, biasanya meluruh eksponensial. Menggunakan loop umpan balik (feedback) dari keluaran sebelumnya. Efisiensi Komputasi Tinggi: Membutuhkan jauh lebih sedikit koefisien dibanding FIR untuk mencapai ketajaman cutoff yang sama. Risiko: Dapat menjadi tidak stabil jika koefisien pole berada di luar lingkaran satuan. Pilar ke-3 adalah Analogi Fisik Sederhana. FIR dianalogikan seperti memukul balok kayu: getaran langsung berhenti seketika dalam beberapa ketukan. IIR dianalogikan seperti membunyikan lonceng perunggu: bunyi dengung bergetar terus-menerus dan meluruh perlahan seiring waktu (decay). ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "FIR (Finite Impulse Respo"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "IIR (Infinite Impulse Res"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Analogi Fisik Sederhana"
+      }
+    ]
+  },
+  "7": {
+    "title": "Persamaan Beda Linear Koefisien Konstan (LCCDE)",
+    "script": "Pada slide ini, kita membahas Persamaan Beda Linear Koefisien Konstan (LCCDE). Perhatikan persamaan matematika inti untuk Formulasi Umum Persamaan Beda Sistem LTI di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. N: Orde sistem (menunjukkan jumlah elemen tunda memori umpan balik output). M: Jumlah elemen tunda masukan sinyal input x[n]. b_k: Koefisien feedforward (mengatur kontribusi sinyal masukan saat ini dan masa lalu). a_k: Koefisien feedback (mengatur kontribusi sinyal keluaran masa lalu). Umumnya dinormalisasi a_0 = 1. Jika seluruh a_k = 0 untuk k >= 1: Sistem menjadi FIR (tanpa umpan balik). Jika minimal ada satu a_k != 0 untuk k >= 1: Sistem menjadi IIR (rekursif). Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Contoh LCCDE Orde-1: y[n] - 0.8 y[n-1] = 2 x[n]. Bentuk Rekursif Komputasi: y[n] = 0.8 y[n-1] + 2 x[n]. Hitung respons impuls h[n] dengan memberikan input x[n] = delta[n] dan asumsi kondisi awal nol (y[-1] = 0): n = 0: y[0] = 0.8(0) + 2(1) = 2. n = 1: y[1] = 0.8(2) + 2(0) = 1.6. n = 2: y[2] = 0.8(1.6) + 0 = 1.28 = 2 * (0.8)^2. Pola Umum: h[n] = 2 * (0.8)^n u[n]. Terbukti respons impuls berlangsung tak terhingga (IIR)! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Formulasi Umum Persamaan Beda "
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "8": {
+    "title": "Komponen Pembentuk Diagram Blok Sistem DSP",
+    "script": "Pada slide ini, kita membahas Komponen Pembentuk Diagram Blok Sistem DSP. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Unit Delay Element (z^-1). Menunda sinyal tepat 1 periode sampel: y[n] = x[n - 1]. Diimplementasikan menggunakan register flip-flop hardware atau variabel pointer memori RAM. Notasi z^-1 berasal dari domain Transformasi-Z. Pilar ke-2 adalah 2. Multiplier / Gain (b_k, a_k). Mengalikan sinyal yang lewat dengan sebuah konstanta bobot skalar: y[n] = c * x[n]. Diimplementasikan oleh sirkuit hardware MAC (Multiply-Accumulate unit) berkecepatan tinggi pada prosesor DSP. Pilar ke-3 adalah 3. Adder / Summer (+). Menjumlahkan dua atau lebih jalur sinyal yang masuk secara simultan: y[n] = x1[n] + x2[n]. Kombinasi ketiga komponen ini membentuk struktur Direct Form I, Direct Form II, Cascade, dan Paralel. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Unit Delay Element (z^"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Multiplier / Gain (b_k"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Adder / Summer (+)"
+      }
+    ]
+  },
+  "9": {
+    "title": "Implementasi Python: Simulasi Respons Sistem dengan SciPy",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Simulasi Respons Sistem dengan SciPy. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Penggunaan scipy.signal.lfilter & dimpulse. scipy.signal.lfilter(b, a, x) adalah fungsi standar industri untuk mengeksekusi persamaan beda LCCDE secara efisien. Vektor b merepresentasikan koefisien pembilang [b0, b1, ..., bM]. Vektor a merepresentasikan koefisien penyebut [a0, a1, ..., aN]. Fungsi scipy.signal.dimpulse() menghitung respons impuls diskrit secara analitis. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Penggunaan scipy.signal.lfilte"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "10": {
+    "title": "Praktikum Mandiri Lab 05: Simulasi Sistem LTI",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 05: Simulasi Sistem LTI. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 05. Judul: Analisis Respons Impuls dan Simulasi Persamaan Beda LCCDE pada Python. Eksperimen 1: Implementasikan Moving Average Filter 5-Titik: y[n] = (1/5) * sum_{k=0}^{4} x[n-k]. Tentukan koefisien b dan a, lalu plot respons impuls h[n]. Apakah filter ini FIR atau IIR? Eksperimen 2: Implementasikan Recursive Low-Pass Filter: y[n] = 0.8 y[n-1] + 0.2 x[n]. Plot respons impulsnya hingga n = 30 sampel. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Modifikasi. Mengapa hal ini sangat fundamental? Tantangan Praktik: Ubah koefisien feedback pada Eksperimen 2 menjadi a = [1.0, -1.05] (nilai feedback > 1.0). Amati apa yang terjadi pada respons impuls h[n] saat n membesar! Pertanyaan Analisis: Apakah sistem dengan koefisien feedback 1.05 stabil BIBO? Apa yang terjadi pada output speaker jika sistem audio memiliki koefisien tersebut? Output: Unggah notebook laporan lengkap dengan interpretasi grafik kestabilan. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 05"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Modifikas"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "11": {
+    "title": "Integrasi AI: Diagram Blok & Generator Persamaan Beda",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Diagram Blok & Generator Persamaan Beda. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Visualisasi Arsitektur. Prompt Diagram Mermaid: 'Buatkan diagram blok representasi Direct Form I untuk persamaan beda y[n] - 0.5 y[n-1] + 0.2 y[n-2] = 2 x[n] + x[n-1] dalam format Mermaid flowchart.' AI Symbolic Math: 'Gunakan SymPy untuk mencari solusi umum relasi rekurensi homogen dari persamaan beda y[n] - 0.9 y[n-1] = 0.' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Protokol Verifikasi Mandiri. Mengapa hal ini sangat fundamental? Waspada Tanda Minus Koefisien: AI sering keliru membalik tanda minus/plus pada koefisien feedback a_k saat memindahkan suku dari sisi kiri ke sisi kanan persamaan. Verifikasi Kondisi Awal Nol: Pastikan simulasi AI mengasumsikan rest condition (y[n]=0 untuk n < 0) jika yang dicari adalah respons impuls sistem LTI relaks. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI untuk Visualisa"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Protokol Verifikasi Mandiri"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Latihan Soal HOTS Pertemuan 05",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 05. Mari kita perhatikan kolom sebelah kiri mengenai Soal Analisis Respons Impuls. Diberikan respons impuls sistem LTI: h[n] = (0.8)^n u[n] - (0.8)^(n-2) u[n-2]. a) Hitung nilai numerik h[0], h[1], h[2], dan h[3]! b) Apakah sistem ini FIR atau IIR? Jelaskan alasan matematisnya! c) Ujilah apakah sistem ini kausal dan stabil BIBO! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal Persamaan Beda LCCDE. Mengapa hal ini sangat fundamental? Sebuah sistem LTI relaks memenuhi persamaan beda: y[n] = 0.5 y[n-1] + x[n]. Jika sistem diberi masukan sinyal unit step x[n] = u[n]: a) Turunkan ekspresi analitis untuk respons output y[n]! b) Berapa nilai steady-state output y[n] saat n menuju tak terhingga (n -> inf)? ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal Analisis Respons Impuls"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal Persamaan Beda LCCDE"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "13": {
+    "title": "Rangkuman Pertemuan 05 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 05 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa respons impuls h[n] memuat seluruh identitas frekuensi dan waktu dari sebuah sistem LTI. Saya memahami bahwa loop umpan balik y[n-k] adalah pedang bermata dua: memberikan efisiensi tinggi, namun menyimpan risiko ketidakstabilan jika pole keluar dari batas. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Setiap sistem audio, filter denoising pada headphone, hingga pemrosesan sinyal seismik pemantauan gempa bumi dimodelkan melalui persamaan beda LCCDE. Konsep kondisi awal nol (rest condition) sangat fundamental dalam komputasi real-time. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Melihat bagaimana baris kode sederhana `lfilter(b, a, x)` dapat mengeksekusi jutaan operasi matematika rekursif secara instan membuat komputasi DSP terasa elegan dan bertenaga. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "14": {
+    "title": "Tindak Lanjut & Referensi Perkuliahan",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-5: Sistem LTI dicirikan secara lengkap oleh respons impuls h[n]. Kausalitas: h[n] = 0 untuk n < 0. Stabilitas BIBO: sum |h[n]| < inf. Filter FIR memiliki respons impuls berhingga, selalu stabil. Filter IIR memiliki respons impuls tak terhingga, dimodelkan oleh LCCDE rekursif. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Selesaikan Laporan Praktikum Lab 05 dan kumpulkan ke LMS. Pelajari metode tabular dan grafis konvolusi diskrit untuk persiapan Pertemuan 6. Kerjakan latihan soal penurunan respons step pada sistem orde satu. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

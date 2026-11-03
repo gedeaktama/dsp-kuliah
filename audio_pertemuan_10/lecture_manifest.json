@@ -1,0 +1,346 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-10. Hari ini kita akan mengkaji secara komprehensif topik utama: DFT, Fast Fourier Transform (FFT) & Windowing. Diskritisasi Domain Frekuensi, Formulasi DFT N-Titik, Algoritma FFT Radix-2 Cooley-Tukey, Resolusi Frekuensi, Fenomena Spectral Leakage, dan Teknik Windowing. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK3, CPMK5 (CPL-A, CPL-B, CPL-C) dengan bobot evaluasi sebesar 7 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: DFT, Fast Fourier Transform (FFT) &"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK3, CPMK5 (CPL-A, CPL-B, CPL-C)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Dari DTFT Kontinu Menuju Komputasi Nyata DFT",
+    "script": "Pada slide ini, kita membahas Dari DTFT Kontinu Menuju Komputasi Nyata DFT. Mari kita perhatikan kolom sebelah kiri mengenai Kebutuhan Komputasi Praktis. DTFT menghasilkan spektrum kontinu X(e^jw). Namun, komputer digital dan prosesor DSP HANYA BISA menyimpan dan memproses angka-angka diskrit dalam memori berhingga. Solusi Brilian: Lakukan pencuplikan (sampling) pada sumbu frekuensi kontinu omega sebanyak N titik berjarak sama sepanjang interval [0, 2 pi). Lahirnya Discrete Fourier Transform (DFT): Transformasi Fourier yang diskrit dalam domain waktu DAN diskrit dalam domain frekuensi! Sekarang, mari kita tinjau kolom sebelah kanan mengenai DFT sebagai Algoritma Paling Berpengaruh Abad Ini. Mengapa hal ini sangat fundamental? Setiap format file multimedia modern (MP3, AAC, JPEG, MPEG-4) bergantung langsung pada DFT / DCT. Sistem spektogram pengenal suara cerdas (Speech AI), equalizer audio, hingga radar modern beroperasi menggunakan komputasi DFT real-time. Kehadiran algoritma Fast Fourier Transform (FFT) menurunkan beban komputasi dari ribuan jam menjadi hitungan milidetik. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Kebutuhan Komputasi Praktis"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "DFT sebagai Algoritma Paling B"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Formulasi Formal DFT & Inverse DFT (IDFT)",
+    "script": "Pada slide ini, kita membahas Formulasi Formal DFT & Inverse DFT (IDFT). Perhatikan persamaan matematika inti untuk Pasangan Transformasi DFT N-Titik di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. x[n]: Sekuens waktu berdurasi N sampel (n = 0, 1, ..., N-1). X[k]: Koefisien spektral DFT pada bin frekuensi ke-k (k = 0, 1, ..., N-1). W_N = e^(-j 2 pi / N): Twiddle Factor (Faktor Pemutar kompleks). k: Indeks bilangan bulat bin frekuensi diskrit. Faktor 1/N: Skalar normalisasi pada persamaan sintesis IDFT. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Pemetaan Indeks Bin ke Frekuensi Fisik Riil: Setiap indeks k berkorespondensi tepat dengan frekuensi fisik dalam Hertz: f_k = k * (Fs / N)  (Hz) \\qquad \\text{atau} \\qquad \\omega_k = \\frac{2\\pi k}{N}  \\text{ (rad/sampel)}. Resolusi Frekuensi Fundamental (Jarak antar bin bersebelahan): \\Delta f = \\frac{F_s}{N} = \\frac{1}{T_{\\text{record}}} \\quad \\text{(Hz)}. Kaidah Emas: Resolusi frekuensi HANYA DITENTUKAN oleh durasi total rekaman waktu (T_record = N * Ts), bukan sekadar frekuensi sampling! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Pasangan Transformasi DFT N-Ti"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "4": {
+    "title": "Kompleksitas Komputasi: DFT Langsung vs Algoritma FFT",
+    "script": "Pada slide ini, kita membahas Kompleksitas Komputasi: DFT Langsung vs Algoritma FFT. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah DFT Langsung: O(N^2). Menghitung N titik output X[k], masing-masing membutuhkan N perkalian kompleks dan N-1 penjumlahan kompleks. Total Perkalian Kompleks: N^2. Untuk N = 1024 sampel: Membutuhkan ~1,048,576 perkalian kompleks. Untuk N = 1,000,000 sampel: Membutuhkan 1 triliun operasi (mustahil untuk audio/video real-time). Pilar ke-2 adalah Fast Fourier Transform (FFT): O(N log2 N). Ditemukan oleh Cooley dan Tukey (1965) menggunakan strategi Divide-and-Conquer. Memanfaatkan simetri W_N^(k + N/2) = -W_N^k dan periodisitas Twiddle Factor W_N^(k+N) = W_N^k. Total Perkalian Kompleks: (N / 2) log2(N). Untuk N = 1024 sampel: Hanya membutuhkan ~5,120 perkalian kompleks (Lebih cepat 200x lipat!). Pilar ke-3 adalah Dampak pada Revolusi Digital. Penurunan eksponensial dari O(N^2) ke O(N log N) memungkinkan komputasi spektrum real-time pada mikroprosesor murah. Menjadikan modem DSL, transmisi WiFi 802.11, dan pemrosesan audio digital terjangkau secara massal. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "DFT Langsung: O(N^2)"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Fast Fourier Transform (F"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Dampak pada Revolusi Digi"
+      }
+    ]
+  },
+  "5": {
+    "title": "Arsitektur Algoritma FFT Radix-2 Decimation-in-Time (DIT)",
+    "script": "Pada slide ini, kita membahas Arsitektur Algoritma FFT Radix-2 Decimation-in-Time (DIT). Perhatikan persamaan matematika inti untuk Dekomposisi Sampel Genap dan Ganjil di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. E[k]: DFT N/2-titik dari sampel-sampel berindeks genap (even samples: x[0], x[2], x[4], ...). O[k]: DFT N/2-titik dari sampel-sampel berindeks ganjil (odd samples: x[1], x[3], x[5], ...). W_N^k: Twiddle factor pengali jalur cabang ganjil. Butterfly Structure: Unit dasar komputasi FFT di mana sepasang nilai input dikombinasikan untuk menghasilkan sepasang output dengan satu perkalian kompleks. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Mekanisme Butterfly Computation: Cabang Atas (k): X[k] = E[k] + W_N^k O[k]. Cabang Bawah (k + N/2): X[k + N/2] = E[k] - W_N^k O[k]  (karena W_N^(k + N/2) = -W_N^k). Satu perkalian kompleks W_N^k O[k] digunakan sekaligus untuk menghitung DUA nilai keluaran! Bit-Reversal Sorting: Pengurutan data input diatur berdasarkan pembalikan urutan representasi biner indeks (misal 001_2 = 1 menjadi 100_2 = 4). ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Dekomposisi Sampel Genap dan G"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "6": {
+    "title": "Fenomena Spectral Leakage: Mengapa Terjadi Kebocoran Spektrum?",
+    "script": "Pada slide ini, kita membahas Fenomena Spectral Leakage: Mengapa Terjadi Kebocoran Spektrum?. Mari kita perhatikan kolom sebelah kiri mengenai Akar Masalah Kebocoran Spektrum. DFT mengasumsikan secara implisit bahwa rekaman data berdurasi N sampel tersebut diulang-ulang secara periodik tak hingga seumur hidup. Kondisi Ideal (Coherent Sampling): Jika durasi pengamatan memuat tepat kelipatan bulat dari periode sinyal, ujung awal dan ujung akhir sinyal menyatu mulus (tanpa diskontinuitas). Spektrum berupa satu garis jarum tunggal murni. Kondisi Non-Koheren: Jika durasi pengamatan memotong sinyal di tengah gelombang, penyambungan periodik menimbulkan patahan tajam (diskontinuitas garis vertikal). Diskontinuitas tajam tersebut menyebarkan energi ke seluruh bin frekuensi tetangga. Inilah Spectral Leakage! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Dampak Merugikan Spectral Leakage. Mengapa hal ini sangat fundamental? Menyamarkan Nada Lemah: Sinyal frekuensi lemah yang berada di dekat sinyal kuat akan tertelan oleh side lobe kebocoran dari sinyal kuat. Ketidaktepatan Estimasi Amplitudo: Nilai puncak spektrum turun karena energinya bocor menyebar ke bin lain. Ketidakakuratan Pengukuran Harmonisa: Total Harmonic Distortion (THD) terukur lebih buruk dari kondisi aslinya. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Akar Masalah Kebocoran Spektru"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Dampak Merugikan Spectral Leak"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "7": {
+    "title": "Solusi Leakage: Fungsi Windowing & Karakteristik Trade-Off",
+    "script": "Pada slide ini, kita membahas Solusi Leakage: Fungsi Windowing & Karakteristik Trade-Off. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Rectangular (Kotak / Default). w[n] = 1. Memotong data secara mendadak. Lebar Main Lobe Paling Sempit (4 pi / N): Memberikan resolusi frekuensi paling tajam. Atenuasi Side Lobe Sangat Buruk (-13 dB): Kebocoran spektral sangat parah. Hanya cocok jika sinyal tepat periodik integer terhadap panjang window. Pilar ke-2 adalah Hann & Hamming (Klasik). Hann: w[n] = 0.5 - 0.5 cos(2 pi n / (N-1)). Atenuasi side lobe -31 dB. Hamming: w[n] = 0.54 - 0.46 cos(2 pi n / (N-1)). Atenuasi side lobe -41 dB. Menghaluskan ujung data mendekati nol, meredam diskontinuitas secara signifikan. Standar industri pemrosesan audio & speech. Pilar ke-3 adalah Blackman & Flat-Top. Blackman: Menambahkan harmonisa kedua, atenuasi side lobe spektakuler -58 dB. Main lobe melebar menjadi 12 pi / N. Flat-Top: Puncak main lobe datar, digunakan khusus untuk kalibrasi instrumen pengukuran amplitudo tegangan yang sangat presisi. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Rectangular (Kotak / Defa"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Hann & Hamming (Klasik)"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Blackman & Flat-Top"
+      }
+    ]
+  },
+  "8": {
+    "title": "Zero-Padding pada DFT: Mitos vs Fakta Ilmiah",
+    "script": "Pada slide ini, kita membahas Zero-Padding pada DFT: Mitos vs Fakta Ilmiah. Mari kita perhatikan kolom sebelah kiri mengenai Apa itu Zero-Padding?. Zero-padding adalah teknik menambahkan deretan angka nol di ujung akhir sekuens sinyal sebelum menghitung FFT (misal sinyal 100 sampel ditambah 924 nol menjadi N = 1024). Apakah Zero-Padding Menaikkan Resolusi Frekuensi Riil? JAWABAN TEGAS: TIDAK! Resolusi fisik tetap ditentukan oleh panjang data asli (T_record). Dua puncak nada yang berdekatan dan sudah melebur tidak akan pernah bisa dipisahkan hanya dengan menambah angka nol! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Manfaat Riil Zero-Padding. Mengapa hal ini sangat fundamental? 1. Interpolasi Spektral (High-Density Spectrum): Menghasilkan titik evaluasi kurva DTFT yang lebih rapat, sehingga bentuk puncak spektrum terlihat mulus dan nilai puncak lebih akurat. 2. Efisiensi Algoritma FFT: Melengkapi panjang sinyal ganjil sembarang (misal 783 sampel) menjadi bilangan pangkat dua terdekat (N = 1024) agar dapat diproses oleh algoritma FFT Radix-2 yang sangat cepat. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Apa itu Zero-Padding?"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Manfaat Riil Zero-Padding"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "9": {
+    "title": "Implementasi Python: Analisis Spektrum dengan FFT & Windowing",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Analisis Spektrum dengan FFT & Windowing. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Kaidah Perhitungan Spektrum dengan NumPy FFT. Gunakan np.fft.fft(x) untuk menghitung koefisien DFT. Kalikan sinyal dengan window (misal np.hanning(N)) sebelum melakukan FFT. Normalisasikan amplitudo dengan membagi N (atau jumlahan bobot window). Ambil separuh spektrum positif (0 s.d. Fs/2) dan kalikan 2 untuk mengkompensasi energi spektrum negatif. Sumbu frekuensi fisik dihitung dengan np.fft.fftfreq(N, 1/Fs). Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Kaidah Perhitungan Spektrum de"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "10": {
+    "title": "Praktikum Mandiri Lab 10: Deteksi Multi-Nada DTMF Telepon",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 10: Deteksi Multi-Nada DTMF Telepon. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 10. Judul: Dekoding Nada Papan Tombol Telepon (Dual-Tone Multi-Frequency / DTMF) Menggunakan FFT. Konsep DTMF: Setiap tombol telepon (0-9, *, #) menghasilkan jumlahan dua frekuensi sinusoidal simultan (Satu frekuensi grup rendah: 697, 770, 852, 941 Hz; dan satu frekuensi grup tinggi: 1209, 1336, 1477 Hz). Tugas: Buat program Python yang membaca sinyal audio rekaman nada telepon, membaginya ke dalam frame waktu, menghitung FFT setiap frame, mendeteksi dua puncak frekuensi dominan, dan mencetak karakter tombol yang ditekan secara otomatis! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Evaluasi. Mengapa hal ini sangat fundamental? Tantangan Praktik: Uji ketahanan program Anda dengan menambahkan white noise pada sinyal audio nada telepon hingga SNR = 5 dB. Apakah algoritma FFT masih mampu mendeteksi tombol secara akurat? Bandingkan Hasil: Bandingkan kinerja spektrogram menggunakan Rectangular Window vs Hamming Window pada deteksi jeda hening antar tombol. Output: Simpan notebook kode decoder DTMF lengkap dengan penjelasan deteksi puncak peak-picking. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 10"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Evaluasi"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "11": {
+    "title": "Integrasi AI: Optimasi Spektrogram & FFT Real-Time",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Optimasi Spektrogram & FFT Real-Time. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Analisis Audio Lanjut. Prompt AI: 'Tuliskan modul Python menggunakan scipy.signal.spectrogram untuk menghasilkan visualisasi Short-Time Fourier Transform (STFT) dari file audio bicara WAV dengan colormap viridis dan sumbu frekuensi logaritmik.' Optimasi Performa: 'Bagaimana cara memanfaatkan pustaka PyFFTW (FFTW wrapper) di Python untuk mempercepat komputasi batch FFT jutaan titik?' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Validasi Mahasiswa. Mengapa hal ini sangat fundamental? Pemeriksaan Skala Decibel: Pastikan konversi magnitudo FFT ke dB menggunakan 20*log10(|X|), bukan 10*log10 untuk besaran tegangan/amplitudo. Verifikasi Overlap STFT: Pastikan parameter pemotongan frame STFT menyertakan overlap (misal 50% atau 75%) untuk mencegah hilangnya informasi pada tepi batas window. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI untuk Analisis "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Validasi Mahasiswa"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Latihan Soal HOTS Pertemuan 10",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 10. Mari kita perhatikan kolom sebelah kiri mengenai Soal 1: Perhitungan Manual DFT 4-Titik. Diberikan sekuens 4-titik: x[n] = { [1], 2, 0, -1 } untuk n = 0, 1, 2, 3. a) Tuliskan matriks Twiddle Factor W4 berukuran 4x4! b) Hitung koefisien DFT X[0], X[1], X[2], dan X[3] menggunakan perkalian matriks manual! c) Tentukan nilai magnitudo spektral |X[k]| untuk seluruh k! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal 2: Analisis Resolusi Frekuensi. Mengapa hal ini sangat fundamental? Sistem sonar bawah air melakukan sampling pada laju Fs = 48 kHz. a) Berapa jumlah titik sampel minimum N yang diperlukan agar sistem dapat membedakan dua pantulan frekuensi sonar yang berjarak hanya 5 Hz? b) Berapa durasi waktu perekaman sinyal minimal yang dibutuhkan dalam detik? c) Jika ukuran FFT dipilih berupa bilangan pangkat dua terdekat, berapa nilai N yang harus digunakan? ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal 1: Perhitungan Manual DFT"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal 2: Analisis Resolusi Frek"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "13": {
+    "title": "Rangkuman Pertemuan 10 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 10 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa DFT adalah algoritma yang memungkinkan komputer digital melakukan analisis spektrum Fourier secara nyata. Saya memahami bahwa FFT bukanlah transformasi baru, melainkan algoritma cerdas yang mempercepat perhitungan DFT secara dramatis. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Setiap kali kita memutar file MP3, menonton video streaming YouTube, atau berbicara melalui telepon seluler, miliaran operasi FFT sedang dieksekusi di dalam chip prosesor. Windowing adalah seni menyeimbangkan antara ketajaman resolusi frekuensi dan pencegahan kebocoran spektral. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Berhasil membuat program decoder nada tombol telepon DTMF menggunakan FFT dan melihat angka telepon muncul di layar terminal memberikan kebanggaan rekayasa nyata! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "14": {
+    "title": "Tindak Lanjut & Referensi Perkuliahan",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-10: DFT mendiskritisasi domain waktu dan frekuensi: X[k] = sum x[n] W_N^(kn). Resolusi frekuensi Delta f = Fs / N ditentukan oleh durasi rekaman. FFT memangkas kompleksitas komputasi dari O(N^2) menjadi O(N log N). Windowing (Hann, Hamming, Blackman) mengatasi kebocoran spektral (spectral leakage). Zero-padding memperhalus kurva tampilan spektrum, bukan menambah resolusi riil. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kumpulkan Laporan Praktikum Lab 10 ke LMS tepat waktu. Pelajari materi Bab 3 Oppenheim mengenai Transformasi-Z dan Region of Convergence (ROC). Siapkan diri untuk menganalisis letak pole dan zero pada bidang kompleks Z. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

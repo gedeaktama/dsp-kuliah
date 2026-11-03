@@ -1,0 +1,310 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-15. Hari ini kita akan mengkaji secara komprehensif topik utama: Proyek Terapan DSP, Validasi Metrik & AI-Assisted Workflow. Integrasi Metode DSP pada Permasalahan Nyata, Taksonomi 4 Klaster Proyek Unggulan, Baseline Pembanding, Validasi Empiris, dan Protokol Etika Pemanfaatan AI. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK5, CPMK6 (CPL-B, CPL-C, CPL-D) dengan bobot evaluasi sebesar 6 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Proyek Terapan DSP, Validasi Metrik"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK5, CPMK6 (CPL-B, CPL-C, CPL-D)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Transformasi Pembelajaran: Menghasilkan Proyek Berdampak Nyata",
+    "script": "Pada slide ini, kita membahas Transformasi Pembelajaran: Menghasilkan Proyek Berdampak Nyata. Mari kita perhatikan kolom sebelah kiri mengenai Visi Outcome-Based Education (OBE). Puncak dari pembelajaran sarjana bukan sekadar menghafal rumus atau mengerjakan soal ujian tertulis di kertas, melainkan kemampuan MENERAPKAN ilmu untuk menyelesaikan masalah nyata di masyarakat dan industri (Project-Based Learning / PjBL). Setiap kelompok mahasiswa wajib menghasilkan prototipe perangkat lunak DSP fungsional yang dapat didemonstrasikan secara langsung (live demo). Fokus Proyek: Kejelasan masalah, legalitas data, ketepatan metode DSP, baseline pembanding yang adil, validasi metrik kuantitatif, dan keterbatasan sistem. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Struktur Standar Proyek Rekayasa. Mengapa hal ini sangat fundamental? 1. Problem Definition: Masalah apa yang diselesaikan? Siapa pengguna sasaran? 2. Data Integrity: Dari mana data diperoleh? Apa lisensi hak ciptanya? 3. DSP Methodology: Metode pemfilteran dan analisis apa yang dipilih? Mengapa? 4. Baseline Comparison: Dibandingkan dengan apa? (Sinyal mentah vs Filter Moving Average vs Filter FIR/IIR Terdesain). 5. Quantitative Metrics: Berapa Delta SNR? Berapa penurunan noise? Berapa akurasi deteksi? ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Visi Outcome-Based Education ("
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Struktur Standar Proyek Rekaya"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Taksonomi 4 Klaster Proyek Unggulan Terapan",
+    "script": "Pada slide ini, kita membahas Taksonomi 4 Klaster Proyek Unggulan Terapan. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Klaster A: Audio & Speech Processing. Pembersihan rekaman suara wawancara jurnalistik dari bising lingkungan (Street / Cafe noise). Equalizer Grafis Multi-Kanal interaktif untuk optimalisasi akustik ruangan. Voice Activity Detection (VAD) untuk kompresi bandwidth transmisi VoIP. Pilar ke-2 adalah Klaster B: Monitoring Getaran Mesin & IoT. Analisis getaran akselerometer IoT untuk deteksi keausan bearing mesin (Predictive Maintenance). Deteksi frekuensi harmonisa resonansi rotor menggunakan analisis spektrum FFT / Welch PSD. Filter adaptif peredam getaran mikroseismik. Pilar ke-3 adalah Klaster C & D: Lingkungan & Biosinyal Terbuka. Klaster C: Pemfilteran data deret waktu sensor kualitas udara (PM2.5 / CO2) dari lonjakan spike noise eksternal. Klaster D: Eksplorasi filter denoising sinyal denyut nadi PPG atau EKG dari dataset terbuka PhysioNet (Eksplorasi akademik murni, NON-DIAGNOSTIK MEDIS). ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Klaster A: Audio & Speech"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Klaster B: Monitoring Get"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Klaster C & D: Lingkungan"
+      }
+    ]
+  },
+  "4": {
+    "title": "Metodologi Eksperimen Rekayasa & Baseline Pembanding",
+    "script": "Pada slide ini, kita membahas Metodologi Eksperimen Rekayasa & Baseline Pembanding. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Pemilihan Baseline Pembanding. Proyek rekayasa tidak boleh mengklaim 'solusi kami bagus' tanpa pembanding! Baseline Wajib: Bandingkan algoritma Anda dengan minimal satu metode standar sederhana (misal Moving Average sederhana atau Raw Unprocessed Signal). Buktikan secara matematis mengapa metode Anda lebih unggul! Pilar ke-2 adalah 2. Parameter Tuning & Ablation Study. Ujilah pengaruh perubahan parameter desain terhadap kinerja sistem. Contoh: Apa yang terjadi jika cutoff digeser 100 Hz? Apa dampak menaikkan orde filter dari 4 menjadi 8? Bagaimana pengaruh perubahan window Hamming vs Blackman? Dokumentasikan dalam tabel eksperimen. Pilar ke-3 adalah 3. Metrik Evaluasi Terukur. Evaluasi tidak boleh hanya berdasar asumsi perasaan ('suara terdengar lebih enak'). Wajib menyertakan angka metrik kuantitatif terukur: Delta SNR (dB), Mean Squared Error (MSE), Spectral Centroid Shift, atau Waktu Eksekusi (ms). ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Pemilihan Baseline Pem"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Parameter Tuning & Abl"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Metrik Evaluasi Teruku"
+      }
+    ]
+  },
+  "5": {
+    "title": "Kebijakan Resmi Penggunaan Generative AI dalam Proyek",
+    "script": "Pada slide ini, kita membahas Kebijakan Resmi Penggunaan Generative AI dalam Proyek. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI yang Diperbolehkan & Didukung. Eksplorasi Konseptual: Mendiskusikan ide pemecahan masalah dan mencari studi literatur awal. Boilerplate Code & UI: Membantu pembuatan kerangka kode plotting Matplotlib, layout Streamlit/Gradio, atau format pembacaan file CSV/WAV. Debugging Logika Program: Meminta saran perbaikan saat kode mengalami error IndexError atau TypeError. Penyusunan Dokumentasi: Membantu merapikan tata bahasa laporan teknis agar baku dan profesional. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Mutlak Mahasiswa (Non-Negotiable). Mengapa hal ini sangat fundamental? Kewajiban Verifikasi Mandiri: Mahasiswa wajib menguji dan memvalidasi setiap baris kode yang dihasilkan AI. Dilarang mempercayai hasil AI tanpa uji program! Transparansi Total: Wajib melampirkan Lampiran Log AI (Prompt yang digunakan, nama model AI, tanggal akses, dan modifikasi yang dilakukan mahasiswa). Perlindungan Data & Privasi: DILARANG KERAS mengunggah data pribadi individu, data medis rahasia, atau dokumen privat tanpa izin sah. Penguasaan Mandiri: Mahasiswa bertanggung jawab penuh saat ditanya dalam sidang presentasi. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI yang Diperboleh"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Mutlak Mahasiswa (No"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "6": {
+    "title": "Rubrik Asesmen Proyek Pembelajaran Berdampak (Bobot 35% RPS)",
+    "script": "Pada slide ini, kita membahas Rubrik Asesmen Proyek Pembelajaran Berdampak (Bobot 35% RPS). Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Kriteria 1 & 2: Pemodelan & DSP. Kriteria 1 - Pemodelan Masalah (Bobot 20%): Kejelasan perumusan masalah, relevansi pengguna sasaran, dan ketepatan pemilihan metode DSP. Kriteria 2 - Implementasi Algoritma DSP (Bobot 25%): Kebenaran kode, struktur pipeline, ketiadaan error runtime, efisiensi komputasi, dan modularitas clean code. Pilar ke-2 adalah Kriteria 3: Eksperimen & Validasi. Bobot 20% Nilai Proyek. Kelengkapan pengujian empiris, keberadaan baseline pembanding yang adil, analisis sensitivitas parameter (ablation study), kejelasan visualisasi grafik, dan ketepatan interpretasi metrik kinerja (SNR, MSE). Pilar ke-3 adalah Kriteria 4 & 5: Dampak & Etika AI. Kriteria 4 - Komunikasi & Dampak (Bobot 15%): Kerapian dokumentasi laporan IEEE, kejelasan video demo, dan dampak manfaat nyata. Kriteria 5 - Integritas Data & Etika AI (Bobot 20%): Legalitas lisensi data, transparansi deklarasi AI, dan pemahaman mandiri saat sesi tanya jawab. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Kriteria 1 & 2: Pemodelan"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Kriteria 3: Eksperimen & "
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Kriteria 4 & 5: Dampak & "
+      }
+    ]
+  },
+  "7": {
+    "title": "Template Struktur Laporan Proyek Standar IEEE",
+    "script": "Pada slide ini, kita membahas Template Struktur Laporan Proyek Standar IEEE. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Bagian I s.d. III. Judul & Identitas Mahasiswa: Nama lengkap, NIM, Program Studi Teknik Informatika UN Manado. Abstrak & Kata Kunci: Ringkasan masalah, metode DSP yang digunakan, dan hasil metrik kuantitatif utama (150-200 kata). I. Pendahuluan: Latar belakang urgensi, identifikasi masalah, tujuan rekayasa, dan batasan ruang lingkup. II. Dasar Teori: Formulasi matematis filter/algoritma yang digunakan. Pilar ke-2 adalah Bagian IV & V. III. Perancangan Sistem & Arsitektur Pipeline: Diagram blok alur pemrosesan data end-to-end dan deskripsi dataset/lisensi. IV. Hasil Eksperimen & Pembahasan: Grafik perbandingan sebelum-sesudah, tabel metrik evaluasi (SNR, MSE), perbandingan dengan baseline, dan analisis trade-off parameter. Pilar ke-3 adalah Bagian VI s.d. Lampiran. V. Kesimpulan & Saran Pengembangan Masa Depan. Daftar Pustaka: Menggunakan format sitasi baku APA 7th / IEEE. Lampiran Wajib: Tautan repositori GitHub source code publik dan Deklarasi Transparansi Penggunaan AI (AI Usage Statement). ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Bagian I s.d. III"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bagian IV & V"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Bagian VI s.d. Lampiran"
+      }
+    ]
+  },
+  "8": {
+    "title": "Implementasi Python: Template Logging Metrik Proyek",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Template Logging Metrik Proyek. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Framework Evaluasi Proyek Komparatif. Script template profesional untuk menguji sinyal pada beberapa metode filter secara bersamaan. Menghitung metrik SNR masukan vs keluaran dan persentase reduksi error secara otomatis. Mengekspor tabel hasil evaluasi dalam format terstruktur yang siap disalin ke laporan proyek. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Framework Evaluasi Proyek Komp"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "9": {
+    "title": "Praktikum Mandiri Lab 15: Dry-Run & Ablation Study",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 15: Dry-Run & Ablation Study. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 15. Judul: Uji Coba Prototipe Akhir (Dry-Run), Pengujian Sensitivitas Parameter, dan Pembuatan Video Demonstrasi. Aktivitas 1: Jalankan pipeline proyek Anda pada minimal 3 file data pengujian yang berbeda untuk memastikan tidak ada hardcoded bug. Aktivitas 2: Lakukan ablation study: matikan satu modul (misal matikan normalisasi atau matikan detrending), catat dampaknya terhadap SNR keluaran. Aktivitas 3: Siapkan video rekaman demonstrasi sistem fungsional berdurasi 3 menit. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Checklist Kesiapan Sidang Presentasi. Mengapa hal ini sangat fundamental? Apakah repositori GitHub memuat README yang jelas tentang cara instalasi (pip install -r requirements.txt)? Apakah seluruh grafik pada slide memiliki label sumbu dan legenda yang jelas? Apakah setiap anggota kelompok menguasai baris kode dan dasar matematika di balik algoritma yang digunakan? Output: Unggah draf akhir laporan proyek dan tautan video demo ke LMS sebelum gladi bersih. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 15"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Checklist Kesiapan Sidang Pres"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "10": {
+    "title": "Integrasi AI: Verifikasi Keamanan Data & Prompt Log",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Verifikasi Keamanan Data & Prompt Log. Mari kita perhatikan kolom sebelah kiri mengenai Penyusunan Deklarasi AI Transparan. Format Wajib Pernyataan AI: 'Dalam penyusunan proyek ini, tim kami menggunakan ChatGPT-4o dan Claude 3.5 Sonnet untuk: 1) Brainstorming fitur ekstraksi audio, dan 2) Memperbaiki error sintaks Matplotlib. Seluruh kode algoritma filter FIR/IIR dirancang dan diverifikasi secara manual oleh anggota tim berlandaskan teori Oppenheim. Tidak ada data rahasia pribadi yang diunggah ke server AI.' Integritas adalah kehormatan tertinggi seorang sarjana informatika. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewaspadaan 'AI Hallucination' pada DSP. Mengapa hal ini sangat fundamental? Waspadai Formula Fiktif: LLM kadang menciptakan nama rumus atau pustaka fiktif yang tidak ada di dokumentasi SciPy. Pemeriksaan Skala Waktu: Pastikan AI tidak salah mengasumsikan satuan waktu (milidetik vs detik) yang dapat menyebabkan pergeseran frekuensi 1000x lipat! Tanggung Jawab Hukum: Mahasiswa bertanggung jawab mutlak atas setiap klaim hasil pengujian yang dicantumkan. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Penyusunan Deklarasi AI Transp"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewaspadaan 'AI Hallucination'"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "11": {
+    "title": "Latihan Soal HOTS Pertemuan 15",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 15. Mari kita perhatikan kolom sebelah kiri mengenai Soal Analisis Metodologi Rekayasa. Sebuah kelompok mahasiswa memfilter sinyal getaran mesin dan mengklaim berhasil menghilangkan seluruh noise karena grafik keluaran menjadi garis lurus datar sempurna bernilai nol. a) Jelaskan secara kritis kesalahan fatal apa yang terjadi pada pemilihan parameter filter kelompok tersebut! b) Mengapa metrik SNR saja tidak cukup jika amplitudo sinyal utama ikut teredam habis oleh filter? c) Metrik apa yang harus ditambahkan untuk mendeteksi hilangnya komponen sinyal utama tersebut? Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal Validasi Keterbatasan Sistem. Mengapa hal ini sangat fundamental? Jelaskan mengapa sebuah filter denoiser audio berbasis spectral subtraction sederhana dapat menimbulkan artefak suara aneh yang disebut 'Musical Noise'! Bagaimana cara mahasiswa mendeteksi dan menjelaskan fenomena keterbatasan ini secara jujur dan ilmiah dalam laporan proyek tanpa mengurangi bobot nilai akademik? ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal Analisis Metodologi Rekay"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal Validasi Keterbatasan Sis"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Rangkuman Pertemuan 15 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 15 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa rekayasa komputasi sejati membutuhkan kejujuran intelektual, validasi empiris berulang, dan kesadaran akan batasan teknologi. Saya memahami bahwa AI adalah akselerator produktivitas, namun nalar kritis manusialah yang menjadi penentu kebenaran solusi. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Melihat proyek yang kami kembangkan mampu menyelesaikan persoalan nyata di bidang audio, sensor mesin, atau pemantauan lingkungan memberikan rasa kebermaknaan yang mendalam. Portofolio proyek nyata ini menjadi modal kompetitif yang sangat berharga untuk karir profesional di industri. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Antusiasme dan kegembiraan saat prototipe kode kelompok berhasil berjalan mulus mendemonstrasikan pembersihan sinyal secara real-time adalah puncak kepuasan belajar. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "13": {
+    "title": "Tindak Lanjut & Persiapan Sidang Akhir (Pertemuan 16)",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Persiapan Sidang Akhir (Pertemuan 16). Sebagai rangkuman perkuliahan Pertemuan ke-15: Proyek terapan mengintegrasikan seluruh CPMK (CPMK 1 s.d. CPMK 6). Eksperimen wajib menyertakan baseline pembanding dan metrik kuantitatif (SNR, MSE). Pemanfaatan AI wajib disertai deklarasi transparansi dan verifikasi mandiri. Minggu depan adalah Sidang Presentasi Proyek Akhir & Demonstrasi UAS. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Unggah Laporan Akhir Proyek format PDF dan slide presentasi ke LMS. Pastikan repositori GitHub bersifat publik dan link video YouTube/Drive dapat diakses. Lakukan latihan presentasi kelompok: 10 menit paparan slide + 10 menit demo langsung & tanya jawab. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

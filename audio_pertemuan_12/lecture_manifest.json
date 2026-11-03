@@ -1,0 +1,315 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-12. Hari ini kita akan mengkaji secara komprehensif topik utama: Perancangan Filter Digital Finite Impulse Response (FIR). Spesifikasi Toleransi Filter, Karakteristik Linear Phase Murni, Metode Windowing (Rectangular, Hann, Hamming, Blackman), dan Algoritma Optimasi Parks-McClellan. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK4, CPMK5 (CPL-B, CPL-C) dengan bobot evaluasi sebesar 7 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Perancangan Filter Digital Finite I"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK4, CPMK5 (CPL-B, CPL-C)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Dunia Filter Digital: Anatomi Spesifikasi Filter",
+    "script": "Pada slide ini, kita membahas Dunia Filter Digital: Anatomi Spesifikasi Filter. Mari kita perhatikan kolom sebelah kiri mengenai Mengapa Kita Membutuhkan Filter Digital?. Filter digital adalah sistem LTI yang dirancang secara spesifik untuk meloloskan komponen frekuensi yang diinginkan (passband) dan menolak/meredam komponen frekuensi yang tidak diinginkan (stopband). Menghilangkan noise dengung listrik 50 Hz pada rekaman vokal studio. Mengisolasi pita kanal komunikasi tertentu pada penerima software-defined radio (SDR). Sekarang, mari kita tinjau kolom sebelah kanan mengenai Empat Parameter Toleransi Spesifikasi Filter. Mengapa hal ini sangat fundamental? 1. Passband Cutoff Frequency (wp): Batas frekuensi pita lolos. 2. Stopband Cutoff Frequency (ws): Batas frekuensi pita henti. 3. Transition Band (Delta w = ws - wp): Lebar pita transisi dari lolos menuju henti (semakin sempit, orde filter semakin tinggi). 4. Riak Toleransi (Ripples): Passband ripple delta_p (dB) dan Stopband attenuation delta_s / As (dB). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Mengapa Kita Membutuhkan Filte"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Empat Parameter Toleransi Spes"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Keunggulan Mutlak Filter FIR: Linear Phase & Stabilitas",
+    "script": "Pada slide ini, kita membahas Keunggulan Mutlak Filter FIR: Linear Phase & Stabilitas. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Selalu Stabil Secara Alami. Fungsi transfer H(z) = sum_{n=0}^M h[n] z^(-n) adalah polinomial murni tanpa penyebut variabel. Seluruh M pole dari filter FIR terkumpul tepat pada titik origin z = 0. Karena origin selalu berada di dalam lingkaran satuan (|0| < 1), filter FIR TIDAK PERNAH BISA TIDAK STABIL! Pilar ke-2 adalah 2. Linear Phase Murni (Tanpa Distorsi). Dapat dirancang memiliki respon fase garis lurus sempurna: angle H(w) = -alpha * w. Group delay konstan sempurna di seluruh spektrum: tau_g = alpha = M / 2 sampel. Seluruh komponen frekuensi mengalami keterlambatan waktu yang identik, sehingga bentuk pulsa gelombang tidak mengalami dispersi atau distorsi bentuk. Pilar ke-3 adalah 3. Kemudahan Implementasi Perangkat Keras. Tanpa loop umpan balik rekursif, struktur pipeline FIR sangat ramah arsitektur paralel GPU dan akselerator DSP MAC. Bebas dari masalah limit cycle oscillations akibat pembulatan register berhingga. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Selalu Stabil Secara A"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Linear Phase Murni (Ta"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Kemudahan Implementasi"
+      }
+    ]
+  },
+  "4": {
+    "title": "Empat Tipe Filter FIR Fase Linier",
+    "script": "Pada slide ini, kita membahas Empat Tipe Filter FIR Fase Linier. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Tipe I & Tipe II (Simetri Genap). Syarat Simetri: h[n] = h[M - n]. Tipe I: Orde M Genap (Jumlah tap M+1 ganjil). Bebas digunakan untuk Low-Pass, High-Pass, Band-Pass, dan Band-Stop. Tipe II: Orde M Ganjil (Jumlah tap genap). Memiliki zero paksa pada w = pi (Nyquist), TIDAK BISA digunakan untuk filter High-Pass! Pilar ke-2 adalah Tipe III & Tipe IV (Simetri Ganjil). Syarat Simetri: h[n] = -h[M - n]. Menghasilkan pergeseran fase 90 derajat (Quadrature). Tipe III: Orde M Genap. Memiliki zero paksa pada w = 0 dan w = pi. Digunakan khusus untuk Differentiator dan Hilbert Transformer. Tipe IV: Orde M Ganjil. Memiliki zero paksa pada w = 0. Pilar ke-3 adalah Kaidah Pemilihan Desain. Untuk merancang Filter Low-Pass standar: Selalu gunakan Tipe I (orde genap) atau Tipe II. Untuk Filter High-Pass: WAJIB menggunakan Tipe I, karena Tipe II melarang respons pada frekuensi tinggi Nyquist. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Tipe I & Tipe II (Simetri"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Tipe III & Tipe IV (Simet"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Kaidah Pemilihan Desain"
+      }
+    ]
+  },
+  "5": {
+    "title": "Metode Perancangan Windowing (Window Method)",
+    "script": "Pada slide ini, kita membahas Metode Perancangan Windowing (Window Method). Perhatikan persamaan matematika inti untuk Mekanisme Pemotongan Respons Impuls Ideal di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. h_d[n]: Respons impuls ideal yang diperoleh dari Inverse DTFT filter brick-wall (berupa fungsi Sinc yang berlangsung tak terhingga dan non-kausal). omega_c: Frekuensi cutoff filter dalam radian per sampel (wc = 2 pi Fc / Fs). M / 2: Faktor pergeseran waktu agar filter menjadi kausal dengan penundaan M/2 sampel. w[n]: Fungsi window berdurasi berhingga (panjang M + 1 sampel). h[n]: Koefisien filter FIR kausal riil hasil perancangan. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Langkah 1: Tentukan spesifikasi frekuensi cutoff wc dan orde filter M. Langkah 2: Hitung nilai impuls ideal hd[n] untuk n = 0, 1, ..., M. Pada titik tengah n = M/2, gunakan limit L'Hopital: hd[M/2] = wc / pi. Langkah 3: Pilih fungsi window w[n] (misal Hamming atau Blackman) sesuai spesifikasi atenuasi stopband yang dituntut. Langkah 4: Kalikan hd[n] dengan w[n] elemen-ke-elemen: h[n] = hd[n] * w[n]. Selesai! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Mekanisme Pemotongan Respons I"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "6": {
+    "title": "Matriks Komparasi Karakteristik Fungsi Window",
+    "script": "Pada slide ini, kita membahas Matriks Komparasi Karakteristik Fungsi Window. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Rectangular vs Hann. Rectangular: Lebar transisi = 4 pi / M, Atenuasi stopband minimum = -21 dB, Passband ripple = 0.74 dB. (Transisi tertajam, namun peredaman stopband sangat buruk). Hann: Lebar transisi = 8 pi / M, Atenuasi stopband = -44 dB, Passband ripple = 0.05 dB. (Pilihan seimbang untuk pemrosesan audio umum). Pilar ke-2 adalah Hamming vs Blackman. Hamming: Lebar transisi = 8 pi / M, Atenuasi stopband = -53 dB, Passband ripple = 0.02 dB. (Paling populer untuk speech recognition dan telekomunikasi). Blackman: Lebar transisi = 12 pi / M, Atenuasi stopband luar biasa = -74 dB, Passband ripple = 0.002 dB. (Sangat bersih untuk instrumentasi presisi). Pilar ke-3 adalah Window Kaiser (Fleksibel Adaptif). Menggunakan fungsi Bessel termodifikasi I0(beta). Parameter beta mengatur atenuasi stopband secara kontinu. Orde M dapat diestimasi secara presisi menggunakan Formula Bellanger: M approx (-20 log10(delta) - 13) / (14.6 * Delta f). ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Rectangular vs Hann"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Hamming vs Blackman"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Window Kaiser (Fleksibel "
+      }
+    ]
+  },
+  "7": {
+    "title": "Algoritma Optimal Parks-McClellan (Equiripple FIR)",
+    "script": "Pada slide ini, kita membahas Algoritma Optimal Parks-McClellan (Equiripple FIR). Mari kita perhatikan kolom sebelah kiri mengenai Kelemahan Metode Windowing. Pada metode windowing, riak riak (ripple) pada passband dan stopband tidak seragam: riak paling besar berada di dekat pita transisi dan meluruh mengecil di frekuensi jauh. Hal ini tidak efisien! Energi toleransi terbuang sia-sia. Metode windowing menghasilkan orde filter yang lebih besar dari yang sebenarnya dibutuhkan. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Solusi Optimal Chebyshev: Parks-McClellan. Mengapa hal ini sangat fundamental? Berdasarkan Teorema Alternasi Chebyshev: Riak dibuat berosilasi dengan tinggi puncak yang sama persis (Equiripple) di seluruh pita lolos dan henti. Menghasilkan ORDE FILTER PALING MINIMUM yang mungkin di dunia untuk memenuhi spesifikasi yang diberikan! Diimplementasikan di Python menggunakan fungsi scipy.signal.remez() (algoritma Remez Exchange). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Kelemahan Metode Windowing"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Solusi Optimal Chebyshev: Park"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "8": {
+    "title": "Implementasi Python: Desain Filter FIR dengan firwin",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Desain Filter FIR dengan firwin. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Fungsi scipy.signal.firwin. scipy.signal.firwin(numtaps, cutoff, window='hamming', fs=Fs) merancang koefisien filter FIR metode windowing secara instan. numtaps adalah jumlah koefisien filter (numtaps = M + 1). cutoff adalah frekuensi batas dalam Hertz (atau rasio normalisasi). Evaluasi respons frekuensi menggunakan scipy.signal.freqz(h, 1.0). Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Fungsi scipy.signal.firwin"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "9": {
+    "title": "Praktikum Mandiri Lab 12: Pembersihan Audio dari Noise",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 12: Pembersihan Audio dari Noise. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 12. Judul: Perancangan Filter FIR untuk Menghilangkan Derau Nada Tunggal (Tone Interference) pada Sinyal Suara. Langkah 1: Siapkan sinyal suara ucapan (voice audio) yang terkontaminasi nada dengung peluit frekuensi tinggi 3000 Hz pada Fs = 8000 Hz. Langkah 2: Rancang filter FIR Low-Pass dengan frekuensi cutoff Fc = 2500 Hz menggunakan window Hamming. Langkah 3: Terapkan filter pada sinyal audio menggunakan y = scipy.signal.lfilter(h_fir, 1.0, x) atau np.convolve. Langkah 4: Putar audio hasil pemfilteran menggunakan IPython.display.Audio. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Evaluasi. Mengapa hal ini sangat fundamental? Tantangan Praktik: Rancang filter alternatif kedua menggunakan window Rectangular dengan jumlah tap yang sama. Bandingkan kualitas audio yang dihasilkan. Apakah dengung 3000 Hz masih bocor terdengar pada window Rectangular? Analisis Spektrogram: Tampilkan plot spektrogram sebelum dan sesudah filtering untuk membuktikan hilangnya garis frekuensi interferensi 3000 Hz. Output: Unggah notebook laporan mandiri lengkap dengan file audio WAV hasil ekspor. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 12"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Evaluasi"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "10": {
+    "title": "Integrasi AI: Estimasi Orde Filter Minimum",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Estimasi Orde Filter Minimum. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Kalkulasi Desain. Prompt AI: 'Tuliskan fungsi Python berbasis Formula Kaiser untuk menghitung perkiraan orde filter FIR M minimum dan parameter beta yang dibutuhkan jika spesifikasi filter adalah: Fs = 16 kHz, Fpass = 3 kHz, Fstop = 3.8 kHz, passband ripple = 0.1 dB, stopband attenuation = 60 dB.' Komparasi Desain: 'Bandingkan koefisien filter firwin vs remez untuk spesifikasi di atas.' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Validasi Mahasiswa. Mengapa hal ini sangat fundamental? Pemeriksaan Tipe Filter: Pastikan jumlah tap yang disarankan AI bertipe ganjil (orde genap) jika merancang filter High-Pass FIR. Uji Kestabilan Fase: Periksa apakah koefisien h[n] yang dihasilkan benar-benar simetris sempurna np.allclose(h, h[::-1]) guna menjamin ketiadaan distorsi fase. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI untuk Kalkulasi"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Validasi Mahasiswa"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "11": {
+    "title": "Latihan Soal HOTS Pertemuan 12",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 12. Mari kita perhatikan kolom sebelah kiri mengenai Soal 1: Perhitungan Manual Koefisien FIR. Rancang sebuah filter FIR Low-Pass 5-Tap (M = 4, n = 0, 1, 2, 3, 4) dengan frekuensi cutoff wc = pi / 2 rad/sampel menggunakan Window Rectangular. a) Hitung nilai respons impuls ideal hd[n] untuk n = 0, 1, 2, 3, 4! b) Tentukan nilai koefisien akhir h[n]! c) Buktikan bahwa koefisien h[n] memiliki simetri genap Tipe I! d) Berapa nilai Group Delay dari filter ini dalam satuan sampel? Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal 2: Analisis Toleransi Stopband. Mengapa hal ini sangat fundamental? Sebuah sistem instrumentasi biomedis EKG membutuhkan filter penolak noise frekuensi tinggi dengan spesifikasi: Atenuasi stopband minimal -65 dB. a) Manakah di antara window berikut yang memenuhi syarat: Rectangular, Hann, Hamming, atau Blackman? Jelaskan alasan spesifikasinya! b) Jika lebar pita transisi yang diinginkan adalah Delta f = 100 Hz pada Fs = 2000 Hz, estimasikan jumlah tap filter M minimum yang dibutuhkan! ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal 1: Perhitungan Manual Koe"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal 2: Analisis Toleransi Sto"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Rangkuman Pertemuan 12 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 12 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa perancangan filter adalah proses kompromi (trade-off) matematis antara ketajaman transisi dan kedalaman atenuasi stopband. Saya memahami bahwa Linear Phase adalah mahkota keunggulan filter FIR yang menjaga integritas bentuk gelombang sinyal. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Dalam produksi musik profesional, mastering audio, dan instrumentasi medis EKG/EEG, filter FIR adalah pilihan nomor satu karena dokter dan sound engineer tidak mentolerir adanya distorsi fase. Metode windowing memberikan rumus sederhana yang elegan. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Mendengar suara rekaman audio yang awalnya berisik tertutup dengung bising berubah menjadi sangat jernih dan bening setelah dilewatkan melalui filter FIR buatan sendiri di Python adalah pengalaman praktikum yang sangat memuaskan. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "13": {
+    "title": "Tindak Lanjut & Referensi Perkuliahan",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-12: Filter FIR selalu stabil secara alami dan mampu mencapai fase linier sempurna. Metode windowing mengalikan fungsi sinc ideal dengan window berdurasi berhingga: h[n] = hd[n] * w[n]. Hamming (-53 dB) dan Blackman (-74 dB) meredam kebocoran stopband dengan memperlebar pita transisi. Kelemahan FIR: Membutuhkan orde yang relatif tinggi dibanding filter IIR (Pertemuan 13)! Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kumpulkan Laporan Praktikum Lab 12 ke LMS. Pelajari materi Bab 7 Oppenheim bagian Perancangan Filter IIR (Transformasi Bilinear). Pahami prototipe filter analog klasik (Butterworth, Chebyshev, Elliptic). Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

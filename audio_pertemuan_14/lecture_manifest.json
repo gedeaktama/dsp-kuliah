@@ -1,0 +1,315 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-14. Hari ini kita akan mengkaji secara komprehensif topik utama: Arsitektur Pipeline Pengolahan Sinyal Digital End-to-End. Integrasi Sistem Utuh: Akuisisi Data, Preprocessing (Detrending & Normalisasi), Denoising, Framing & Windowing, Ekstraksi Fitur Domain Waktu/Frekuensi, dan Metrik Kinerja (SNR, MSE, THD). Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK5 (CPL-B, CPL-C) dengan bobot evaluasi sebesar 6 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Arsitektur Pipeline Pengolahan Siny"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK5 (CPL-B, CPL-C)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Menyatukan Seluruh Konsep: Dari Teori Menjadi Solusi Utuh",
+    "script": "Pada slide ini, kita membahas Menyatukan Seluruh Konsep: Dari Teori Menjadi Solusi Utuh. Mari kita perhatikan kolom sebelah kiri mengenai Tantangan Rekayasa Sistem Nyata. Dalam aplikasi industri riil, kita tidak pernah hanya menerapkan satu fungsi filter terisolasi. Data sinyal di lapangan selalu terkontaminasi berbagai macam gangguan simultan: 1. DC-Offset dan Baseline Drift akibat karakteristik transduser sensor. 2. Noise frekuensi tinggi dan interferensi jala-jala listrik. 3. Fluktuasi amplitudo antar rekaman yang tidak seragam. Solusi: Membangun Arsitektur Pipeline DSP End-to-End yang modular, teruji, dan siap diintegrasikan dengan sistem AI/Machine Learning. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Enam Tahap Utama Pipeline DSP Standar Industri. Mengapa hal ini sangat fundamental? Tahap 1: Data Acquisition & Validation (Pemeriksaan laju Fs, bit-depth, integritas data). Tahap 2: Preprocessing (DC Removal, Linear Detrending, Peak/RMS Normalization). Tahap 3: Filtering & Denoising (Band-pass filtering, Notch 50/60 Hz, Median Filter). Tahap 4: Segmentation & Windowed Framing (Short-time analysis dengan overlap 50%). Tahap 5: Feature Extraction (Fitur domain waktu dan domain spektral frekuensi). Tahap 6: Performance Evaluation & Output Formatting (SNR, MSE, THD, Export). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Tantangan Rekayasa Sistem Nyat"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Enam Tahap Utama Pipeline DSP "
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Tahap 1 & 2: Preprocessing Sinyal (Detrending & Normalisasi)",
+    "script": "Pada slide ini, kita membahas Tahap 1 & 2: Preprocessing Sinyal (Detrending & Normalisasi). Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah DC-Offset Removal. Sinyal analog seringkali membawa pergeseran tegangan rata-rata bukan nol (mean != 0) yang memboroskan rentang dinamis ADC. Metode Pengurangan Rata-Rata: x_clean[n] = x[n] - np.mean(x). Metode Filter Notch DC: High-Pass Filter IIR orde-1 dengan pole sangat dekat ke z = 1 (misal H(z) = (1 - z^-1) / (1 - 0.995 z^-1)). Pilar ke-2 adalah Linear Detrending. Mengoreksi pergeseran garis dasar (baseline wander) akibat perubahan suhu sensor atau pernapasan pasien. Mengestimasi tren linier menggunakan regresi kuadrat terkecil (least-squares line fitting) lalu menguranginya dari sinyal: scipy.signal.detrend(x). Pilar ke-3 adalah Normalisasi Amplitudo. Peak Normalization: Membagi seluruh sinyal dengan amplitudo maksimum mutlak: x_norm = x / np.max(np.abs(x)). Menjamin rentang ketat [-1.0, +1.0]. RMS Normalization (Z-Score Standard): Mengatur rata-rata = 0 dan variansi energi = 1, sangat krusial sebagai masukan model AI / Neural Network. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "DC-Offset Removal"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Linear Detrending"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Normalisasi Amplitudo"
+      }
+    ]
+  },
+  "4": {
+    "title": "Tahap 3 & 4: Denoising, Framing & Windowing",
+    "script": "Pada slide ini, kita membahas Tahap 3 & 4: Denoising, Framing & Windowing. Mari kita perhatikan kolom sebelah kiri mengenai Filtering & Denoising Terpadu. Filtering Bertingkat: Kombinasi High-Pass (menghilangkan drift) + Low-Pass (menghilangkan noise frekuensi tinggi) + Notch Filter (menghilangkan interferensi listrik 50 Hz). Median Filtering: Menggantikan setiap sampel dengan nilai median dari tetangga sekitarnya. Sangat efektif menghilangkan derau bintik impulsif (Salt-and-Pepper Noise / Spike Noise) tanpa mengaburkan tepi transisi sinyal yang tajam. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Framing & Overlapping Analysis. Mengapa hal ini sangat fundamental? Sinyal nyata seperti suara bicara manusia (speech) bersifat Non-Stasioner (karakteristik frekuensinya berubah seiring waktu). Prinsip Quasi-Stationary: Dalam selang waktu sangat pendek (10 s.d. 30 milidetik), sinyal suara dapat diasumsikan stasioner. Framing: Memotong sinyal panjang menjadi potongan frame-frame berdurasi N_frame (misal 25 ms). Overlap (Hop Size): Menggeser frame sebesar 50% panjang frame agar transisi informasi antar frame tidak terputus di perbatasan window. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Filtering & Denoising Terpadu"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Framing & Overlapping Analysis"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "5": {
+    "title": "Tahap 5: Ekstraksi Fitur Domain Waktu (Temporal Features)",
+    "script": "Pada slide ini, kita membahas Tahap 5: Ekstraksi Fitur Domain Waktu (Temporal Features). Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Zero-Crossing Rate (ZCR). Menghitung berapa kali sinyal memotong sumbu nol (berubah polaritas dari positif ke negatif atau sebaliknya) dalam satu frame waktu. Aplikasi: Membedakan antara suara berdesis tanpa getaran pita suara (Unvoiced Speech / Fricatives seperti 's', 'f', 't') yang memiliki ZCR sangat tinggi, dengan suara vokal (Voiced) yang ber-ZCR rendah. Pilar ke-2 adalah 2. Short-Time Energy (STE). STE = sum_{m=0}^{N-1} (x[m] * w[m])^2. Mengukur kekuatan energi sesaat sinyal pada setiap frame waktu. Aplikasi Utama: Voice Activity Detection (VAD) untuk mendeteksi kapan seseorang mulai berbicara dan kapan jeda hening (silence detection) pada asisten suara cerdas. Pilar ke-3 adalah 3. Root Mean Square (RMS). RMS = sqrt( (1/N) * sum x[m]^2 ). Merepresentasikan intensitas kenyaringan (loudness) perseptual sinyal audio. Digunakan untuk normalisasi dinamika sinyal pada sistem broadcast radio/podcast. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Zero-Crossing Rate (ZC"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Short-Time Energy (STE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Root Mean Square (RMS)"
+      }
+    ]
+  },
+  "6": {
+    "title": "Tahap 5 Lanjut: Ekstraksi Fitur Domain Frekuensi (Spectral Features)",
+    "script": "Pada slide ini, kita membahas Tahap 5 Lanjut: Ekstraksi Fitur Domain Frekuensi (Spectral Features). Perhatikan persamaan matematika inti untuk Formulasi Fitur Spektral Berbasis FFT Frame di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. |X[k]|: Magnitudo koefisien spektrum FFT frame ke-m. f_k: Frekuensi fisik bin ke-k dalam Hertz. Spectral Centroid (Pusat Massa Spektrum): Mengukur derajat 'kecerahan' akustik (brightness/timbre) suatu suara. Suara bernada tajam memiliki centroid tinggi. Spectral Rolloff: Frekuensi batas bawah di mana 85% akumulasi energi spektral terkonsentrasi. Mel-Frequency Cepstral Coefficients (MFCC): Representasi spektrum skala persepsi pendengaran manusia Mel-scale, fitur nomor satu pada Speech Recognition dan Klasifikasi Musik AI. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Mengapa Fitur Spektral Sangat Penting untuk AI? Memberikan representasi data yang kompak (dimensionality reduction): dari 1000 sampel mentah per frame direduksi menjadi hanya 13 koefisien MFCC bermakna tinggi! Memudahkan model klasifikasi (SVM, Random Forest, CNN) mengenali jenis kerusakan getaran mesin atau emosi suara manusia secara akurat. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Formulasi Fitur Spektral Berba"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "7": {
+    "title": "Tahap 6: Metrik Kuantitatif Evaluasi Kinerja Pemrosesan",
+    "script": "Pada slide ini, kita membahas Tahap 6: Metrik Kuantitatif Evaluasi Kinerja Pemrosesan. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Signal-to-Noise Ratio (SNR). SNR = 10 * log10( P_signal / P_noise ) dB. SNR Improvement: Delta SNR = SNR_output - SNR_input. Mengukur keberhasilan filter dalam mengangkat sinyal bersih keluar dari derau latar belakang. Kenaikan Delta SNR > 10 dB menandakan pembersihan yang sangat efektif. Pilar ke-2 adalah Mean Squared Error (MSE). MSE = (1 / N) * sum_{n=0}^{N-1} (x_clean[n] - y_filtered[n])^2. Mengukur derajat kemiripan numerik antara sinyal hasil filtering dengan sinyal referensi murni (ground-truth). Semakin kecil nilai MSE mendekati nol, semakin sempurna restorasi sinyal. Pilar ke-3 adalah Total Harmonic Distortion (THD). THD = sqrt( sum_{i=2}^inf V_i^2 ) / V_1 * 100%. Mengukur persentase distorsi harmonisa yang timbul akibat ketidaklinieran sistem audio atau perangkat keras. Sistem Hi-Fi berkualitas tinggi menuntut THD < 0.1%. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Signal-to-Noise Ratio (SN"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Mean Squared Error (MSE)"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Total Harmonic Distortion"
+      }
+    ]
+  },
+  "8": {
+    "title": "Implementasi Python: Arsitektur Kelas Pipeline Berorientasi Objek",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Arsitektur Kelas Pipeline Berorientasi Objek. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Desain Modular SignalProcessingPipeline. Membangun kelas Python berorientasi objek (OOP) SignalProcessingPipeline yang membungkus seluruh tahapan pengolahan secara modular. Memudahkan integrasi dengan pipeline pemelajaran mesin (scikit-learn / PyTorch). Mendukung chaining method: pipe.remove_dc().bandpass_filter().extract_features(). Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Desain Modular SignalProcessin"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "9": {
+    "title": "Praktikum Mandiri Lab 14: Restorasi Sinyal Wicara Berderau",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 14: Restorasi Sinyal Wicara Berderau. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 14. Judul: Membangun Pipeline Pengolahan Sinyal Wicara (Speech Enhancement & Feature Extraction). Dataset: Rekaman suara ucapan manusia 'speech_noisy.wav' yang tertutup derau jalan raya (street traffic noise). Tugas 1: Bangun modul pipeline lengkap yang melakukan detrending, pemfilteran bandpass (300 - 3400 Hz standar telephony), dan normalisasi amplitudo. Tugas 2: Hitung metrik SNR sebelum dan sesudah filtering. Tugas 3: Lakukan framing 20 ms dengan overlap 50% dan ekstraksi profil kontur Energy STE dan ZCR sepanjang waktu. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Evaluasi. Mengapa hal ini sangat fundamental? Tantangan Praktik: Gunakan kontur Short-Time Energy (STE) untuk membuat segmentasi otomatis Voice Activity Detection (VAD). Berikan tanda kotak merah pada grafik pada rentang waktu di mana manusia sedang berbicara! Uji Dengar Perseptual: Simpan audio hasil pemfilteran dan putar di kelas. Apakah suara ucapan menjadi lebih mudah dipahami (intelligible)? Output: Unggah script class Python modular dan notebook laporan ke LMS. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 14"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Evaluasi"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "10": {
+    "title": "Integrasi AI: Refactoring Clean Code Pipeline",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Refactoring Clean Code Pipeline. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Peningkatan Arsitektur Kode. Prompt AI: 'Lakukan refactoring pada kelas DSPPipeline Python berikut agar memenuhi prinsip Clean Code SOLID, menyertakan Type Hints (typing.NDArray), docstrings Google Style, dan penanganan exception input yang kuat.' Optimasi Vektorisasi: 'Bagaimana cara mengubah loop ekstraksi frame audio Python menjadi operasi vektor menggunakan numpy.lib.stride_tricks.sliding_window_view?' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Validasi Mahasiswa. Mengapa hal ini sangat fundamental? Pemeriksaan Konsistensi Memori: Waspadai penggunaan sliding_window_view yang menghasilkan array non-contiguous yang dapat memicu silent memory error jika dimodifikasi in-place. Verifikasi Independensi Modul: Pastikan setiap fungsi tahapan preprocessing dapat diuji secara terisolasi (Unit Testing) dengan input sinyal sintetis sederhana. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI untuk Peningkat"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Validasi Mahasiswa"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "11": {
+    "title": "Latihan Soal HOTS Pertemuan 14",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 14. Mari kita perhatikan kolom sebelah kiri mengenai Soal Analisis Metrik SNR. Sinyal masukan memiliki daya sinyal P_sig = 0.5 Watt dan daya derau P_noise = 0.05 Watt. a) Hitung nilai SNR masukan dalam decibel (dB)! b) Setelah melewati filter pipeline, daya sinyal menjadi 0.48 Watt dan daya derau berhasil ditekan menjadi 0.001 Watt. Hitung nilai SNR keluaran! c) Berapa nilai peningkatan SNR (Delta SNR) yang dicapai oleh pipeline tersebut? Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal Desain Framing Audio. Mengapa hal ini sangat fundamental? Sebuah sinyal audio wicara direkam dengan frekuensi sampling Fs = 16 kHz. a) Berapa jumlah sampel N_frame yang terkandung dalam satu frame waktu berdurasi 25 ms? b) Jika digunakan skema overlapping 50%, berapa jumlah sampel pergeseran (hop size) antar frame? c) Jika total durasi audio adalah 2 detik, berapa jumlah frame total yang dihasilkan oleh proses segmentasi tersebut? ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal Analisis Metrik SNR"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal Desain Framing Audio"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Rangkuman Pertemuan 14 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 14 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa kehebatan sebuah algoritma DSP ditentukan oleh kebersihan tahapan pra-pemrosesan (garbage in, garbage out). Saya memahami bahwa segmentasi waktu-frekuensi adalah cara jitu menangani sinyal non-stasioner di dunia nyata. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Arsitektur pipeline modular yang dibangun hari ini adalah cetak biru yang sama persis dengan yang digunakan di industri asisten suara (Siri, Google Assistant), mobil otonom, dan pemantauan kesehatan cerdas. Fitur spektral menjembatani DSP tradisional dengan era Modern AI. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Melihat seluruh modul dari pertemuan 1 hingga 13 terangkai harmonis dalam satu kelas Python tunggal yang bersih dan otomatis menghasilkan laporan analisis memberikan kepuasan rekayasa tingkat tinggi. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "13": {
+    "title": "Tindak Lanjut & Persiapan Proyek Terapan",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Persiapan Proyek Terapan. Sebagai rangkuman perkuliahan Pertemuan ke-14: Pipeline DSP end-to-end mengintegrasikan Preprocessing, Filtering SOS, Framing, dan Ekstraksi Fitur. Fitur temporal (ZCR, STE, RMS) memetakan dinamika domain waktu. Fitur spektral (Centroid, Rolloff, MFCC) memetakan warna suara timbre. Evaluasi kuantitatif divalidasi melalui metrik SNR, MSE, dan THD. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kumpulkan Laporan Praktikum Lab 14 ke LMS. Pelajari panduan Proyek Pembelajaran Berdampak (Klaster Audio, Getaran, IoT, Biosinyal) untuk Pertemuan 15. Finalisasi pembagian peran kelompok dan pemilihan dataset berlisensi terbuka. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

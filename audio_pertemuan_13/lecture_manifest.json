@@ -1,0 +1,320 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-13. Hari ini kita akan mengkaji secara komprehensif topik utama: Perancangan Filter Digital IIR & Komparasi Komprehensif FIR vs IIR. Metode Transformasi Bilinear (BLT), Prototipe Filter Analog (Butterworth, Chebyshev, Elliptic), Frequency Pre-Warping, Struktur Biquad SOS, dan Matriks Komparasi Industri FIR vs IIR. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK4, CPMK5 (CPL-B, CPL-C) dengan bobot evaluasi sebesar 7 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Perancangan Filter Digital IIR & Ko"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK4, CPMK5 (CPL-B, CPL-C)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Filosofi Desain Filter IIR: Mengadopsi Warisan Filter Analog",
+    "script": "Pada slide ini, kita membahas Filosofi Desain Filter IIR: Mengadopsi Warisan Filter Analog. Mari kita perhatikan kolom sebelah kiri mengenai Mengapa Tidak Merancang IIR Langsung dari Nol?. Dunia teknik elektro analog telah mengembangkan teori perancangan filter kontinu selama lebih dari satu abad (Butterworth, Chebyshev, Cauer/Elliptic). Fungsi transfer analog Ha(s) dalam domain Laplace s memiliki rumus analitis bentuk tertutup yang sangat matang, optimal, dan teruji. Strategi Cerdas IIR: Alih-alih merancang dari nol di bidang-Z, kita merancang filter prototipe analog Ha(s) terlebih dahulu, lalu MEMETAKANNYA secara matematis ke bidang-Z menggunakan Transformasi Bilinear! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Daya Tarik Utama Filter IIR. Mengapa hal ini sangat fundamental? Efisiensi Komputasi Ekstrem: Untuk memenuhi spesifikasi ketajaman cutoff yang sama, filter IIR hanya membutuhkan orde 4 hingga 8, sedangkan filter FIR membutuhkan orde 100 hingga 300! Kebutuhan Memori Sangat Kecil: Hanya menyimpan sedikit koefisien dan register delay. Sangat ideal untuk sistem mikrokontroler berdaya rendah, alat bantu dengar (hearing aids), dan pemrosesan audio streaming real-time pada perangkat IoT. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Mengapa Tidak Merancang IIR La"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Daya Tarik Utama Filter IIR"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Empat Prototipe Filter Analog Standar",
+    "script": "Pada slide ini, kita membahas Empat Prototipe Filter Analog Standar. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Filter Butterworth (Maximally Flat). Respons magnitudo paling rata mulus tanpa riak sama sekali di passband dan stopband. Meluruh secara monoton seiring naiknya frekuensi. Kelemahan: Pita transisi paling lebar dibanding prototipe lain pada orde yang sama. Pilar ke-2 adalah 2. Filter Chebyshev (Tipe I & Tipe II). Chebyshev I: Memiliki riak equiripple seragam pada passband, namun monoton mulus pada stopband. Transisi jauh lebih tajam dibanding Butterworth. Chebyshev II (Inverse Chebyshev): Monoton pada passband, equiripple pada stopband. Sangat populer karena passband bebas riak. Pilar ke-3 adalah 3. Filter Elliptic (Cauer). Memiliki riak equiripple pada passband DAN stopband. Memberikan pita transisi PALING TAJAM di antara seluruh kelas filter di dunia pada orde yang sama! Kelemahan: Karakteristik fase paling non-linier dan distorsi delay tertinggi. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Filter Butterworth (Ma"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Filter Chebyshev (Tipe"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Filter Elliptic (Cauer"
+      }
+    ]
+  },
+  "4": {
+    "title": "Metode Transformasi Bilinear (Bilinear Transformation / BLT)",
+    "script": "Pada slide ini, kita membahas Metode Transformasi Bilinear (Bilinear Transformation / BLT). Perhatikan persamaan matematika inti untuk Pemetaan Konformal Bidang-s Analog Menuju Bidang-Z Diskrit di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. s = sigma + j Omega: Variabel bidang Laplace kontinu analog. z = r e^(jw): Variabel bidang-Z diskrit. Ts: Periode sampling nominal (sering dinormalisasi menjadi Ts = 2 sehingga faktor pengali = 1). Kaidah Pemetaan Sumbu: Sumbu imajiner analog j Omega dipetakan tepat ke keliling lingkaran satuan |z| = 1 pada bidang-Z. Jaminan Kestabilan: Setengah bidang kiri s (LHP di mana sigma < 0) dipetakan tepat ke DALAM lingkaran satuan (|z| < 1). Filter analog yang stabil dijamin 100% menghasilkan filter digital IIR yang juga stabil! Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Keunggulan Mutlak BLT Dibanding Impulse Invariance: Metode Impulse Invariance klasik mengalami aliasing spektral yang parah jika sampling rate tidak cukup tinggi. Metode Transformasi Bilinear TIDAK PERNAH MENGALAMI ALIASING! Karena rentang frekuensi analog tak hingga Omega in (-inf, +inf) dipadatkan secara non-linier ke dalam rentang satu putaran lingkaran satuan omega in (-pi, +pi)! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Pemetaan Konformal Bidang-s An"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "5": {
+    "title": "Efek Frequency Warping & Formula Pre-Warping Wajib",
+    "script": "Pada slide ini, kita membahas Efek Frequency Warping & Formula Pre-Warping Wajib. Perhatikan persamaan matematika inti untuk Relasi Pemadatan Frekuensi Non-Linier di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. omega: Frekuensi sudut digital diskrit dalam radian per sampel (skala 0 sampai pi). Omega: Frekuensi sudut analog dalam radian per detik. Omega_prewarp: Frekuensi target analog hasil koreksi pre-warping. omega_d = 2 pi F_cutoff / Fs: Frekuensi digital spesifikasi yang dituju. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Mekanisme Distorsi Warping: Pada frekuensi rendah (w mendekati 0), relasi hampir linier (tan(w/2) approx w/2). Namun semakin mendekati frekuensi Nyquist (w -> pi), sumbu frekuensi analog tertekan (terkompresi secara ekstrem) menuju tak terhingga! Prosedur Wajib Pre-Warping: Sebelum mendesain filter analog, hitung frekuensi cutoff analog ekuivalen Omega_prewarp menggunakan rumus tangen di atas. Rancang filter Ha(s) pada frekuensi Omega_prewarp tersebut. Ketika disubstitusikan dengan BLT, frekuensi cutoff digital akan bergeser kembali tepat ke titik spesifikasi wd yang diinginkan! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Relasi Pemadatan Frekuensi Non"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "6": {
+    "title": "Masalah Finite Word-Length & Solusi Struktur Biquad (SOS)",
+    "script": "Pada slide ini, kita membahas Masalah Finite Word-Length & Solusi Struktur Biquad (SOS). Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Bahaya Orde Tinggi Direct Form. Jika filter IIR orde tinggi (misal orde 8 atau 12) diimplementasikan dalam struktur Direct Form polinomial tunggal, koefisien polinomial menjadi sangat sensitif terhadap pembulatan floating point / fixed point. Kuantisasi register memori mikroprosesor dapat menggeser posisi pole mendekati atau menembus lingkaran satuan. Dampaknya: Filter yang di atas kertas stabil dapat menjadi tidak stabil dan meledak berosilasi saat dijalankan di chip hardware! Pilar ke-2 adalah Solusi Emas: Second-Order Sections (SOS). Faktorkan fungsi transfer H(z) menjadi kaskade blok-blok biquad orde dua: H(z) = G * product_{k=1}^K [ (b0_k + b1_k z^-1 + b2_k z^-2) / (1 + a1_k z^-1 + a2_k z^-2) ]. Setiap blok hanya mengelola sepasang pole dan zero konjugat terdekat. Sangat stabil dan tahan terhadap noise kuantisasi representasi bit. Pilar ke-3 adalah Standar Pemrograman SciPy. Jangan gunakan format (b, a) untuk filter IIR di Python! Selalu gunakan parameter output='sos' pada fungsi desain (scipy.signal.butter, cheby1, ellip) dan jalankan pemfilteran dengan scipy.signal.sosfilt(). ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Bahaya Orde Tinggi Direct"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Solusi Emas: Second-Order"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Standar Pemrograman SciPy"
+      }
+    ]
+  },
+  "7": {
+    "title": "Matriks Komparasi Komprehensif: FIR vs IIR",
+    "script": "Pada slide ini, kita membahas Matriks Komparasi Komprehensif: FIR vs IIR. Mari kita perhatikan kolom sebelah kiri mengenai Karakteristik Filter FIR. Stabilitas: Selalu stabil 100% secara alami (semua pole di origin z=0). Respons Fase: Mampu mencapai Fase Linier Murni (Group Delay konstan sempurna, tanpa distorsi bentuk gelombang). Kebutuhan Orde: Tinggi (Orde 50 s.d. 500 tap untuk transisi tajam). Beban Komputasi: Relatif besar (membutuhkan banyak operasi MAC). Sensitivitas Kuantisasi: Sangat rendah (tahan terhadap pembulatan bit). Implementasi: Ideal untuk FFT Convolution, Audio Studio, Biomedis EKG. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Karakteristik Filter IIR. Mengapa hal ini sangat fundamental? Stabilitas: Bersyarat (membutuhkan verifikasi ketat |p| < 1). Respons Fase: Non-linier (terjadi distorsi keterlambatan fase, terutama di dekat pita cutoff). Kebutuhan Orde: Sangat Rendah (Cukup orde 4 s.d. 8). Beban Komputasi: Sangat Ringan dan Cepat (hemat memori dan baterai). Sensitivitas Kuantisasi: Tinggi (wajib menggunakan struktur Biquad SOS). Implementasi: Ideal untuk Telekomunikasi RF, Hearing Aids, Sensor IoT Edge. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Karakteristik Filter FIR"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Karakteristik Filter IIR"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "8": {
+    "title": "Implementasi Python: Desain Filter IIR dengan SciPy SOS",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Desain Filter IIR dengan SciPy SOS. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Perancangan Filter IIR Berbasis SOS. scipy.signal.butter(N, Wn, btype='low', fs=Fs, output='sos') merancang filter Butterworth dalam format Second-Order Sections. scipy.signal.sosfreqz(sos, worN=1024, fs=Fs) menghitung respons frekuensi yang stabil secara numerik. Fungsi sosfilt(sos, x) mengeksekusi pemfilteran tanpa risiko instabilitas akumulasi floating point. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Perancangan Filter IIR Berbasi"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "9": {
+    "title": "Praktikum Mandiri Lab 13: Komparasi FIR vs IIR pada Sinyal EKG",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 13: Komparasi FIR vs IIR pada Sinyal EKG. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 13. Judul: Analisis Perbandingan Filter FIR vs IIR pada Pembersihan Sinyal Biomedis EKG. Dataset: Sinyal EKG publik terkontaminasi dengung listrik 50 Hz dan fluktuasi baseline (baseline wander 0.5 Hz). Langkah 1: Rancang filter Band-Pass IIR Butterworth (0.8 - 45 Hz) orde 4 dalam format SOS. Langkah 2: Rancang filter Band-Pass FIR dengan window Hamming yang memenuhi spesifikasi atenuasi setara (didapatkan jumlah tap ~121). Langkah 3: Filter sinyal EKG dengan kedua filter tersebut. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Evaluasi. Mengapa hal ini sangat fundamental? Tantangan Analisis: Amati morfologi puncak gelombang QRS dan segmen ST pada sinyal EKG keluaran filter IIR vs FIR. Apakah filter IIR menyebabkan pergeseran bentuk gelombang akibat fase non-linier? Komparasi Waktu Eksekusi: Ukur waktu komputasi pemfilteran menggunakan modul %timeit di Jupyter Notebook. Berapa kali lipat filter IIR lebih cepat dibanding FIR? Output: Unggah notebook laporan mandiri dengan visualisasi sinyal EKG sebelum-sesudah. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 13"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Evaluasi"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "10": {
+    "title": "Integrasi AI: Analisis Kestabilan & Distorsi Fase",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Analisis Kestabilan & Distorsi Fase. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Analisis Kritis. Prompt AI: 'Diberikan matriks koefisien SOS filter IIR orde 8, buatkan script Python untuk memplot diagram pole-zero setiap biquad section dan periksa apakah ada pole yang berjarak kurang dari 0.01 ke lingkaran satuan.' AI Zero-Phase Filtering: 'Jelaskan cara kerja fungsi scipy.signal.filtfilt (forward-backward filtering) untuk menghilangkan distorsi fase IIR pada pemrosesan offline.' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Validasi Mahasiswa. Mengapa hal ini sangat fundamental? Batasan filtfilt(): Mahasiswa wajib memahami bahwa filtfilt() bersifat NON-KAUSAL dan TIDAK DAPAT digunakan pada sistem siaran langsung atau real-time audio. Verifikasi Pre-Warping: Pastikan bahwa frekuensi cutoff yang dimasukkan ke fungsi desain analog telah memperhitungkan koreksi tangen pre-warping secara tepat. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI untuk Analisis "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Validasi Mahasiswa"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "11": {
+    "title": "Latihan Soal HOTS Pertemuan 13",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 13. Mari kita perhatikan kolom sebelah kiri mengenai Soal 1: Transformasi Bilinear Manual. Sebuah filter analog low-pass orde-1 memiliki fungsi transfer: Ha(s) = 1 / (s + 2). Terapkan Transformasi Bilinear dengan periode sampling Ts = 1 detik (substitusi s = 2 (1 - z^-1) / (1 + z^-1)): a) Turunkan ekspresi fungsi transfer digital H(z)! b) Tentukan lokasi pole dan zero dari H(z) pada bidang-Z! c) Tuliskan persamaan beda LCCDE yang mengimplementasikan filter tersebut! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal 2: Perhitungan Pre-Warping. Mengapa hal ini sangat fundamental? Kita ingin merancang filter digital IIR low-pass dengan frekuensi cutoff Fc = 1 kHz pada frekuensi sampling Fs = 10 kHz menggunakan Transformasi Bilinear. a) Hitung frekuensi sudut digital cutoff wd dalam radian per sampel! b) Hitung nilai frekuensi analog pre-warped Omega_prewarp dalam radian per detik! c) Apa yang akan terjadi jika kita mendesain filter analog langsung pada Omega = 2 pi Fc tanpa pre-warping? ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal 1: Transformasi Bilinear "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal 2: Perhitungan Pre-Warpin"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Rangkuman Pertemuan 13 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 13 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa filter IIR dan FIR bukan rival yang saling meniadakan, melainkan dua instrumen rekayasa dengan kekuatan dan kompromi yang saling melengkapi. Saya memahami bahwa Transformasi Bilinear adalah jembatan matematis tanpa-aliasing dari domain kontinu Laplace menuju domain diskrit Z. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Keputusan memilih FIR atau IIR di industri menentukan konsumsi baterai perangkat pintar dan integritas bentuk data. Penerapan struktur Biquad SOS adalah standar industri yang wajib dikuasai insinyur komputasi modern. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Melihat bagaimana filter IIR orde 6 yang sangat ringan mampu menyamai ketajaman filter FIR orde 100 membuat kita mengagumi keanggunan efisiensi matematika rekursif. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "13": {
+    "title": "Tindak Lanjut & Referensi Perkuliahan",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-13: Filter IIR dirancang dengan memetakan prototipe analog (Butterworth, Chebyshev) via BLT. Formula pre-warping mengoreksi kompresi frekuensi non-linier. Format Biquad Second-Order Sections (SOS) mencegah instabilitas numerik kuantisasi bit. FIR unggul dalam linear phase; IIR unggul dalam efisiensi komputasi. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kumpulkan Laporan Praktikum Lab 13 ke LMS tepat waktu. Persiapkan diri untuk Pertemuan 14: Membangun Arsitektur Pipeline Pengolahan Sinyal Digital End-to-End. Mulai matangkan rancangan modul-modul program proyek akhir. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

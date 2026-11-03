@@ -1,0 +1,341 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-1. Hari ini kita akan mengkaji secara komprehensif topik utama: Orientasi DSP, Konsep Dasar Sinyal & Sistem Diskrit, dan Aplikasi Modern. Pengenalan Paradigma Pemrosesan Sinyal Digital, Taksonomi Sinyal, Arsitektur Sistem, dan Ekosistem Python DSP di Era Kecerdasan Artifisial. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK1 (CPL-A) dengan bobot evaluasi sebesar 3 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Orientasi DSP, Konsep Dasar Sinyal "
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK1 (CPL-A)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Kontrak Perkuliahan & Standar Outcome-Based Education (OBE)",
+    "script": "Pada slide ini, kita membahas Kontrak Perkuliahan & Standar Outcome-Based Education (OBE). Mari kita perhatikan kolom sebelah kiri mengenai Struktur Pembelajaran & Bobot Evaluasi. Mata Kuliah: Pengolahan Sinyal Digital (3 SKS: 2 Teori + 1 Praktik Laboratorium). Bobot Asesmen Resmi RPS: Partisipasi Aktif (5%), Kuis & Tugas Analitis (15%), Praktikum Komputasi (25%), Evaluasi Tengah Semester / UTS (20%), Proyek Akhir Berdampak & UAS (35%). Standar Mutu OBE: Target kelulusan minimal 70% mahasiswa memperoleh skor >= 70 pada seluruh CPMK (CPMK1 s.d. CPMK6). Prinsip Turnkey & Kemandirian: Setiap mahasiswa wajib menguasai konsep teoretis analitis sekaligus implementasi kode komputasi nyata. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Integrasi Pembelajaran Mendalam (Deep Learning). Mengapa hal ini sangat fundamental? Berkesadaran (Mindful): Mahasiswa memahami urgensi setiap rumus matematis dan mampu melakukan penelusuran mandiri (self-assessment). Bermakna (Meaningful): Setiap teori langsung dikaitkan dengan problem industri nyata (Speech AI, IoT Sensor, Audio Engineering, Radar). Menggembirakan (Joyful): Praktik komputasi interaktif menggunakan Python (NumPy, SciPy, Matplotlib) untuk mendengar dan melihat sinyal. Kebijakan Etika AI: AI digunakan sebagai asisten eksplorasi dan akselerator coding; verifikasi matematis dan pemahaman logika mutlak wajib. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Struktur Pembelajaran & Bobot "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Integrasi Pembelajaran Mendala"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Urgensi DSP di Era Artificial Intelligence & Komputasi Modern",
+    "script": "Pada slide ini, kita membahas Urgensi DSP di Era Artificial Intelligence & Komputasi Modern. Mari kita perhatikan kolom sebelah kiri mengenai Mengapa Pengolahan Sinyal Digital Mutlak Diperlukan?. Dunia Fisik Bersifat Analog: Suara ucapan manusia, denyut jantung (EKG), gelombang seismik bumi, dan transmisi radio adalah fenomena kontinu waktu. Komputer Bekerja dalam Domain Biner Diskrit: Algoritma cerdas, LLM, dan model visi komputer tidak dapat memproses gelombang fisik kontinu secara langsung. DSP sebagai 'Mata dan Telinga' AI: Tanpa ekstraksi fitur DSP (filtering, denoising, transformasi Fourier, spektrogram), model AI akan tenggelam dalam derau (noise) mentah. Efisiensi Energi & Real-Time Processing: DSP modern dirancang untuk dieksekusi secara instan pada chip mikroprosesor berdaya rendah (Edge AI / IoT). Sekarang, mari kita tinjau kolom sebelah kanan mengenai Dampak Disrupsi Teknologi Berbasis DSP. Mengapa hal ini sangat fundamental? Active Noise Cancellation (ANC): Memproduksi 'anti-noise' dalam hitungan mikrodetik untuk meredam kebisingan kabin pesawat dan headphone. Sistem Biomedis Modern: Menghilangkan artefak interferensi jala-jala listrik 50 Hz pada rekaman elektrokardiogram pasien kritis. Komunikasi Seluler 5G/6G & WiFi 7: Modulasi OFDM canggih yang mengalirkan data gigabit per detik melalui udara. Smart Audio & Asisten Suara: Voice Activity Detection (VAD) dan Beamforming mikrofon array pada perangkat pintar. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Mengapa Pengolahan Sinyal Digi"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Dampak Disrupsi Teknologi Berb"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "4": {
+    "title": "Taksonomi & Klasifikasi Sinyal: Kontinu, Diskrit, dan Digital",
+    "script": "Pada slide ini, kita membahas Taksonomi & Klasifikasi Sinyal: Kontinu, Diskrit, dan Digital. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Sinyal Waktu Kontinu x(t). Didefinisikan untuk setiap nilai kontinu waktu t dalam bilangan real (t in R). Amplitudo x(t) bernilai kontinu dalam rentang dinamis tertentu. Contoh: Tegangan keluaran mikrofon analog, tekanan akustik udara, suhu ruangan kontinu. Pilar ke-2 adalah Sinyal Waktu Diskrit x[n]. Didefinisikan hanya pada indeks bilangan bulat diskrit (n in Z). Waktu telah disampling dengan periode Ts, di mana t = n * Ts. Amplitudo masih bernilai kontinu (presisi tak hingga sebelum kuantisasi register). Pilar ke-3 adalah Sinyal Digital x_d[n]. Sumbu waktu terdiskritisasi (disampling) dan sumbu amplitudo terkuantisasi. Nilai amplitudo dibatasi ke dalam level diskrit berhingga (kata biner b-bit). Representasi riil yang tersimpan di memori komputer, flash RAM, atau file WAV/MP3. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Sinyal Waktu Kontinu x(t)"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Sinyal Waktu Diskrit x[n]"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Sinyal Digital x_d[n]"
+      }
+    ]
+  },
+  "5": {
+    "title": "Formulasi Matematis Sinyal Sinusoidal Kontinu vs Diskrit",
+    "script": "Pada slide ini, kita membahas Formulasi Matematis Sinyal Sinusoidal Kontinu vs Diskrit. Perhatikan persamaan matematika inti untuk Representasi Sinyal Sinusoidal Domain Waktu di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. A: Amplitudo puncak sinyal (mengukur kekuatan atau simpangan maksimum). F: Frekuensi siklik analog dalam satuan Hertz (siklus per detik). t: Waktu fisik kontinu dalam detik (sekon). Fs: Frekuensi sampling (laju pencuplikan per detik, Fs = 1/Ts). omega: Frekuensi sudut ternormalisasi diskrit (radian/sampel), omega = 2*pi*(F/Fs). theta: Pergeseran sudut fase awal (radian). Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Langkah 1: Tentukan sinyal analog x(t) = 5 cos(200*pi*t). Frekuensi analog F = 100 Hz. Langkah 2: Pilih frekuensi sampling Fs = 800 Hz (memenuhi syarat Nyquist Fs > 2F). Langkah 3: Substitusikan waktu kontinu t = n / Fs = n / 800 ke dalam sinyal. Langkah 4: Hitung frekuensi ternormalisasi: omega = 200*pi / 800 = pi/4 rad/sampel. Langkah 5: Diperoleh sekuens diskrit: x[n] = 5 cos((pi/4)*n). Periode dasar N = 2*pi / (pi/4) = 8 sampel. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Representasi Sinyal Sinusoidal"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "6": {
+    "title": "Arsitektur Blok Diagram Sistem DSP End-to-End",
+    "script": "Pada slide ini, kita membahas Arsitektur Blok Diagram Sistem DSP End-to-End. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Tahap Input Analog. Transduser (Sensor/Mikrofon): Mengubah besaran fisik ke tegangan listrik. Anti-Aliasing Filter (LPF Analog): Memangkas frekuensi di atas Fs/2 guna mencegah distorsi aliasing sebelum proses pencuplikan. Pilar ke-2 adalah 2. Inti Konversi & Prosesor DSP. ADC (Analog-to-Digital Converter): Sample-and-Hold & Kuantisasi biner b-bit. DSP Core (CPU / GPU / FPGA / NPU): Menjalankan algoritma pemfilteran FIR/IIR, FFT, dan transformasi secara matematis presisi. Pilar ke-3 adalah 3. Tahap Rekonstruksi Output. DAC (Digital-to-Analog Converter): Mengubah sekuens digital kembali ke tegangan bertangga. Reconstruction Smoothing Filter: Menghilangkan komponen frekuensi harmonisa pencuplikan untuk menghasilkan sinyal analog mulus. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Tahap Input Analog"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Inti Konversi & Proses"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Tahap Rekonstruksi Out"
+      }
+    ]
+  },
+  "7": {
+    "title": "Komparasi Keunggulan: Sistem Pemrosesan Digital vs Analog",
+    "script": "Pada slide ini, kita membahas Komparasi Keunggulan: Sistem Pemrosesan Digital vs Analog. Mari kita perhatikan kolom sebelah kiri mengenai Keunggulan Mutlak Sistem Digital (DSP). Presisi & Keterulangan (Reproducibility): Tidak terpengaruh toleransi nilai resistor/kapasitor maupun perubahan suhu lingkungan (thermal drift). Fleksibilitas Pemrograman: Mengubah frekuensi cutoff filter semudah mengubah koefisien angka di baris kode, tanpa mengganti hardware fisik. Kemampuan Implementasi Kompleksitas Tinggi: Mampu merealisasikan filter fase linier sempurna (FIR) yang mustahil dibuat dengan rangkaian analog pasif/aktif. Kemudahan Kompresi & Penyimpanan: Data terkuantisasi dapat dikompresi (FLAC, MP3, AAC) dan ditransmisikan tanpa akumulasi noise kabel. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan & Batasan Sistem Digital. Mengapa hal ini sangat fundamental? Konsumsi Daya & Kecepatan ADC: Sinyal ultra-tinggi (misalnya sinyal radar frekuensi gelombang mikro puluh GHz) menuntut ADC berdaya besar dan mahal. Noise Kuantisasi: Pembulatan ke dalam representasi bit berhingga menimbulkan derau dasar (quantization error floor). Latensi Pemrosesan (Algorithmic Latency): Waktu buffering dan komputasi FFT/filter menimbulkan delay yang harus dioptimasi pada aplikasi real-time kritis. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Keunggulan Mutlak Sistem Digit"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan & Batasan Sistem Dig"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "8": {
+    "title": "Ekosistem Komputasi DSP Berbasis Python",
+    "script": "Pada slide ini, kita membahas Ekosistem Komputasi DSP Berbasis Python. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah NumPy (Numerical Python). Tulang punggung representasi larik vektor (ndarray) berkecepatan C. Operasi elemen-ke-elemen, dot product, matriks, dan aljabar linear sekuens sinyal diskrit. Contoh fungsi: np.arange, np.linspace, np.sin, np.convolve. Pilar ke-2 adalah SciPy (Signal Processing). Modul scipy.signal menyediakan algoritma DSP kelas industri. Desain filter FIR/IIR (firwin, butter, cheby1), respons frekuensi (freqz), transformasi Fourier, dan konvolusi cepat. Fungsi: scipy.signal.lfilter, sosfilt, spectrogram. Pilar ke-3 adalah Matplotlib & Visualisasi. Visualisasi grafik teknik standar publikasi ilmiah IEEE. Fungsi stem() khusus untuk merepresentasikan sekuens diskrit impuls jarum. Plotting domain frekuensi, kurva magnitudo (dB), fase, dan diagram pole-zero. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "NumPy (Numerical Python)"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "SciPy (Signal Processing)"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Matplotlib & Visualisasi"
+      }
+    ]
+  },
+  "9": {
+    "title": "Implementasi Python: Visualisasi Sinyal Kontinu vs Sinyal Diskrit",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Visualisasi Sinyal Kontinu vs Sinyal Diskrit. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Kaidah Visualisasi Sinyal Diskrit. Sinyal analog didekati menggunakan grid waktu sangat rapat (oversampling, misalnya dt = 0.0001 s) dengan fungsi plt.plot(). Sinyal diskrit wajib divisualisasikan menggunakan diagram jarum impuls dengan fungsi plt.stem(), karena sinyal hanya terdefinisi pada indeks bilangan bulat n. Perhatikan parameter use_line_collection=True pada matplotlib untuk performa rendering grafis yang optimal. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Kaidah Visualisasi Sinyal Disk"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "10": {
+    "title": "Praktikum Mandiri Lab 01: Eksplorasi Sinyal Diskrit",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 01: Eksplorasi Sinyal Diskrit. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 01. Judul: Eksplorasi Pembangkitan Sinyal Diskrit dan Efek Variasi Frekuensi Sampling. Alat & Bahan: Python 3.10+, Jupyter Notebook / Google Colab, pustaka NumPy & Matplotlib. Langkah Kerja 1: Bangkitkan sinyal sinusoidal f = 10 Hz selama 0.5 detik. Langkah Kerja 2: Lakukan pencuplikan dengan tiga nilai Fs berbeda: Fs1 = 100 Hz, Fs2 = 30 Hz, Fs3 = 12 Hz. Langkah Kerja 3: Visualisasikan ketiga hasil menggunakan subplot 3x1 dengan plt.stem(). Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Output Wajib. Mengapa hal ini sangat fundamental? Tantangan Praktik: Amati apa yang terjadi pada bentuk gelombang ketika Fs = 12 Hz (mendekati nilai 10 Hz). Apakah bentuk sinusoidal masih dapat dikenali? Pertanyaan Evaluasi: Mengapa jumlah titik sampel pada sekuens berubah secara proporsional terhadap frekuensi sampling? Output Praktikum: Simpan file notebook 'Lab01_NIM_Nama.ipynb' berisi kode lengkap, penjelasan grafik, dan kesimpulan ketercapaian CPMK 1. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 01"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Output Wa"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "11": {
+    "title": "Integrasi Kecerdasan Artifisial (AI-Assisted DSP)",
+    "script": "Pada slide ini, kita membahas Integrasi Kecerdasan Artifisial (AI-Assisted DSP). Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Akselerasi Pemahaman. Prompt Konseptual Efektif: 'Jelaskan perbedaan mendasar antara frekuensi sudut analog Omega (rad/s) dan frekuensi sudut diskrit omega (rad/sampel) dengan analogi roda berputar.' AI Code Assistant: Gunakan AI untuk menghasilkan template boiler-plate sinyal uji sinusoidal multikomponen. Debugging Logika Vektor: Tanyakan kepada AI penyebab error dimensi saat melakukan operasi dot product antara vektor waktu n dan sinyal x[n]. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Verifikasi & Validasi Mahasiswa. Mengapa hal ini sangat fundamental? Pemeriksaan Skala Nyquist: Pastikan rumus yang disarankan AI tidak melanggar batasan frekuensi sampling Fs >= 2 Fmax. Verifikasi Sumbu Grafik: Cek apakah AI memplot sumbu horizontal sebagai indeks sampel n (bilangan bulat) atau detik nyata t. Integritas Akademik: Cantumkan riwayat prompt dan deklarasi penggunaan AI dalam laporan praktikum sesuai regulasi UN Manado. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI untuk Akseleras"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Verifikasi & Validas"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Latihan Soal HOTS & Pertanyaan Diskusi Kritis",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS & Pertanyaan Diskusi Kritis. Mari kita perhatikan kolom sebelah kiri mengenai Pertanyaan Analisis Matematis (HOTS). Soal 1: Suatu sinyal analog x(t) = 3 cos(100 pi t) + 2 sin(250 pi t) disampling dengan Fs = 200 Hz. Tentukan frekuensi analog setiap komponen, frekuensi diskrit omega masing-masing komponen, dan periksa apakah ada komponen yang mengalami aliasing! Soal 2: Buktikan secara matematis apakah sekuens diskrit x[n] = cos(0.1 pi n) bersifat periodik! Jika ya, berapa periode dasar fundamental N-nya? Sekarang, mari kita tinjau kolom sebelah kanan mengenai Diskusi Rekayasa & Logika Komputasi. Mengapa hal ini sangat fundamental? Topik Diskusi 1: 'Dalam era streaming audio definisi tinggi (Hi-Res Audio 192 kHz / 24-bit), apakah telinga manusia benar-benar mampu mendengar frekuensi di atas 20 kHz, ataukah ada pertimbangan filter anti-aliasing yang mendasari standarisasi tersebut?' Topik Diskusi 2: 'Bagaimana arsitektur DSP pada sensor denyut nadi smartwatch (PPG) memisahkan denyut darah mikro dari goyangan tangan saat berolahraga?' ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pertanyaan Analisis Matematis "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Diskusi Rekayasa & Logika Komp"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "13": {
+    "title": "Rangkuman Pertemuan 01 & Refleksi Pembelajaran Mendalam",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 01 & Refleksi Pembelajaran Mendalam. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa dunia fisik analog dan dunia komputasi digital dihubungkan oleh jembatan sampling waktu dan kuantisasi amplitudo. Saya memahami bahwa frekuensi diskrit terikat erat pada laju pencuplikan Fs. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Teknologi modern seperti AI pengenal suara, Active Noise Cancellation, dan komunikasi 5G bergantung sepenuhnya pada keandalan sistem DSP hulu. Keahlian DSP membuka peluang karir strategis di bidang Audio AI, Edge Computing, dan Biomedis. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Sangat mengesankan dapat memvisualisasikan bagaimana gelombang matematika berubah wujud menjadi deretan angka diskrit di layar Python. Eksplorasi kode langsung di Jupyter Notebook memberikan kepuasan pemahaman yang nyata. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "14": {
+    "title": "Tindak Lanjut Pembelajaran & Referensi Akademik",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut Pembelajaran & Referensi Akademik. Sebagai rangkuman perkuliahan Pertemuan ke-1: Sinyal analog x(t) kontinu, sinyal diskrit x[n] memiliki waktu bulat, sinyal digital terkuantisasi penuh. Frekuensi ternormalisasi diskrit omega = 2*pi*(F/Fs) radian per sampel. Arsitektur DSP membutuhkan Anti-Aliasing LPF, ADC, DSP Core, DAC, dan Reconstruction Filter. Python (NumPy, SciPy, Matplotlib) menjadi fondasi komputasi praktikum mandiri. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kerjakan Laporan Praktikum Lab 01 dan unggah ke LMS sebelum Pertemuan 2. Pelajari materi Bab 2 buku Oppenheim mengenai Representasi Sekuens Waktu Diskrit. Cek ketersediaan lingkungan instalasi Python di laptop masing-masing. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

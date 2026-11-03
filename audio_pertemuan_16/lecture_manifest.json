@@ -1,0 +1,237 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-16. Hari ini kita akan mengkaji secara komprehensif topik utama: Evaluasi Akhir Semester (UAS): Sidang Presentasi Proyek DSP Berdampak. Sidang Akademik Demonstrasi Prototipe Mandiri, Pengujian Autentisitas Kode, Evaluasi Ketercapaian Mutu OBE CPMK 4-6, dan Refleksi Penutup Perkuliahan. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK4, CPMK5, CPMK6 (CPL-B, CPL-C, CPL-D) dengan bobot evaluasi sebesar 15 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Evaluasi Akhir Semester (UAS): Sida"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK4, CPMK5, CPMK6 (CPL-B, CPL-C, CPL-D)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Visi Sidang Presentasi Akhir: Pembuktian Kemahiran Rekayasa",
+    "script": "Pada slide ini, kita membahas Visi Sidang Presentasi Akhir: Pembuktian Kemahiran Rekayasa. Mari kita perhatikan kolom sebelah kiri mengenai Panggung Pembuktian Kompetensi Sarjana. Selamat datang di Sidang Presentasi Proyek Akhir Pengolahan Sinyal Digital Universitas Nusantara Manado! Hari ini setiap kelompok membuktikan kemahiran komputasi, kedalaman analisis matematis, dan tanggung jawab profesional yang telah diasah selama 15 minggu perkuliahan intensif. Sidang ini merupakan asesmen autentik (authentic assessment) untuk mengukur secara tuntas ketercapaian CPMK 4 (Perancangan Filter), CPMK 5 (Pengembangan Pipeline Python), dan CPMK 6 (Penyajian Solusi Nyata & Etika AI). Sekarang, mari kita tinjau kolom sebelah kanan mengenai Mekanisme & Alokasi Waktu Sidang. Mengapa hal ini sangat fundamental? Total Waktu per Kelompok: 20 Menit. 1. Presentasi Paparan Slide (8 Menit): Latar belakang, perumusan masalah, arsitektur pipeline DSP, dan hasil evaluasi metrik. 2. Demonstrasi Langsung / Live Demo (5 Menit): Menjalankan kode program pada data uji nyata di depan dosen dan rekan kelas. 3. Tanya Jawab Kritis & Live Code Defense (7 Menit): Pertanyaan konseptual mendalam dari dosen pengampu untuk menguji pemahaman mandiri setiap individu anggota tim. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Panggung Pembuktian Kompetensi"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Mekanisme & Alokasi Waktu Sida"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Struktur Wajib Presentasi Mahasiswa",
+    "script": "Pada slide ini, kita membahas Struktur Wajib Presentasi Mahasiswa. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Masalah & Landasan Teori. Slide 1: Judul Proyek, Nama Anggota, NIM, dan Klaster Topik. Slide 2: Konteks urgensi masalah dan karakteristik sinyal yang dihadapi. Slide 3: Landasan matematis metode DSP yang dipilih (rumus filter FIR/IIR, transformasi frekuensi, atau rumus fitur spektral). Pilar ke-2 adalah 2. Arsitektur Pipeline & Kode. Slide 4: Blok diagram alur pemrosesan dari input mentah hingga output bersih. Slide 5: Desain filter dan implementasi kode Python modular. Slide 6: Spesifikasi dataset dan lisensi penggunaan data terbuka yang sah. Pilar ke-3 adalah 3. Evaluasi Metrik & Refleksi. Slide 7: Grafik perbandingan domain waktu dan domain frekuensi sebelum vs sesudah pemrosesan. Slide 8: Tabel komparasi metrik (SNR, MSE, THD) terhadap baseline pembanding. Slide 9: Keterbatasan solusi, deklarasi transparansi AI, dan kesimpulan dampak. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Masalah & Landasan Teo"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Arsitektur Pipeline & "
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Evaluasi Metrik & Refl"
+      }
+    ]
+  },
+  "4": {
+    "title": "Mekanisme Uji Autentisitas & Live Code Defense",
+    "script": "Pada slide ini, kita membahas Mekanisme Uji Autentisitas & Live Code Defense. Mari kita perhatikan kolom sebelah kiri mengenai Protokol Live Code Defense oleh Dosen. Untuk menjamin bahwa mahasiswa benar-benar memahami kode dan tidak sekadar menyalin hasil AI secara buta, Dosen Pengampu akan memberikan modifikasi parameter spontan di tempat: Contoh Uji 1: 'Coba ubah frekuensi cutoff filter dari 1500 Hz menjadi 800 Hz sekarang juga. Jalankan ulang program. Jelaskan apa yang berubah pada grafik spektrum!' Contoh Uji 2: 'Tunjukkan di baris kode mana fungsi windowing diaplikasikan sebelum komputasi FFT!' Contoh Uji 3: 'Jelaskan mengapa Anda memilih koefisien biquad SOS bukan Direct Form!' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kriteria Penguasaan Individu. Mengapa hal ini sangat fundamental? Setiap anggota kelompok dinilai secara independen berdasarkan kemampuannya menjawab pertanyaan teknis. Mahasiswa yang tidak mampu menjelaskan logika baris kode yang dibuatnya akan mengalami reduksi skor individu secara signifikan. Penguasaan konsep mendalam mengalahkan dekorasi slide presentasi. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Protokol Live Code Defense ole"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kriteria Penguasaan Individu"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "5": {
+    "title": "Rubrik Asesmen Resmi Sidang Proyek OBE",
+    "script": "Pada slide ini, kita membahas Rubrik Asesmen Resmi Sidang Proyek OBE. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Kriteria 1 & 2: Desain & Implementasi. Pemodelan Masalah (20%): Formulasi masalah tajam, alasan pemilihan metode tepat dan terukur. Implementasi DSP (25%): Algoritma berfungsi sempurna, kode terstruktur, modular, dan bebas error. Pilar ke-2 adalah Kriteria 3: Validasi Empiris. Bobot 20% Nilai. Eksperimen komparatif dengan baseline, pengujian variasi parameter, visualisasi grafik jelas, interpretasi metrik kritis (SNR, MSE). Pilar ke-3 adalah Kriteria 4 & 5: Komunikasi & Integritas. Komunikasi & Dampak (15%): Presentasi lugas, demonstrasi meyakinkan, dokumentasi IEEE rapi. Etika Data & AI (20%): Lisensi data sah, transparansi AI lengkap, kemandirian menjawab live defense terbukti unggul. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Kriteria 1 & 2: Desain & "
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Kriteria 3: Validasi Empi"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Kriteria 4 & 5: Komunikas"
+      }
+    ]
+  },
+  "6": {
+    "title": "Showcase Inovasi: Pameran Karya Terbaik Mahasiswa",
+    "script": "Pada slide ini, kita membahas Showcase Inovasi: Pameran Karya Terbaik Mahasiswa. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Inovasi Klaster Audio. Aplikasi pembersih rekaman wawancara berbasis Bandpass Butterworth SOS dan Spectral Subtraction dengan slider frekuensi interaktif. Mampu meningkatkan SNR audio dari 4.2 dB melonjak menjadi 18.5 dB. Pilar ke-2 adalah Inovasi Klaster Sensor Getaran. Sistem pemantau kondisi motor listrik industri berbasis analisis spektrum FFT getaran akselerometer IoT. Mampu mendeteksi tanda awal kerusakan bearing pada frekuensi harmonisa 180 Hz sebelum mesin mengalami kerusakan fatal. Pilar ke-3 adalah Inovasi Klaster Biosinyal Terbuka. Pipeline denoising sinyal denyut nadi PPG untuk smartwatch edukasi. Menghilangkan artefak gerakan tangan (motion artifact) menggunakan filter bandpass FIR fase linier tanpa mengubah jeda interval puncak denyut darah. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Inovasi Klaster Audio"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Inovasi Klaster Sensor Ge"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Inovasi Klaster Biosinyal"
+      }
+    ]
+  },
+  "7": {
+    "title": "Evaluasi Ketercapaian Mutu OBE Semester V",
+    "script": "Pada slide ini, kita membahas Evaluasi Ketercapaian Mutu OBE Semester V. Mari kita perhatikan kolom sebelah kiri mengenai Target Mutu Kurikulum Berbasis Capaian (OBE). Target Mutu Universitas Nusantara Manado: Sekurang-kurangnya 70% mahasiswa memperoleh skor minimal 70 pada seluruh CPMK (CPMK 1 s.d. CPMK 6). Evaluasi ketercapaian dihitung secara transparan berbasis portofolio asesmen: Partisipasi (5%), Tugas (15%), Praktikum (25%), UTS (20%), dan Proyek Akhir/UAS (35%). Bagi mahasiswa yang melampaui batas kompetensi, portofolio proyek direkomendasikan untuk diajukan ke seminar nasional atau kompetisi inovasi teknologi. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Peta Pencapaian Lulusan (CPL Terpenuhi). Mengapa hal ini sangat fundamental? CPL-A (Pengetahuan Matematika & Sains Komputasi): Terbukti melalui penguasaan sampling, konvolusi, transformasi Fourier, dan bidang-Z. CPL-B (Keterampilan Analisis & Penerapan Algoritma): Terbukti melalui desain filter FIR/IIR dan analisis spektrum. CPL-C (Perancangan Solusi Rekayasa): Terbukti melalui pembangunan pipeline DSP Python end-to-end. CPL-D (Profesionalisme & Etika): Terbukti melalui kerjasama tim, etika perlindungan data, dan transparansi AI. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Target Mutu Kurikulum Berbasis"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Peta Pencapaian Lulusan (CPL T"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "8": {
+    "title": "Refleksi Akhir Perkuliahan: Perjalanan dari Waktu ke Frekuensi",
+    "script": "Pada slide ini, kita membahas Refleksi Akhir Perkuliahan: Perjalanan dari Waktu ke Frekuensi. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Mahasiswa menyadari metamorfosis cara berpikirnya: dari melihat gelombang sebagai misteri rumit, kini mampu membedah komponen frekuensi dan respons sistemnya secara logis dan presisi. Menyadari bahwa setiap keputusan rekayasa selalu memiliki trade-off yang harus dipertanggungjawabkan. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Digital Signal Processing bukan sekadar kumpulan rumus kalkulus di papan tulis, melainkan fondasi tak terlihat yang menggerakkan seluruh peradaban informasi modern: telekomunikasi seluler, audio digital, kecerdasan buatan, hingga eksplorasi luar angkasa. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Rasa bangga dan gembira yang luar biasa atas kemampuan merancang sistem DSP sendiri dari nol, memfilter derau, dan melihat kode Python bekerja nyata melayani kebutuhan komputasi. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "9": {
+    "title": "Arah Masa Depan: DSP di Era Generative AI & Edge Computing",
+    "script": "Pada slide ini, kita membahas Arah Masa Depan: DSP di Era Generative AI & Edge Computing. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Deep Learning for Audio (Neural DSP). Konvergensi antara arsitektur filter klasik dengan Neural Network (Differentiable DSP). Model pemisahan sumber audio (Source Separation / Music Demixing) dan sintesis suara ucapan natural (Voice Cloning AI). Pilar ke-2 adalah 2. TinyML & Edge AI DSP. Menjalankan pipeline DSP dan inferensi model AI langsung pada mikrokontroler mikroskopis berdaya baterai koin (ARM Cortex-M, ESP32). Smart Agriculture, pemantauan satwa liar hutan, dan sensor kesehatan portabel. Pilar ke-3 adalah 3. Komunikasi Generasi Baru 6G. Pemrosesan sinyal pada frekuensi terahertz (THz), Massive MIMO beamforming adaptif, dan Integrated Sensing and Communications (ISAC). ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Deep Learning for Audi"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. TinyML & Edge AI DSP"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Komunikasi Generasi Ba"
+      }
+    ]
+  },
+  "10": {
+    "title": "Pesan Penutup Dosen Pengampu & Pengesahan Perkuliahan",
+    "script": "Pada slide ini, kita membahas Pesan Penutup Dosen Pengampu & Pengesahan Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-16: 16 Pertemuan Pengolahan Sinyal Digital telah tuntas diselesaikan dengan standar mutu tertinggi. Terima kasih atas dedikasi, kerja keras, ketelitian analitis, dan integritas akademik seluruh mahasiswa Universitas Nusantara Manado. Jadilah sarjana informatika yang tidak hanya pandai memakai alat, tetapi menguasai prinsip sains fundamental di balik alat tersebut. 'Sinyal yang jernih lahir dari filter yang tepat; ilmu yang bermanfaat lahir dari ketekunan yang tulus.' Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Pastikan seluruh nilai praktikum Lab 01 s.d. Lab 15 dan laporan proyek akhir terunggah lengkap di LMS. Cek nilai akhir dan transkrip ketercapaian CPMK pada portal akademik resmi. Kembangkan proyek akhir menjadi draf skripsi atau publikasi jurnal ilmiah! Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

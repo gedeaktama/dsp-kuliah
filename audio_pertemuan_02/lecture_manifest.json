@@ -1,0 +1,372 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-2. Hari ini kita akan mengkaji secara komprehensif topik utama: Representasi Sinyal Waktu Diskrit & Operasi Dasar Sinyal. Karakteristik Sekuens Diskrit, Sinyal Elementer (Impuls, Step, Ramp, Sinusoid), Dekomposisi Genap-Ganjil, serta Operasi Transformasi Waktu & Amplitudo. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK1 (CPL-A) dengan bobot evaluasi sebesar 5 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Representasi Sinyal Waktu Diskrit &"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK1 (CPL-A)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Sekuens Waktu Diskrit sebagai Fondasi Komputasi",
+    "script": "Pada slide ini, kita membahas Sekuens Waktu Diskrit sebagai Fondasi Komputasi. Mari kita perhatikan kolom sebelah kiri mengenai Definisi Formal Sekuens Diskrit. Sekuens diskrit direpresentasikan sebagai fungsi x[n] di mana variabel independen n adalah bilangan bulat (n in Z = {..., -2, -1, 0, 1, 2, ...}). x[n] tidak pernah terdefinisi untuk nilai n non-integer (misalnya x[1.5] tidak memiliki makna matematis). Empat Mode Representasi Sinyal Diskrit: Fungsional/Persamaan Matematis, Daftar Tabular Nilai Angka, Barisan Vektor Sekuensial dengan Penanda Origin, dan Diagram Batang Stem Plot. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Notasi Vektor & Penanda Titik Origin (n = 0). Mengapa hal ini sangat fundamental? Notasi kurung kurawal: x[n] = {..., 2, 1, [4], 0, -1, ...} di mana simbol panah bawah atau kurung siku [ ] menandakan titik asal n = 0. Jika tidak ada tanda panah/kurung siku khusus, elemen pertama secara default diasumsikan sebagai titik n = 0. Durasi Berhingga (Finite-Length) vs Durasi Tak Berhingga (Infinite-Length): Panjang sekuens N sangat menentukan kebutuhan alokasi memori komputer. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Definisi Formal Sekuens Diskri"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Notasi Vektor & Penanda Titik "
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Sinyal Elementer I: Unit Sample / Impuls Satuan delta[n]",
+    "script": "Pada slide ini, kita membahas Sinyal Elementer I: Unit Sample / Impuls Satuan delta[n]. Perhatikan persamaan matematika inti untuk Definisi Impuls Satuan (Kronecker Delta) di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. delta[n]: Fungsi impuls diskrit Kronecker bernilai tepat 1 pada origin n=0 dan 0 di semua tempat lain. delta[n-k]: Impuls yang digeser sejauh k sampel ke arah kanan (time delay). Perbedaan Kritis dengan Dirac Kontinu: Impuls diskrit memiliki amplitudo berhingga = 1 (bukan tak hingga), sehingga tidak menimbulkan singularitas numerik. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Sifat Ekstraksi / Sifting Property: x[n] * delta[n - k] = x[k] * delta[n - k]. Penjumlahan Sifting: sum_{n=-inf}^{inf} x[n] delta[n - k] = x[k]. Operasi ini mengambil nilai tunggal sinyal pada indeks k. Dekomposisi Sinyal Sebarang: Setiap sinyal diskrit x[n] dapat dituliskan secara mutlak sebagai kombinasi linier impuls terboboti: Formula Representasi: x[n] = sum_{k=-inf}^{inf} x[k] delta[n - k]. Inilah prinsip paling mendasar yang memungkinkan lahirnya operasi konvolusi pada sistem LTI! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Definisi Impuls Satuan (Kronec"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "4": {
+    "title": "Sinyal Elementer II: Unit Step u[n] dan Ramp r[n]",
+    "script": "Pada slide ini, kita membahas Sinyal Elementer II: Unit Step u[n] dan Ramp r[n]. Mari kita perhatikan kolom sebelah kiri mengenai Unit Step Sequence u[n]. Definisi Matematis: u[n] = 1 untuk n >= 0, dan u[n] = 0 untuk n < 0. Representasi Sakelar: Digunakan untuk memodelkan sinyal kausal yang baru aktif menyala pada waktu n = 0. Hubungan Fundamental dengan Impuls: delta[n] = u[n] - u[n - 1]. Akumulasi Impuls: u[n] = sum_{k=-inf}^{n} delta[k] = sum_{k=0}^{inf} delta[n - k]. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Unit Ramp Sequence r[n]. Mengapa hal ini sangat fundamental? Definisi Matematis: r[n] = n untuk n >= 0, dan r[n] = 0 untuk n < 0. Hubungan dengan Unit Step: r[n] = n * u[n]. Representasi Integrator Diskrit: Sinyal ramp merupakan hasil akumulasi bertingkat dari sinyal unit step. Aplikasi: Digunakan sebagai sinyal uji akselerasi pada sistem kendali diskrit dan estimasi kecepatan sensor gerak. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Unit Step Sequence u[n]"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Unit Ramp Sequence r[n]"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "5": {
+    "title": "Sinyal Elementer III: Sekuens Eksponensial Real & Kompleks",
+    "script": "Pada slide ini, kita membahas Sinyal Elementer III: Sekuens Eksponensial Real & Kompleks. Perhatikan persamaan matematika inti untuk Formulasi Sekuens Eksponensial Diskrit di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. a: Parameter basis real. Jika |a| < 1 sinyal meluruh (decaying); jika |a| > 1 sinyal membesar (growing); jika a = 1 sinyal unit step. sigma: Koefisien peredaman real (damping factor). omega_0: Frekuensi osilasi sudut diskrit dalam radian per sampel. Formula Euler: e^(j*omega_0*n) = cos(omega_0*n) + j*sin(omega_0*n). Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Analisis Kasus 1 (0 < a < 1, misal a = 0.8): Sekuens bernilai positif dan meluruh mulus menuju nol asimtotik. Analisis Kasus 2 (-1 < a < 0, misal a = -0.8): Sekuens meluruh dengan tanda berganti-ganti (berosilasi polaritas positif-negatif). Analisis Kasus 3 (|a| > 1): Sinyal membesar tanpa batas (unbounded), memodelkan sistem tidak stabil. Eksponensial Kompleks: Merupakan fungsi eigen dari sistem LTI diskrit, fondasi bagi Transformasi Fourier dan Transformasi-Z! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Formulasi Sekuens Eksponensial"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "6": {
+    "title": "Operasi Transformasi Sumbu Waktu (Independent Variable)",
+    "script": "Pada slide ini, kita membahas Operasi Transformasi Sumbu Waktu (Independent Variable). Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Pergeseran Waktu (Shifting). y[n] = x[n - k]. Jika k > 0, sinyal mengalami keterlambatan (time delay), bergeser ke kanan. Jika k < 0, sinyal mengalami kemajuan (time advance), bergeser ke kiri. Contoh: Menghasilkan efek gema suara (echo/delay). Pilar ke-2 adalah 2. Pembalikan Waktu (Reversal/Folding). y[n] = x[-n]. Sinyal dicerminkan terhadap sumbu vertikal n = 0. Sampel pada waktu masa depan menjadi masa lalu. Merupakan langkah wajib pertama dalam operasi konvolusi analitis. Pilar ke-3 adalah 3. Penskalaan Waktu (Decimation & Expansion). Downsampling (Decimation): y[n] = x[M*n], mengambil setiap sampel ke-M dan membuang sampel lainnya. Upsampling (Expansion): Menyisipkan L-1 angka nol di antara sampel bersebelahan. Operasi krusial pada multirate DSP. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Pergeseran Waktu (Shif"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Pembalikan Waktu (Reve"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Penskalaan Waktu (Deci"
+      }
+    ]
+  },
+  "7": {
+    "title": "Operasi Amplitudo Sinyal (Dependent Variable)",
+    "script": "Pada slide ini, kita membahas Operasi Amplitudo Sinyal (Dependent Variable). Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Penskalaan Amplitudo (Scaling). y[n] = c * x[n], di mana c adalah skalar konstanta pengali. Jika |c| > 1 terjadi penguatan sinyal (amplification). Jika |c| < 1 terjadi pelemahan sinyal (attenuation). Direalisasikan oleh komponen Multiplier pada hardware DSP. Pilar ke-2 adalah Penjumlahan & Pengurangan. y[n] = x1[n] + x2[n]. Dihitung secara paralel untuk setiap indeks n yang berkorespondensi. Direalisasikan oleh komponen Adder pada sirkuit pemrosesan sinyal. Contoh: Mencampur dua trek audio (audio mixer). Pilar ke-3 adalah Perkalian Sinyal (Modulasi). y[n] = x1[n] * x2[n] (perkalian elemen-ke-elemen, bukan konvolusi!). Aplikasi: Modulasi amplitudo (AM), windowing untuk mengurangi spectral leakage pada FFT. Contoh: Mengalikan sinyal dengan window Hamming. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Penskalaan Amplitudo (Sca"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Penjumlahan & Pengurangan"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Perkalian Sinyal (Modulas"
+      }
+    ]
+  },
+  "8": {
+    "title": "Dekomposisi Sinyal: Komponen Genap (Even) & Ganjil (Odd)",
+    "script": "Pada slide ini, kita membahas Dekomposisi Sinyal: Komponen Genap (Even) & Ganjil (Odd). Perhatikan persamaan matematika inti untuk Formula Dekomposisi Simetri Sinyal di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. x_e[n]: Komponen genap (symmetric/even). Memenuhi sifat x_e[-n] = x_e[n]. x_o[n]: Komponen ganjil (anti-symmetric/odd). Memenuhi sifat x_o[-n] = -x_o[n]. Pada origin n=0, x_o[0] selalu bernilai 0. Universalitas: Setiap sinyal sebarang, tanpa perkecualian, dapat diuraikan secara unik menjadi pasangan sinyal genap dan ganjil. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Contoh: Diberikan sinyal kausal berhingga x[n] = { [2], 4, 6 } untuk n = 0, 1, 2. Langkah 1: Bentuk sinyal hasil pencerminan x[-n] = { 6, 4, [2] } untuk n = -2, -1, 0. Langkah 2: Hitung komponen genap: x_e[0] = (2+2)/2 = 2. x_e[1] = x_e[-1] = 4/2 = 2. x_e[2] = x_e[-2] = 6/2 = 3. Hasil x_e[n]: { 3, 2, [2], 2, 3 } untuk n in [-2, 2]. Langkah 3: Hitung komponen ganjil: x_o[0] = (2-2)/2 = 0. x_o[1] = (4-0)/2 = 2, x_o[-1] = (0-4)/2 = -2. x_o[2] = 3, x_o[-2] = -3. Hasil x_o[n]: { -3, -2, [0], 2, 3 } untuk n in [-2, 2]. Verifikasi: x_e[n] + x_o[n] tepat sama dengan x[n]! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Formula Dekomposisi Simetri Si"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "9": {
+    "title": "Energi dan Daya Sinyal Waktu Diskrit",
+    "script": "Pada slide ini, kita membahas Energi dan Daya Sinyal Waktu Diskrit. Mari kita perhatikan kolom sebelah kiri mengenai Energi Sinyal Diskrit (E). Definisi Matematis: E = sum_{n=-inf}^{inf} |x[n]|^2. Sinyal Energi (Energy Signal): Sinyal yang memiliki energi total berhingga (0 < E < inf). Implikasi: Semua sinyal dengan durasi berhingga dan amplitudo berhingga dipastikan merupakan sinyal energi. Daya rata-rata untuk sinyal energi bernilai nol (P = 0) karena energi dibagi durasi waktu tak terhingga. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Daya Sinyal Diskrit (P). Mengapa hal ini sangat fundamental? Definisi Matematis: P = lim_{N->inf} (1 / (2N + 1)) sum_{n=-N}^{N} |x[n]|^2. Sinyal Daya (Power Signal): Sinyal dengan daya rata-rata berhingga dan bukan nol (0 < P < inf). Energinya bernilai tak terhingga (E = inf). Contoh Klasik: Sinyal periodik seumur hidup x[n] = A cos(omega n + theta). Sifat Mutlak: Sebuah sinyal dapat berupa sinyal energi, sinyal daya, atau bukan kedua-duanya (misalnya sinyal ramp yang divergen). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Energi Sinyal Diskrit (E)"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Daya Sinyal Diskrit (P)"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "10": {
+    "title": "Implementasi Python: Dekomposisi Sinyal Genap & Ganjil",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Dekomposisi Sinyal Genap & Ganjil. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Strategi Penataan Sumbu Indeks Simetris. Untuk melakukan operasi penjumlahan sinyal x[n] dan x[-n], kedua sekuens harus didefinisikan pada rentang indeks waktu n yang identik. Gunakan teknik zero-padding untuk menyelaraskan panjang array ke rentang simetris [-N, N]. Fungsi np.flip() digunakan untuk merefleksikan urutan elemen array secara cepat. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Strategi Penataan Sumbu Indeks"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "11": {
+    "title": "Praktikum Mandiri Lab 02: Manipulasi Sekuens Diskrit",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 02: Manipulasi Sekuens Diskrit. Mari kita perhatikan kolom sebelah kiri mengenai Spesifikasi Tugas Praktikum 02. Judul: Pembuatan Modul Python untuk Operasi Sinyal Diskrit (Shifting, Reversal, Scaling, Dekomposisi). Tugas 1: Buat fungsi signal_shift(x, n, k) yang menggeser sinyal sejauh k sampel tanpa mengubah bentuk aslinya. Tugas 2: Buat fungsi signal_add(x1, n1, x2, n2) yang mampu menjumlahkan dua sinyal dengan rentang indeks berbeda secara otomatis. Tugas 3: Buktikan teorema energi bahwa Energi Total = Energi Genap + Energi Ganjil (E_total = E_even + E_odd) pada sekuens uji. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Laporan. Mengapa hal ini sangat fundamental? Tantangan Praktik: Ujilah fungsi Anda pada sinyal pulsa segitiga asimetris. Tampilkan plot 4-subplot: Sinyal Asli, Sinyal Geser x[n-2], Komponen Genap, dan Komponen Ganjil. Verifikasi Numerik: Buktikan bahwa nilai x_odd[0] selalu tepat bernilai 0.000. Pengumpulan: Simpan kode dan tangkapan layar visualisasi pada format laporan standar OBE. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Spesifikasi Tugas Praktikum 02"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Laporan"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Integrasi AI: Validasi Kode Manipulasi Indeks Vektor",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Validasi Kode Manipulasi Indeks Vektor. Mari kita perhatikan kolom sebelah kiri mengenai Prompt Rekayasa untuk AI Assistant. Contoh Prompting Efektif: 'Tuliskan fungsi Python berbasis NumPy murni untuk melakukan pergeseran sinyal x[n] sejauh k langkah ke kanan, dengan tetap melacak array indeks waktu n secara tepat. Hindari error out-of-bounds.' Refactoring: 'Bagaimana cara menggabungkan dua dictionary sinyal diskrit {n: x_n} agar operasi perkalian elemen-ke-elemen berjalan dalam kompleksitas waktu O(N)?' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Pengujian & Verifikasi Kritis. Mengapa hal ini sangat fundamental? Waspada Kesalahan Klasik AI: Seringkali model AI menggeser elemen array data tetapi lupa menggeser sumbu indeks waktu n, atau sebaliknya. Pengujian Kasus Ekstrem (Edge Cases): Uji kode AI dengan pergeseran negatif (advance), pergeseran nol (k=0), dan sinyal dengan satu elemen tunggal. Deklarasi AI: Mahasiswa wajib mencantumkan verifikasi manual langkah per langkah atas setiap baris kode yang disarankan AI. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Prompt Rekayasa untuk AI Assis"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Pengujian & Verifika"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "13": {
+    "title": "Latihan Soal Analitis & HOTS Pertemuan 02",
+    "script": "Pada slide ini, kita membahas Latihan Soal Analitis & HOTS Pertemuan 02. Mari kita perhatikan kolom sebelah kiri mengenai Soal Transformasi Sumbu Waktu. Diberikan sinyal x[n] = { [1], 2, 3, 2, 1 } untuk n in [0, 4]. Gambarkan dan tentukan nilai numerik sekuens untuk: a) y1[n] = x[n - 2] b) y2[n] = x[2 - n]  (Perhatikan urutan operasi pembalikan dan pergeseran!) c) y3[n] = x[2n]  (Decimation) Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal Analisis Energi & Daya. Mengapa hal ini sangat fundamental? Soal 2: Tentukan apakah sinyal x[n] = (1/2)^n u[n] merupakan sinyal energi atau sinyal daya! Hitung nilai numerik total energinya menggunakan rumus deret geometri tak terhingga! Soal 3: Buktikan secara aljabar bahwa untuk sebarang sinyal real, integral/penjumlahan silang antara komponen genap dan ganjil sum_{n=-inf}^{inf} x_e[n] x_o[n] selalu bernilai tepat nol! ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal Transformasi Sumbu Waktu"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal Analisis Energi & Daya"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "14": {
+    "title": "Rangkuman Pertemuan 02 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 02 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa indeks n adalah urutan diskrit, bukan waktu riil kontinu. Saya memahami bahwa operasi pembalikan x[-n] mencerminkan sumbu waktu, memicu pemahaman awal tentang kausalitas sistem. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Dekomposisi sinyal menjadi komponen impuls delta[n] adalah rahasia mengapa komputer mampu memodelkan sistem akustik ruangan konser hingga filter audio smartphone. Operasi shifting adalah dasar pembentukan delay, gema suara, dan filter FIR tap. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Melihat bagaimana penjumlahan dua gelombang simetris genap dan ganjil dapat membentuk kembali sinyal aslinya secara presisi di layar grafik Python sangat memuaskan. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "15": {
+    "title": "Tindak Lanjut & Referensi Perkuliahan",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-2: Sinyal diskrit elementer meliputi impuls Kronecker delta[n], unit step u[n], dan eksponensial a^n. Sifting property membuktikan setiap sinyal adalah kombinasi linier impuls. Transformasi sumbu waktu mencakup pergeseran, pencerminan, dan decimation. Setiap sinyal dapat didekomposisi menjadi komponen genap dan ganjil unik. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Selesaikan modul fungsi Python Lab 02 dan kumpulkan notebook ke LMS. Baca materi Bab 2 Oppenheim mengenai Teorema Sampling dan Aliasing untuk persiapan pertemuan 3. Kerjakan 3 latihan soal HOTS pada buku catatan mandiri. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

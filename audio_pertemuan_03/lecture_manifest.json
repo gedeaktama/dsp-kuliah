@@ -1,0 +1,351 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-3. Hari ini kita akan mengkaji secara komprehensif topik utama: Sampling, Kuantisasi, Rekonstruksi, dan Fenomena Aliasing. Kaidah Konversi Analog ke Digital (ADC), Teorema Nyquist-Shannon, Analisis Spektrum Pencuplikan, Frequency Folding, dan Noise Kuantisasi. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK1 (CPL-A) dengan bobot evaluasi sebesar 6 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Sampling, Kuantisasi, Rekonstruksi,"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK1 (CPL-A)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Dilema Konversi Analog-ke-Digital (ADC)",
+    "script": "Pada slide ini, kita membahas Dilema Konversi Analog-ke-Digital (ADC). Mari kita perhatikan kolom sebelah kiri mengenai Pertanyaan Filosofis Konversi Data. Apakah mungkin sebuah sinyal analog kontinu yang memiliki jumlah titik tak terhingga dalam rentang 1 detik dapat diwakili secara sempurna oleh sejumlah berhingga sampel angka diskrit? Jawabannya: Ya, sangat mungkin! Asalkan sinyal tersebut memiliki batasan pita frekuensi (band-limited) dan laju pencuplikan memenuhi Teorema Nyquist-Shannon. Jika aturan ini dilanggar, informasi asli akan rusak secara permanen oleh fenomena aliasing yang tidak dapat dipulihkan oleh algoritma apapun. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Empat Tahapan Rantai ADC Modern. Mengapa hal ini sangat fundamental? 1. Anti-Aliasing Filter (Analog LPF): Menjamin spektrum input bersih di atas frekuensi batas Fs/2. 2. Sample-and-Hold (S/H): Menangkap nilai tegangan instan dan menahannya selama durasi konversi. 3. Quantizer: Memetakan amplitudo kontinu ke salah satu dari 2^B tingkat level diskrit. 4. Digital Encoder: Mengonversi level kuantisasi menjadi kata biner b-bit (bitstream). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pertanyaan Filosofis Konversi "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Empat Tahapan Rantai ADC Moder"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Teorema Sampling Nyquist-Shannon",
+    "script": "Pada slide ini, kita membahas Teorema Sampling Nyquist-Shannon. Perhatikan persamaan matematika inti untuk Syarat Mutlak Pencuplikan Tanpa Distorsi di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. Fs: Frekuensi sampling (laju pencuplikan per detik dalam satuan Hz). Ts: Periode sampling (selang waktu antar sampel, Ts = 1/Fs dalam sekon). Fmax: Frekuensi komponen tertinggi yang terkandung di dalam sinyal analog input. Nyquist Rate: Batas frekuensi pencuplikan minimum yang diizinkan (2 * Fmax). Nyquist Frequency (Folding Frequency): Batas tertinggi spektrum yang dapat direpresentasikan tanpa ambigu, F_fold = Fs / 2. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Kasus 1: Sinyal suara manusia dengan frekuensi tertinggi Fmax = 3.4 kHz (standar telepon). Nyquist Rate minimum: Fs_min = 2 * 3.4 kHz = 6.8 kHz. Standar industri memilih Fs = 8 kHz (aman). Kasus 2: Sinyal audio musik hi-fi dengan rentang pendengaran manusia Fmax = 20 kHz. Nyquist Rate minimum: Fs_min = 2 * 20 kHz = 40 kHz. Standar Audio CD menetapkan Fs = 44.1 kHz. Mengapa 44.1 kHz? Memberikan ruang transisi sebesar 2.05 kHz untuk kemiringan filter analog anti-aliasing (roll-off band) dari 20 kHz menuju 22.05 kHz! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Syarat Mutlak Pencuplikan Tanp"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "4": {
+    "title": "Interpretasi Domain Frekuensi: Replikasi Spektral",
+    "script": "Pada slide ini, kita membahas Interpretasi Domain Frekuensi: Replikasi Spektral. Mari kita perhatikan kolom sebelah kiri mengenai Model Matematis Pencuplikan Impuls Train. Proses sampling dapat dimodelkan sebagai perkalian sinyal analog xa(t) dengan kereta impuls periodik p(t) = sum delta(t - n Ts). Teorema Modulasi: Perkalian dalam domain waktu ekuivalen dengan konvolusi dalam domain frekuensi. Spektrum Sinyal Tersampling Xs(F): Xs(F) = (1 / Ts) * sum_{k=-inf}^{inf} Xa(F - k Fs). Pencuplikan menyebabkan spektrum sinyal asli direplikasi (diulang) secara periodik dengan interval sebesar kelipatan Fs. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kondisi Terjadinya Aliasing. Mengapa hal ini sangat fundamental? Kondisi Aman (Fs >= 2 Fmax): Salinan spektrum pada interval k*Fs terpisah dengan jelas, ada jeda guard band. Kondisi Aliasing (Fs < 2 Fmax): Salinan spektrum saling bertumpuk (overlap) dan menjumlahkan energinya. Spektrum yang bertumpuk tersebut tidak dapat dipisahkan kembali oleh filter rekonstruksi manapun. Dampaknya: Komponen frekuensi tinggi menyamar (alias) menjadi frekuensi rendah palsu! ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Model Matematis Pencuplikan Im"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kondisi Terjadinya Aliasing"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "5": {
+    "title": "Formula Frekuensi Semu (Apparent Frequency Folding)",
+    "script": "Pada slide ini, kita membahas Formula Frekuensi Semu (Apparent Frequency Folding). Perhatikan persamaan matematika inti untuk Menghitung Frekuensi Hasil Aliasing di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. F: Frekuensi nyata sinyal analog yang dicuplik (Hz). Fs: Frekuensi sampling yang digunakan (Hz). k: Bilangan bulat kelipatan pergeseran spektral. Falias: Frekuensi semu yang tampak dan terdengar pada sistem digital (Hz). Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Contoh Kasus Ekstrem: Sinyal nada murni F = 90 Hz dicuplik dengan Fs = 100 Hz. Evaluasi Nyquist: Fmax = 90 Hz, syarat Nyquist Fs >= 180 Hz. Karena Fs = 100 Hz, terjadi pelanggaran berat! Batas Nyquist (Folding): Fs/2 = 50 Hz. Sinyal 90 Hz berada jauh di atas 50 Hz. Hitung nilai k: Untuk k = 1, Falias = |90 - 1 * 100| = |-10| = 10 Hz. Hasil: Komputer digital mendeteksi dan memutar gelombang 90 Hz tersebut sebagai nada 10 Hz! Frekuensi tinggi telah melipat menjadi frekuensi rendah palsu. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Menghitung Frekuensi Hasil Ali"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "6": {
+    "title": "Proses Kuantisasi Sinyal & Pembentukan Step Size Delta",
+    "script": "Pada slide ini, kita membahas Proses Kuantisasi Sinyal & Pembentukan Step Size Delta. Mari kita perhatikan kolom sebelah kiri mengenai Kuantisasi Uniform (Seragam). Amplitudo kontinu hasil cuplikan harus dibulatkan ke salah satu nilai level representasi biner b-bit. Jumlah Tingkat Kuantisasi (L): L = 2^B (misal sistem 8-bit memiliki L = 256 level, sistem 16-bit memiliki L = 65,536 level). Rentang Dinamis Tegangan: Vpp = Vmax - Vmin. Resolusi / Step Size Kuantisasi (Delta): Delta = Vpp / (2^B - 1) approx Vpp / 2^B. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Error Kuantisasi (Quantization Noise). Mengapa hal ini sangat fundamental? Error sesaat didefinisikan sebagai selisih: e[n] = x_q[n] - x[n]. Untuk pembulatan rounding (nearest level), error kuantisasi berada dalam batas ketat: -Delta/2 <= e[n] <= Delta/2. Model Probabilitas: Error kuantisasi diasumsikan berdistribusi seragam (uniform distribution) dengan nilai rata-rata nol. Daya Derau Kuantisasi: P_noise = sigma_e^2 = Delta^2 / 12. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Kuantisasi Uniform (Seragam)"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Error Kuantisasi (Quantization"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "7": {
+    "title": "Signal-to-Quantization-Noise Ratio (SQNR) & Kaidah 6 dB",
+    "script": "Pada slide ini, kita membahas Signal-to-Quantization-Noise Ratio (SQNR) & Kaidah 6 dB. Perhatikan persamaan matematika inti untuk Formula Emas Hubungan Bit Depth dan Kualitas Sinyal di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. SQNR: Rasio daya sinyal terhadap derau kuantisasi dalam skala logaritmik decibel (dB). B: Jumlah bit resolusi ADC (Word length / bit depth). 6.02 dB: Kontribusi kenaikan SQNR untuk setiap penambahan 1 bit (20 * log10(2) approx 6.02). 1.76 dB: Konstanta matematis untuk sinyal sinusoidal skala penuh (full-scale sine wave). Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Evaluasi Bit Depth 8-Bit (Audio Mikrokomputer Klasik): SQNR approx 6.02*(8) + 1.76 = 49.92 dB (Noise derau desis terdengar jelas). Evaluasi Bit Depth 16-Bit (Standar Audio CD): SQNR approx 6.02*(16) + 1.76 = 98.08 dB (Kualitas jernih, rentang dinamis sangat baik). Evaluasi Bit Depth 24-Bit (Studio Rekaman Profesional): SQNR approx 6.02*(24) + 1.76 = 146.24 dB (Di bawah batas derau termal komponen elektronik riil). Kaidah Praktis Dosen: Setiap penambahan 1 bit resolusi kuantisasi akan melipatgandakan ketelitian level dan menaikkan SQNR sebesar ~6 dB! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Formula Emas Hubungan Bit Dept"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "8": {
+    "title": "Rekonstruksi Sinyal: Dari Diskrit Kembali ke Analog",
+    "script": "Pada slide ini, kita membahas Rekonstruksi Sinyal: Dari Diskrit Kembali ke Analog. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Interpolasi Sinc Ideal (Whittaker-Shannon). Formula Matematis: xa(t) = sum_{n=-inf}^{inf} x[n] sinc((t - n Ts) / Ts). Secara teoretis memulihkan sinyal analog 100% sempurna tanpa cacat. Kelemahan Praktis: Fungsi sinc berlangsung tak hingga (non-kausal), membutuhkan filter ideal brick-wall yang mustahil dibuat di dunia nyata. Pilar ke-2 adalah Zero-Order Hold (ZOH) Praktis. Menahan amplitudo sampel konstan selama interval Ts (menghasilkan gelombang bertangga/staircase). Sangat mudah diimplementasikan pada rangkaian DAC elektronik. Menimbulkan distorsi sinc(f Ts) pada domain frekuensi yang harus dikoreksi oleh analog reconstruction filter. Pilar ke-3 adalah Reconstruction Smoothing Filter. Filter Low-Pass Analog yang dipasang tepat setelah output DAC. Tugas Utama: Memotong seluruh salinan spektrum frekuensi tinggi hasil pencuplikan pada kelipatan Fs. Menghaluskan bentuk gelombang tangga ZOH menjadi kontur analog yang kontinu dan mulus. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Interpolasi Sinc Ideal (W"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Zero-Order Hold (ZOH) Pra"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Reconstruction Smoothing "
+      }
+    ]
+  },
+  "9": {
+    "title": "Implementasi Python: Simulasi Aliasing Sinyal Chirp",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Simulasi Aliasing Sinyal Chirp. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Demonstrasi Spektakuler Frequency Folding. Sinyal chirp adalah gelombang yang frekuensinya meningkat secara linier seiring berjalannya waktu (dari f0 menuju f1). Ketika frekuensi chirp sesaat melampaui frekuensi Nyquist (Fs/2), arah perubahan frekuensi yang terdengar justru berbalik arah (melipat turun)! Visualisasi ini memperlihatkan fenomena aliasing secara visual dan akustik. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Demonstrasi Spektakuler Freque"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "10": {
+    "title": "Praktikum Mandiri Lab 03: Sampling & Kuantisasi",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 03: Sampling & Kuantisasi. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 03. Judul: Eksperimen Aliasing Sinyal Audio dan Simulasi Efek Bit Depth Kuantisasi. Eksperimen 1 (Aliasing): Bangkitkan nada f = 1200 Hz. Lakukan sampling pada Fs = 8000 Hz (Normal) vs Fs = 1500 Hz (Under-sampling). Putar audio menggunakan IPython.display.Audio. Eksperimen 2 (Kuantisasi): Buat fungsi kuantisasi seragam B-bit. Ujilah sinyal sinus pada variasi resolusi bit B = 8, B = 4, B = 3, dan B = 2 bit. Hitung nilai error kuantisasi e[n] dan plot grafik histogram distribusinya. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Evaluasi. Mengapa hal ini sangat fundamental? Tantangan Analisis 1: Hitung secara analitis berapa frekuensi nada semu yang terdengar saat f = 1200 Hz dicuplik pada Fs = 1500 Hz. Apakah hasil perhitungan cocok dengan audio yang diputar? Tantangan Analisis 2: Pada bit depth berapa distorsi kuantisasi mulai terdengar sebagai derau serak kasar (harsh distortion)? Kriteria Penilaian: Ketepatan perhitungan matematis frekuensi lipat, kualitas grafik histogram error, dan komparasi SQNR teoretis vs empiris. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 03"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Evaluasi"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "11": {
+    "title": "Integrasi AI: Eksplorasi Visualisasi Interaktif Sampling",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Eksplorasi Visualisasi Interaktif Sampling. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Simulasi Konseptual. Prompt AI: 'Buatkan kode Python menggunakan ipywidgets untuk membuat slider interaktif frekuensi sinyal F (1-100 Hz) dan slider frekuensi sampling Fs (10-200 Hz). Tampilkan spektrum FFT secara real-time untuk melihat titik lipat aliasing.' AI Explainer: 'Jelaskan mengapa roda mobil di film bioskop (24 fps) kadang terlihat berputar mundur menggunakan analogi stroboscopic effect dan aliasing temporal.' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Protokol Verifikasi Mahasiswa. Mengapa hal ini sangat fundamental? Verifikasi Rumus: Pastikan rumus FFT yang dibuat AI menggunakan normalisasi magnitudo yang benar (dibagi N sampel). Pemeriksaan Skala Sumbu: Sumbu frekuensi tidak boleh melebihi Fs/2 jika menampilkan spektrum satu sisi (single-sided spectrum). Transparansi Laporan: Mahasiswa wajib melampirkan dokumentasi prompt yang digunakan saat mengembangkan modul simulasi. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI untuk Simulasi "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Protokol Verifikasi Mahasiswa"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Latihan Soal HOTS & Perhitungan Bertahap",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS & Perhitungan Bertahap. Mari kita perhatikan kolom sebelah kiri mengenai Soal 1: Perhitungan ADC & Kuantisasi. Sebuah sensor getaran menghasilkan tegangan analog dalam rentang -5.0 Volt sampai +5.0 Volt. Sinyal dikonversi oleh ADC 12-bit. a) Hitung jumlah level kuantisasi L! b) Hitung nilai resolusi tegangan (step size Delta) dalam satuan milivolt! c) Tentukan nilai error kuantisasi maksimum yang mungkin terjadi! d) Hitung nilai teoretis SQNR sistem tersebut dalam decibel (dB)! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal 2: Frekuensi Lipat Aliasing Multikomponen. Mengapa hal ini sangat fundamental? Sinyal analog komposit x(t) = 4 cos(600 pi t) + 3 sin(1800 pi t) + cos(2800 pi t) dicuplik dengan Fs = 1000 Hz. a) Tentukan frekuensi analog setiap komponen dalam Hertz! b) Tentukan komponen mana saja yang mengalami aliasing! c) Tentukan persamaan lengkap sinyal diskrit x[n] yang teramati! d) Jika sinyal direkonstruksi dengan filter LPF ideal cutoff 500 Hz, tuliskan persamaan sinyal analog akhir xr(t) yang dihasilkan! ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal 1: Perhitungan ADC & Kuan"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal 2: Frekuensi Lipat Aliasi"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "13": {
+    "title": "Rangkuman Pertemuan 03 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 03 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa konversi analog ke digital bukanlah perkiraan asal-asalan, melainkan sains presisi berlandaskan Teorema Nyquist-Shannon. Saya memahami bahwa aliasing adalah kesalahan fatal yang tidak dapat diperbaiki pasca-sampling, sehingga filter anti-aliasing analog mutlak dipasang di awal. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Standar audio modern (CD 44.1 kHz, Studio 96 kHz, MP3, WAV) memiliki akar rekayasa yang berpijak langsung pada batas pendengaran manusia dan trade-off filter analog. Setiap bit kuantisasi bernilai investasi kualitas ~6 dB. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Mendengar sendiri fenomena nada frekuensi tinggi yang melipat menjadi nada rendah melalui speaker laptop saat praktikum memberikan pemahaman intuitif yang tak terlupakan. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "14": {
+    "title": "Tindak Lanjut & Referensi Perkuliahan",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-3: Teorema Sampling: Fs >= 2 Fmax mencegah tumpang tindih spektrum replikasi. Aliasing melipat frekuensi tinggi ke dalam batas Nyquist [0, Fs/2] dengan rumus |F - k Fs|. Kuantisasi B-bit menghasilkan 2^B level dan SQNR approx 6.02 B + 1.76 dB. Rekonstruksi ideal menggunakan interpolasi sinc, praktis menggunakan ZOH + smoothing filter. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kumpulkan Laporan Praktikum Lab 03 ke LMS sesuai tenggat waktu. Pelajari materi Pertemuan 4 mengenai Karakteristik dan Sifat-Sifat Sistem Waktu Diskrit. Siapkan ringkasan mandiri mengenai definisi linearitas dan time-invariance. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

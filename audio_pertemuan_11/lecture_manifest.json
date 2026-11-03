@@ -1,0 +1,346 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-11. Hari ini kita akan mengkaji secara komprehensif topik utama: Transformasi-Z & Analisis Fungsi Sistem. Generalisasi Transformasi Fourier pada Bidang Kompleks Z, Region of Convergence (ROC), Diagram Pole-Zero, Fungsi Transfer H(z), dan Evaluasi Kestabilan Sistem LTI. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK3 (CPL-A, CPL-B) dengan bobot evaluasi sebesar 6 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Transformasi-Z & Analisis Fungsi Si"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK3 (CPL-A, CPL-B)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Filosofi Transformasi-Z: Generalisasi Fourier",
+    "script": "Pada slide ini, kita membahas Filosofi Transformasi-Z: Generalisasi Fourier. Mari kita perhatikan kolom sebelah kiri mengenai Keterbatasan Transformasi Fourier (DTFT). DTFT hanya dapat diterapkan pada sinyal atau sistem yang stabil (memenuhi syarat sum |x[n]| < inf). Bagaimana jika kita harus menganalisis sistem yang tidak stabil, sistem dengan osilasi tak teredam, atau sistem transien yang bertumbuh seiring waktu? DTFT gagal dan divergen untuk kelas sistem tersebut! Solusi: Perluas variabel frekuensi kompleks e^(jw) menjadi variabel bilangan kompleks sembarang z = r e^(jw). Lahirlah Transformasi-Z! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Transformasi-Z sebagai 'Aljabar Sakti' DSP. Mengapa hal ini sangat fundamental? Transformasi-Z adalah padanan domain diskrit dari Transformasi Laplace pada sistem kontinu. Mengubah operasi konvolusi waktu dan persamaan beda diferensial LCCDE yang rumit menjadi operasi perkalian dan pembagian pecahan aljabar polinomial biasa! Memberikan gambaran visual geometris yang sangat intuitif mengenai kestabilan dan resonansi sistem melalui diagram Pole-Zero. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Keterbatasan Transformasi Four"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Transformasi-Z sebagai 'Aljaba"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Definisi Formal Transformasi-Z & Bidang Kompleks Z",
+    "script": "Pada slide ini, kita membahas Definisi Formal Transformasi-Z & Bidang Kompleks Z. Perhatikan persamaan matematika inti untuk Persamaan Transformasi-Z Dua Sisi (Bilateral) di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. x[n]: Sinyal domain waktu diskrit. z: Variabel bilangan kompleks kontinu pada bidang-Z (Z-plane). r = |z|: Jari-jari lingkaran (magnitude) pada bidang-Z. omega = angle z: Sudut fase frekuensi pada bidang-Z. Hubungan dengan DTFT: Jika kita mengevaluasi Transformasi-Z tepat pada lingkaran satuan (Unit Circle di mana r = |z| = 1, sehingga z = e^(jw)), Transformasi-Z berubah menjadi tepat DTFT! Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Substitusi z = r e^(jw) ke dalam rumus Transformasi-Z: X(r e^(jw)) = sum_{n=-inf}^{inf} x[n] (r e^(jw))^(-n) = sum_{n=-inf}^{inf} [ x[n] r^(-n) ] e^(-jw n). Perhatikan dengan seksama: Transformasi-Z adalah DTFT dari sinyal x[n] yang dikalikan dengan faktor pembobot eksponensial r^(-n)! Faktor r^(-n) ini dapat meredam sinyal yang bertumbuh sehingga deret jumlahan konvergen! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Persamaan Transformasi-Z Dua S"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "4": {
+    "title": "Region of Convergence (ROC) & Sifat-Sifat Mutlaknya",
+    "script": "Pada slide ini, kita membahas Region of Convergence (ROC) & Sifat-Sifat Mutlaknya. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Definisi Region of Convergence (ROC). ROC adalah himpunan semua nilai z pada bidang kompleks di mana deret derau tak terhingga X(z) konvergen menuju nilai berhingga (|X(z)| < inf). X(z) TIDAK MEMILIKI ARTI tanpa menyertakan spesifikasi daerah ROC-nya! Dua sinyal waktu yang sangat berbeda (kausal vs antikausal) dapat memiliki ekspresi aljabar X(z) yang identik, dan hanya dibedakan oleh ROC-nya. Pilar ke-2 adalah Sifat Geometris ROC. 1. Berbentuk Cincin / Piringan konsentris yang berpusat di titik origin z = 0. 2. ROC TIDAK BOLEH MEMUAT POLE APAPUN (karena pada titik pole, nilai X(z) meledak ke tak terhingga). 3. Jika x[n] berdurasi berhingga, ROC adalah seluruh bidang-Z kecuali mungkin z = 0 atau z = inf. Pilar ke-3 adalah Kaitan ROC dengan Kausalitas. Sekuens Sisi Kanan (Kausal): ROC meluas ke arah luar melampaui pole terluar: |z| > |p_max|. Sekuens Sisi Kiri (Anti-Kausal): ROC meluas ke arah dalam menuju origin di dalam pole terdalam: |z| < |p_min|. Sekuens Dua Sisi (Bilateral): ROC berbentuk cincin di antara dua pole: |p1| < |z| < |p2|. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Definisi Region of Conver"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Sifat Geometris ROC"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Kaitan ROC dengan Kausali"
+      }
+    ]
+  },
+  "5": {
+    "title": "Fungsi Transfer Sistem H(z) & Persamaan Beda",
+    "script": "Pada slide ini, kita membahas Fungsi Transfer Sistem H(z) & Persamaan Beda. Perhatikan persamaan matematika inti untuk Hubungan Langsung Persamaan Beda LCCDE dengan H(z) di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. H(z): Fungsi Transfer (System Function) dari sistem LTI. Y(z): Transformasi-Z dari sinyal keluaran y[n]. X(z): Transformasi-Z dari sinyal masukan x[n]. b_k: Koefisien masukan (feedforward) yang membentuk polinomial pembilang. a_k: Koefisien keluaran (feedback) yang membentuk polinomial penyebut. Teorema Pergeseran: Z{ x[n - k] } = z^(-k) X(z). Tunda 1 sampel ekuivalen dengan perkalian z^(-1). Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Contoh: Diberikan persamaan beda y[n] - 0.9 y[n-1] = x[n] + 0.5 x[n-1]. Langkah 1: Terapkan Transformasi-Z pada kedua sisi persamaan: Y(z) - 0.9 z^(-1) Y(z) = X(z) + 0.5 z^(-1) X(z). Langkah 2: Faktorkan Y(z) dan X(z): Y(z) [1 - 0.9 z^(-1)] = X(z) [1 + 0.5 z^(-1)]. Langkah 3: Bagi Y(z) dengan X(z) untuk memperoleh H(z): H(z) = (1 + 0.5 z^(-1)) / (1 - 0.9 z^(-1)) = (z + 0.5) / (z - 0.9). ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Hubungan Langsung Persamaan Be"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "6": {
+    "title": "Diagram Pole-Zero: Anatomi Arsitektur Sistem",
+    "script": "Pada slide ini, kita membahas Diagram Pole-Zero: Anatomi Arsitektur Sistem. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Definisi Zero (Akar Pembilang). Nilai z di mana pembilang H(z) bernilai nol, sehingga H(z) = 0. Disimbolkan dengan lingkaran kecil (o) pada diagram bidang-Z. Zero 'menarik turun' nilai respons frekuensi menuju nol (meredam frekuensi). Pilar ke-2 adalah Definisi Pole (Akar Penyebut). Nilai z di mana penyebut H(z) bernilai nol, sehingga H(z) meledak ke tak terhingga (H(z) -> inf). Disimbolkan dengan tanda silang (x) pada diagram bidang-Z. Pole 'mendorong naik' respons frekuensi membentuk puncak resonansi (memperkuat frekuensi). Pilar ke-3 adalah Faktorisasi Bentuk Pole-Zero. H(z) = (b0 / a0) * [ product_{i=1}^M (1 - c_i z^-1) ] / [ product_{k=1}^N (1 - d_k z^-1) ]. c_i adalah lokasi zero, dan d_k adalah lokasi pole. Tata letak geometris pole dan zero menentukan seluruh perilaku sistem secara komprehensif! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Definisi Zero (Akar Pembi"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Definisi Pole (Akar Penye"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Faktorisasi Bentuk Pole-Z"
+      }
+    ]
+  },
+  "7": {
+    "title": "Kriteria Mutlak Kestabilan Sistem LTI Berbasis Pole-Zero",
+    "script": "Pada slide ini, kita membahas Kriteria Mutlak Kestabilan Sistem LTI Berbasis Pole-Zero. Mari kita perhatikan kolom sebelah kiri mengenai Syarat Mutlak Stabilitas BIBO. Teorema Stabilitas Dasar: Sistem LTI stabil BIBO jika dan hanya jika ROC dari H(z) MEMUAT LINGKARAN SATUAN (Unit Circle |z| = 1). Mengapa? Karena jika lingkaran satuan berada di dalam ROC, maka evaluasi z = e^(jw) konvergen, yang berarti respons frekuensi DTFT H(e^jw) ada dan berhingga! Jika lingkaran satuan berada di luar ROC, sistem tidak stabil BIBO. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kondisi Emas Sistem Kausal & Stabil. Mengapa hal ini sangat fundamental? UNTUK SISTEM LTI YANG BERSIFAT KAUSAL: Sistem stabil BIBO jika dan hanya jika SELURUH POLE TERLETAK TEPAT DI DALAM LINGKARAN SATUAN! |p_k| < 1  untuk semua k = 1, 2, ..., N. Jika ada minimal satu pole terletak di luar lingkaran satuan (|p| > 1), sistem kausal dipastikan TIDAK STABIL (output meledak divergen)! Jika ada pole tunggal tepat pada lingkaran satuan (|p| = 1), sistem bersifat marginally stable (berosilasi terus-menerus tanpa henti). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Syarat Mutlak Stabilitas BIBO"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kondisi Emas Sistem Kausal & S"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "8": {
+    "title": "Interpretasi Geometris: Dari Pole-Zero ke Respons Frekuensi",
+    "script": "Pada slide ini, kita membahas Interpretasi Geometris: Dari Pole-Zero ke Respons Frekuensi. Perhatikan persamaan matematika inti untuk Evaluasi Grafis Vektor Respons Frekuensi di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. e^(j omega): Titik frekuensi yang berjalan mengelilingi keliling lingkaran satuan dari omega = 0 hingga pi. |e^(jw) - c_i|: Panjang vektor jarak geometris dari titik frekuensi ke zero ke-i. |e^(jw) - d_k|: Panjang vektor jarak geometris dari titik frekuensi ke pole ke-k. G: Faktor penguatan skalar konstan. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Kaidah Geometris Intuitif Dosen: 1. Ketika titik frekuensi e^(jw) bergerak mendekati sebuah POLE, jarak ke pole mengecil -> Penyebut mengecil -> Respons magnitudo MELONJAK NAIK (terbentuk puncak resonansi / passband filter). 2. Ketika titik frekuensi bergerak mendekati sebuah ZERO, jarak ke zero mengecil -> Pembilang mengecil -> Respons magnitudo ANJLOK TURUN MENDEKATI NOL (terbentuk notch null / stopband filter). Hanya dengan melihat diagram lingkaran dan letak tanda silang (x) serta lingkaran (o), Anda dapat langsung menebak jenis filter tersebut (Low-pass, High-pass, Band-pass, atau Notch) tanpa menghitung satu rumus pun! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Evaluasi Grafis Vektor Respons"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "9": {
+    "title": "Implementasi Python: Diagram Pole-Zero dengan SciPy",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Diagram Pole-Zero dengan SciPy. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Visualisasi Z-Plane Menggunakan scipy.signal.tf2zpk. scipy.signal.tf2zpk(b, a) mengubah koefisien polinomial pembilang b dan penyebut a menjadi akar-akar Zero (z), Pole (p), dan Gain (k). Gambarkan lingkaran satuan beradius 1.0 menggunakan np.exp(1j * theta). Plot pole dengan marker silang 'x' merah dan zero dengan marker lingkaran 'o' biru. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Visualisasi Z-Plane Menggunaka"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "10": {
+    "title": "Praktikum Mandiri Lab 11: Eksplorasi Kestabilan Sistem",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 11: Eksplorasi Kestabilan Sistem. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 11. Judul: Analisis Pergeseran Pole-Zero pada Bidang-Z dan Dampaknya Terhadap Kestabilan Sistem. Eksperimen 1: Uji sistem dengan pole tunggal real: H(z) = 1 / (1 - p z^-1). Variasikan nilai p dari 0.5, 0.9, 1.0, hingga 1.1. Simulasikan respons impuls h[n] hingga n = 40. Amati perbedaan tajam antara respons meluruh (p < 1), osilasi konstan (p = 1), dan ledakan divergen (p > 1). Eksperimen 2: Rancang filter Notch pembatal frekuensi 60 Hz pada sistem dengan Fs = 600 Hz dengan meletakkan sepasang zero tepat pada lingkaran satuan di sudut w0 = 2*pi*(60/600) = 0.2 pi. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Evaluasi. Mengapa hal ini sangat fundamental? Tantangan Praktik: Tambahkan sepasang pole di belakang zero notch pada jari-jari r = 0.95 dengan sudut yang sama. Amati bagaimana penambahan pole ini menyempitkan notch bandwidth sehingga sinyal selain 60 Hz tidak terdistorsi! Pertanyaan Evaluasi: Mengapa filter FIR selalu dijamin stabil? Di mana lokasi seluruh pole dari filter FIR pada bidang-Z? Output: Dokumentasikan notebook laporan dengan analisis diagram pole-zero dan respons frekuensi. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 11"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Evaluasi"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "11": {
+    "title": "Integrasi AI: Faktorisasi Polinomial Orde Tinggi",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Faktorisasi Polinomial Orde Tinggi. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Analisis Parsial. Prompt AI: 'Tuliskan kode Python menggunakan scipy.signal.residuez untuk melakukan Ekspansi Fraksi Parsial (Partial Fraction Expansion / PFE) dari transfer function H(z) = (2 + z^-1) / (1 - 0.7 z^-1 + 0.1 z^-2) dan tentukan respons impuls analitis h[n].' AI Symbolic Root Finder: 'Cari akar-akar pole dan zero dari polinomial penyebut orde 6 menggunakan numpy.roots.' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Validasi Mahasiswa. Mengapa hal ini sangat fundamental? Pemeriksaan Format Pangkat Z: Perhatikan bahwa beberapa pustaka Python dan AI menggunakan format pangkat positif z, sementara DSP klasik Oppenheim menggunakan format delay z^(-1). Jangan sampai tertukar! Verifikasi Sifat Konjugat: Pastikan bahwa setiap pole atau zero bilangan kompleks selalu hadir berpasangan dengan konjugatnya jika koefisien persamaan beda bernilai real. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI untuk Analisis "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Validasi Mahasiswa"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Latihan Soal HOTS Pertemuan 11",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 11. Mari kita perhatikan kolom sebelah kiri mengenai Soal 1: Penentuan ROC & Kausalitas. Diberikan fungsi transfer: H(z) = 1 / [ (1 - 0.5 z^-1)(1 - 2 z^-1) ]. a) Tentukan lokasi seluruh pole dari sistem tersebut! b) Ada 3 kemungkinan bentuk ROC yang berbeda. Sebutkan dan gambarkan sketsa ketiga ROC tersebut! c) Untuk masing-masing ROC, tentukan apakah sistem bersifat kausal dan apakah sistem stabil BIBO! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal 2: Inverse Z-Transform (PFE). Mengapa hal ini sangat fundamental? Sebuah sistem LTI kausal memiliki fungsi transfer: H(z) = [ 1 - z^-1 ] / [ 1 - 0.8 z^-1 + 0.15 z^-2 ] dengan ROC |z| > 0.5. a) Lakukan faktorisasi penyebut menjadi dua suku orde satu! b) Uraikan H(z) menggunakan Partial Fraction Expansion (PFE)! c) Tentukan persamaan analitis respons impuls h[n] untuk seluruh n! ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal 1: Penentuan ROC & Kausal"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal 2: Inverse Z-Transform (P"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "13": {
+    "title": "Rangkuman Pertemuan 11 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 11 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa Transformasi-Z melengkapi kekurangan Transformasi Fourier dalam menganalisis kestabilan sistem. Saya memahami bahwa letak pole relatif terhadap lingkaran satuan |z|=1 adalah garis pemisah mutlak antara sistem yang aman stabil atau sistem yang meledak divergen. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Setiap insinyur DSP dan kontrol modern memeriksa kestabilan filter digital mereka dengan melihat apakah semua pole berada di dalam lingkaran satuan sebelum kode diunggah ke prosesor perangkat keras. Diagram Pole-Zero adalah bahasa visual universal sistem LTI. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Melihat kaitan geometris yang begitu indah antara posisi titik silang pole pada bidang kompleks dengan tinggi rendahnya kurva grafik respons frekuensi memberikan pencerahan logika yang luar biasa. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "14": {
+    "title": "Tindak Lanjut & Referensi Perkuliahan",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-11: Transformasi-Z: X(z) = sum x[n] z^(-n), z = r e^(jw). ROC memuat lingkaran satuan jika dan hanya jika sistem stabil BIBO. Sistem LTI kausal stabil mensyaratkan SELURUH POLE berada di dalam lingkaran satuan (|p| < 1). Letak pole dan zero secara geometris membentuk kontur respons frekuensi H(e^jw). Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kumpulkan Laporan Praktikum Lab 11 ke LMS tepat waktu. Baca Bab 7 Oppenheim mengenai Perancangan Filter Digital Finite Impulse Response (FIR). Siapkan ringkasan karakteristik fungsi window (Hamming, Hanning, Blackman, Kaiser). Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

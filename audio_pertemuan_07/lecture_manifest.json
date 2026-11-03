@@ -1,0 +1,325 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-7. Hari ini kita akan mengkaji secara komprehensif topik utama: Respons Frekuensi Sistem Diskrit & Respon Steady-State. Karakteristik Respon Sistem LTI Terhadap Sinyal Eigen Sinusoidal Kompleks, Pemisahan Magnitude & Phase Response, Group Delay, dan Analisis Steady-State. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK3 (CPL-A, CPL-B) dengan bobot evaluasi sebesar 6 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Respons Frekuensi Sistem Diskrit & "
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK3 (CPL-A, CPL-B)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Transisi Paradigma: Dari Domain Waktu ke Domain Frekuensi",
+    "script": "Pada slide ini, kita membahas Transisi Paradigma: Dari Domain Waktu ke Domain Frekuensi. Mari kita perhatikan kolom sebelah kiri mengenai Keterbatasan Pandangan Domain Waktu. Melihat sinyal hanya pada domain waktu (amplitudo vs waktu n) seringkali seperti melihat bayangan buram. Kita melihat gelombang berosilasi, namun sulit mengetahui frekuensi apa saja yang menyusunnya. Operasi konvolusi dalam domain waktu memerlukan komputasi jumlahan perkalian berulang yang sangat intensif. Domain frekuensi memungkinkan kita melihat komposisi 'resep warna' frekuensi secara transparan dan jernih. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Keanggunan Sinyal Eigen Eksponensial Kompleks. Mengapa hal ini sangat fundamental? Sinyal eksponensial kompleks x[n] = e^(j omega n) memiliki sifat adiluhung pada sistem LTI: Sinyal ini adalah FUNGSI EIGEN (Eigenfunction) dari sistem LTI! Artinya: Jika masukan adalah gelombang sinusoidal dengan frekuensi omega, maka keluaran sistem DIJAMIN HANYA BERUPA GELOMBANG DENGAN FREKUENSI YANG SAMA PERSIS (omega), tanpa pernah muncul frekuensi baru! Sistem LTI hanya berhak mengubah dua hal: Amplitudo (gain) dan Fase (pergeseran waktu). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Keterbatasan Pandangan Domain "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Keanggunan Sinyal Eigen Ekspon"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Penurunan Matematis Respons Frekuensi H(e^(j omega))",
+    "script": "Pada slide ini, kita membahas Penurunan Matematis Respons Frekuensi H(e^(j omega)). Perhatikan persamaan matematika inti untuk Respons Sistem Terhadap Sinyal Eigen di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. omega: Frekuensi sudut ternormalisasi diskrit (radian per sampel). h[k]: Respons impuls sistem LTI dalam domain waktu. H(e^(j omega)): Respons Frekuensi (Frequency Response) sistem, bernilai bilangan kompleks. Magnitude Response |H(e^(j omega))|: Nilai mutlak/panjang vektor kompleks, merepresentasikan faktor penguatan atau pelemahan amplitudo pada frekuensi omega. Phase Response angle H(e^(j omega)): Sudut fase vektor kompleks, merepresentasikan pergeseran sudut fase pada frekuensi omega. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Langkah 1: Masukkan x[n] = e^(j omega n) ke formula konvolusi y[n] = sum h[k] x[n-k]. Langkah 2: Faktorkan suku e^(j omega n) keluar dari sigma karena tidak bergantung pada indeks penjumlahan k. Langkah 3: Bagian di dalam sigma sum_{k=-inf}^{inf} h[k] e^(-j omega k) didefinisikan sebagai H(e^(j omega)). Langkah 4: Terbukti bahwa y[n] = H(e^(j omega)) * x[n]. Nilai eigen sistem adalah tepat Respons Frekuensi H(e^(j omega))! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Respons Sistem Terhadap Sinyal"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "4": {
+    "title": "Respons Steady-State Sinusoidal Real",
+    "script": "Pada slide ini, kita membahas Respons Steady-State Sinusoidal Real. Perhatikan persamaan matematika inti untuk Output Sistem LTI Terhadap Masukan Sinus Real di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. A: Amplitudo awal sinyal masukan. omega_0: Frekuensi sinusoidal masukan tertentu. theta: Sudut fase awal masukan. |H(e^(j omega_0))|: Gain sistem pada frekuensi omega_0. angle H(e^(j omega_0)): Pergeseran fase yang ditambahkan oleh sistem. Steady-State (Kondisi Tunak): Respons jangka panjang setelah respons transien alami sistem meluruh hingga nol. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Contoh: Diberikan filter dengan H(e^(j omega_0)) = 2.5 e^(-j pi/3) pada omega_0 = 0.2 pi. Gain: |H| = 2.5. Pergeseran Fase: angle H = -pi/3 radian (-60 derajat). Masukan: x[n] = 4 cos(0.2 pi n + pi/6). Hitung Amplitudo Output: A_out = 4 * 2.5 = 10. Hitung Fase Output: theta_out = pi/6 - pi/3 = -pi/6 radian (-30 derajat). Keluaran Tunak: y_ss[n] = 10 cos(0.2 pi n - pi/6). Perhitungan sangat cepat dan elegan tanpa perlu melakukan konvolusi waktu! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Output Sistem LTI Terhadap Mas"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "5": {
+    "title": "Periodisitas 2 pi & Karakteristik Simetri Respons Frekuensi",
+    "script": "Pada slide ini, kita membahas Periodisitas 2 pi & Karakteristik Simetri Respons Frekuensi. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Sifat Periodik 2 pi. H(e^(j (omega + 2 pi))) = H(e^(j omega)). Karena e^(-j (omega + 2 pi) k) = e^(-j omega k) * e^(-j 2 pi k) = e^(-j omega k) * 1. Implikasi: Seluruh karakteristik respons frekuensi sistem diskrit cukup diamati pada interval fundamental sepanjang 2 pi, yaitu [-pi, pi] atau [0, 2 pi]. Pilar ke-2 adalah 2. Simetri untuk Respons Impuls Real. Jika h[n] bernilai bilangan real (seperti semua filter fisik): H(e^(-j omega)) = H*(e^(j omega)) (Konjugat Kompleks). Magnitude bersifat Simetri Genap: |H(e^(-j omega))| = |H(e^(j omega))|. Phase bersifat Simetri Ganjil: angle H(e^(-j omega)) = - angle H(e^(j omega)). Pilar ke-3 adalah 3. Rentang Frekuensi Fisik. omega = 0 merepresentasikan frekuensi DC (0 Hz). omega = pi merepresentasikan frekuensi Nyquist (Fs / 2 Hz), frekuensi osilasi tertinggi pada sistem diskrit. omega = 2 pi berputar kembali ke frekuensi DC (0 Hz). ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Sifat Periodik 2 pi"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Simetri untuk Respons "
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Rentang Frekuensi Fisi"
+      }
+    ]
+  },
+  "6": {
+    "title": "Phase Delay & Group Delay (Keterlambatan Grup)",
+    "script": "Pada slide ini, kita membahas Phase Delay & Group Delay (Keterlambatan Grup). Perhatikan persamaan matematika inti untuk Definisi Matematis Phase Delay & Group Delay di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. tau_p(omega): Phase Delay (keterlambatan waktu yang dialami oleh komponen frekuensi individu). tau_g(omega): Group Delay (keterlambatan waktu yang dialami oleh selubung modulasi / paket sinyal multi-frekuensi). Distorsi Fase (Phase Distortion): Terjadi jika Group Delay tidak konstan terhadap frekuensi, menyebabkan berbagai komponen nada merambat dengan kecepatan berbeda sehingga bentuk gelombang rusak. Linear Phase Ideal: Filter yang memiliki sudut fase garis lurus angle H(w) = -alpha * w memiliki Group Delay konstan sempurna tau_g = alpha sampel! Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Mengapa Group Delay Krusial pada Audio & Biomedis? Pada rekaman musik: Jika frekuensi bass tertunda 10 ms lebih lambat dari nada vokal akibat fase non-linier filter, musik terdengar 'berlumpur' (muddy) dan artikulasi hilang. Pada sinyal EKG: Distorsi fase dapat mengubah bentuk gelombang segmen ST, memicu salah diagnosis serangan jantung oleh dokter! Inilah alasan mengapa Filter FIR Fase Linier sangat dijunjung tinggi dalam rekayasa DSP. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Definisi Matematis Phase Delay"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "7": {
+    "title": "Analisis Kasus: Moving Average Filter 3-Titik",
+    "script": "Pada slide ini, kita membahas Analisis Kasus: Moving Average Filter 3-Titik. Mari kita perhatikan kolom sebelah kiri mengenai Persamaan Sistem & Penurunan H(e^(jw)). Persamaan Beda: y[n] = (1/3) [ x[n] + x[n-1] + x[n-2] ]. Respons Impuls: h[n] = 1/3 untuk n = 0, 1, 2; dan 0 di tempat lain. Evaluasi Respons Frekuensi: H(e^(jw)) = (1/3) [ 1 + e^(-jw) + e^(-j2w) ]. Faktorkan suku tengah e^(-jw): H(e^(jw)) = (1/3) e^(-jw) [ e^(jw) + 1 + e^(-jw) ] = (1/3) e^(-jw) [ 1 + 2 cos(w) ]. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Interpretasi Magnitude & Fase. Mengapa hal ini sangat fundamental? Magnitude Response: |H(e^(jw))| = (1/3) |1 + 2 cos(w)|. Pada w = 0 (DC): |H(e^j0)| = (1/3)|1 + 2(1)| = 1.0 (Gain 0 dB, sinyal DC lolos utuh). Pada w = 2*pi/3: 1 + 2 cos(2*pi/3) = 1 + 2(-0.5) = 0! Terjadi notch null sempurna (sinyal teredam total). Pada w = pi (Nyquist): |H(e^jpi)| = (1/3)|1 - 2| = 1/3 (Teredam menjadi 33%). Phase Response: angle H(w) = -w (linier murni) dengan lompatan pi saat melewati nol. Group Delay = 1 sampel konstan! ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Persamaan Sistem & Penurunan H"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Interpretasi Magnitude & Fase"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "8": {
+    "title": "Implementasi Python: Visualisasi freqz pada SciPy",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Visualisasi freqz pada SciPy. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Fungsi scipy.signal.freqz. scipy.signal.freqz(b, a, worN=512) menghitung respons frekuensi H(e^(jw)) pada 512 titik frekuensi dari 0 hingga pi (frekuensi Nyquist). Magnitude biasanya dikonversi ke skala logaritmik decibel: Mag_dB = 20 * log10(|H|). Fase digambarkan dalam radian atau derajat dengan penanganan unwrap: np.unwrap(np.angle(H)). Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Fungsi scipy.signal.freqz"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "9": {
+    "title": "Praktikum Mandiri Lab 07: Analisis Filter Digital",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 07: Analisis Filter Digital. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 07. Judul: Analisis Respons Frekuensi Filter FIR Diferensiator dan Low-Pass Filter. Eksperimen 1 (Diferensiator): Uji filter y[n] = x[n] - x[n-1]. Hitung dan plot kurva respons frekuensinya. Amati mengapa filter ini meloloskan frekuensi tinggi (High-Pass). Eksperimen 2 (Komparasi): Bandingkan respons Moving Average 3-Titik vs 7-Titik. Amati efek pertambahan jumlah tap terhadap lebar pita transisi dan atenuasi stopband. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Evaluasi. Mengapa hal ini sangat fundamental? Tantangan Praktik: Gunakan fungsi scipy.signal.group_delay((b, a)) untuk memplot Group Delay kedua filter di atas. Buktikan filter mana yang memiliki group delay konstan sempurna! Pertanyaan Evaluasi: Mengapa filter diferensiator sangat sensitif memperkuat noise derau frekuensi tinggi pada sinyal instrumentasi? Output: Unggah notebook laporan mandiri ke LMS. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 07"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Tantangan Analisis & Evaluasi"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "10": {
+    "title": "Integrasi AI: Deteksi Masalah Fase Non-Linier",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Deteksi Masalah Fase Non-Linier. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Analisis Respon Sistem. Prompt AI: 'Diberikan transfer function filter digital H(z), buatkan script Python untuk menghitung Group Delay analitis menggunakan turunan fase dan visualisasikan titik dispersi frekuensinya.' AI Comparator: 'Jelaskan trade-off antara filter Butterworth (respons magnitudo maximally flat namun fase non-linier) dengan filter Bessel (fase mendekati linier sempurna).' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Validasi Mahasiswa. Mengapa hal ini sangat fundamental? Pemeriksaan Phase Unwrapping: AI sering lupa melakukan unwrapping pada fase arctan, sehingga grafik fase terlihat memiliki patahan vertikal palsu 2*pi. Verifikasi Skala Normalisasi: Pastikan mahasiswa memeriksa apakah frekuensi disajikan dalam radian per sampel (0 sampai pi) atau Hertz fisik (0 sampai Fs/2). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Pemanfaatan AI untuk Analisis "
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Validasi Mahasiswa"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "11": {
+    "title": "Latihan Soal HOTS Pertemuan 07",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 07. Mari kita perhatikan kolom sebelah kiri mengenai Soal Analisis Respons Steady-State. Sebuah sistem LTI memiliki respons impuls h[n] = delta[n] + 0.5 delta[n-1]. a) Tentukan ekspresi analitis Respons Frekuensi H(e^(jw))! b) Tentukan nilai numerik Magnitude |H| dan Phase angle H pada frekuensi w = pi/2 rad/sampel! c) Jika masukan sistem adalah x[n] = 2 cos( (pi/2) n + pi/4 ), tuliskan persamaan lengkap keluaran tunak y_ss[n]! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal Karakteristik Filter Notch. Mengapa hal ini sangat fundamental? Diberikan filter FIR dengan koefisien: b = [1, -2*cos(w0), 1]. a) Tentukan nilai respons frekuensi H(e^(jw)) tepat pada frekuensi w = w0! b) Apa fungsi praktis dari filter dengan karakteristik seperti ini dalam menghilangkan interferensi frekuensi tunggal (misal dengung jala-jala listrik 50 Hz)? ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Soal Analisis Respons Steady-S"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Soal Karakteristik Filter Notc"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Rangkuman Pertemuan 07 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 07 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa melihat sistem dari domain frekuensi memberikan pemahaman langsung mengenai frekuensi mana yang diizinkan lewat dan mana yang diblokir. Saya memahami bahwa pergeseran fase tidak kalah penting dari penguatan magnitudo. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Konsep Equalizer pada pemutar musik, tone control bass/treble, hingga pembatal derau mikrofon berakar langsung dari manipulasi kurva H(e^(jw)). Group delay konstan adalah rahasia kejernihan transmisi data telekomunikasi digital. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Sangat mengagumkan bahwa kita bisa menghitung keluaran gelombang sinusoidal yang rumit hanya dengan mengalikan satu angka gain dan menjumlahkan satu sudut fase! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "13": {
+    "title": "Tindak Lanjut & Persiapan Evaluasi Tengah Semester (UTS)",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Persiapan Evaluasi Tengah Semester (UTS). Sebagai rangkuman perkuliahan Pertemuan ke-7: Sinyal sinusoidal kompleks adalah fungsi eigen sistem LTI: y[n] = H(e^jw) x[n]. Respons Frekuensi H(e^jw) periodik 2 pi, memiliki magnitude genap dan fase ganjil. Keluaran steady-state sinusoidal: amplitudo dikali |H|, fase ditambah angle H. Group delay konstan menjamin ketiadaan distorsi bentuk gelombang. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kumpulkan Laporan Praktikum Lab 07 ke LMS. Pelajari kembali seluruh materi Pertemuan 1 s.d. 7 untuk persiapan UTS minggu depan. Pastikan laptop dan environment Python siap digunakan untuk sesi ujian praktik individual. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

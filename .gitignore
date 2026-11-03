@@ -1,0 +1,21 @@
+# Git ignore untuk repositori perkuliahan DSP
+# Lindungi privasi sampel suara dosen agar tidak dapat diunduh publik
+sampel_suara_pak_erik/
+*.wav
+
+# File script lokal & generator
+generate_lecture_f5tts.py
+Buka_Studio_Suara_F5_TTS.bat
+
+# Python & Environment
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv*/
+venv*/
+f5tts_env*/
+
+# OS Temp
+Thumbs.db
+.DS_Store

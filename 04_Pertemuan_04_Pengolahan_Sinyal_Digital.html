@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Waktu Diskrit & Sifat-Sifat Sistem - Pengolahan Sinyal Digital UN Manado</title>
+  
+  <!-- Fonts: Inter, Fira Code & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for crisp mathematical formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <!-- Prism.js for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #050B14;
+      --bg-surface: #0A1322;
+      --bg-card: rgba(14, 26, 47, 0.78);
+      --border-card: #1E3252;
+      --primary: #00B4D8;
+      --primary-light: #90E0EF;
+      --accent-blue: #0077B6;
+      --accent-emerald: #10B981;
+      --accent-amber: #F59E0B;
+      --accent-red: #EF4444;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --code-bg: #050B14;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 180, 216, 0.35);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      user-select: none;
+    }
+
+    /* Presentation Viewport - 100% Fullscreen Canvas */
+    .presentation-viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 25%, #0E1A2E 0%, #050B14 100%);
+    }
+
+    /* Top Global Slim Progress Indicator */
+    .top-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 999;
+    }
+
+    .top-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent-emerald) 100%);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+
+    /* Base Slide Definition (Strict Display Control) */
+    .slide {
+      display: none !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      padding: 2.2rem 4rem 4.8rem 4rem;
+      box-sizing: border-box;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .slide.active {
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    /* Title Slide Specific Full Screen Centering */
+    .slide-title-view {
+      display: none !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      padding: 3rem 6rem 5.5rem 6rem;
+      box-sizing: border-box;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .slide-title-view.active {
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    .title-badge-univ {
+      color: var(--primary);
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+      background: rgba(0, 180, 216, 0.12);
+      border: 1px solid rgba(0, 180, 216, 0.35);
+      padding: 6px 18px;
+      border-radius: 30px;
+      display: inline-block;
+    }
+
+    .title-meeting-badge {
+      color: var(--accent-amber);
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .title-main {
+      font-size: clamp(2.4rem, 4.2vw, 4.2rem);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.18;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF 30%, #90E0EF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      max-width: 1200px;
+    }
+
+    .title-sub {
+      font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+      color: #94A3B8;
+      max-width: 1100px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .title-meta-box {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.2rem 2.2rem;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 2.2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: left;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .meta-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .lecturer-signature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #F1F5F9;
+      font-size: 1.12rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .title-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-cta-start {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%);
+      color: #050B14;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 12px 28px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0, 180, 216, 0.35);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-cta-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(0, 180, 216, 0.5);
+    }
+
+    .btn-cta-fullscreen {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 1.02rem;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Slide Header on Content Slides */
+    .slide-header {
+      margin-bottom: 1.3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .slide-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.35rem;
+    }
+
+    .badge-univ-sm {
+      background: rgba(0, 180, 216, 0.12);
+      border: 1px solid rgba(0, 180, 216, 0.35);
+      color: var(--primary);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .slide-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+    }
+
+    .badge-cpmk-sm {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--accent-emerald);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .slide-title {
+      font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .slide-header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .slide-counter-badge {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .slide-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Full-Screen Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 14px;
+      padding: 1.6rem 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      overflow-y: auto;
+      backdrop-filter: blur(12px);
+    }
+
+    .card.accent-blue { border-top: 4px solid var(--primary); }
+    .card.accent-green { border-top: 4px solid var(--accent-emerald); }
+    .card.accent-amber { border-top: 4px solid var(--accent-amber); }
+
+    .card-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .card-title.blue { color: var(--primary); }
+    .card-title.green { color: var(--accent-emerald); }
+    .card-title.amber { color: var(--accent-amber); }
+
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .card-list li {
+      font-size: clamp(0.95rem, 1.1vw, 1.08rem);
+      line-height: 1.55;
+      color: #E2E8F0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .card-list li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.3rem;
+      line-height: 1.2;
+    }
+
+    /* Formula Banner */
+    .formula-banner {
+      background: linear-gradient(135deg, rgba(0, 180, 216, 0.14) 0%, rgba(14, 26, 47, 0.95) 100%);
+      border: 1px solid rgba(0, 180, 216, 0.45);
+      border-radius: 14px;
+      padding: 1.1rem 2.2rem;
+      margin-bottom: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-shrink: 0;
+      box-shadow: 0 8px 24px rgba(0, 180, 216, 0.12);
+    }
+
+    .formula-banner h4 {
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .formula-banner .katex-display {
+      margin: 0.45rem 0;
+      color: #FFFFFF;
+      font-size: clamp(1.4rem, 2.2vw, 2.0rem);
+    }
+
+    /* Code Container Full Height */
+    .code-container {
+      background: var(--code-bg);
+      border: 1px solid #1E3252;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .code-header {
+      background: #0E1A2D;
+      padding: 9px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1E3252;
+      flex-shrink: 0;
+    }
+
+    .code-title {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      color: var(--primary-light);
+      font-weight: 600;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #E2E8F0;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    pre[class*="language-"] {
+      margin: 0;
+      padding: 1.2rem 1.5rem;
+      background: transparent !important;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      overflow-x: auto;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    /* Floating Presenter Control HUD */
+    .presenter-bar {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 19, 34, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 40px;
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .presenter-bar.autohide {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(20px);
+    }
+
+    .presenter-bar:hover {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: translateX(-50%) translateY(0) !important;
+    }
+
+    .bar-btn {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #CBD5E1;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .bar-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #050B14;
+    }
+
+    .bar-btn-record {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #EF4444;
+      color: #FCA5A5;
+      font-weight: 700;
+    }
+    .bar-btn-record:hover {
+      background: #EF4444;
+      color: #FFF;
+    }
+    .bar-btn-record.recording {
+      background: #EF4444;
+      color: #FFF;
+      animation: recordBlink 1s infinite alternate;
+    }
+    @keyframes recordBlink {
+      0% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+
+    .bar-btn-primary {
+      background: var(--primary);
+      border: 1px solid var(--primary);
+      color: #050B14;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .bar-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      margin: 0 4px;
+    }
+
+    .bar-indicator {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      padding: 4px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* Edge Click Zones */
+    .edge-nav-zone {
+      position: fixed;
+      top: 0;
+      bottom: 70px;
+      width: 5vw;
+      z-index: 50;
+      cursor: pointer;
+      opacity: 0;
+    }
+    .edge-nav-left { left: 0; }
+    .edge-nav-right { right: 0; }
+
+    /* Virtual Laser Pointer */
+    .virtual-laser {
+      position: fixed;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #FF0055;
+      box-shadow: 0 0 12px #FF0055, 0 0 24px #FF0055, 0 0 38px #FF5588;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: top 0.75s cubic-bezier(0.22, 1, 0.36, 1), left 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+      opacity: 0;
+    }
+    .virtual-laser.active {
+      opacity: 1;
+      animation: laserPulse 1.2s infinite alternate;
+    }
+    @keyframes laserPulse {
+      0% { transform: translate(-50%, -50%) scale(0.85); box-shadow: 0 0 8px #FF0055; }
+      100% { transform: translate(-50%, -50%) scale(1.35); box-shadow: 0 0 24px #FF0055, 0 0 40px #FF0055; }
+    }
+
+    .laser-label {
+      position: fixed;
+      background: rgba(10, 19, 34, 0.95);
+      border: 1px solid #FF0055;
+      color: #FFF;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(18px, -18px);
+      transition: top 0.75s cubic-bezier(0.22, 1, 0.36, 1), left 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+      opacity: 0;
+      white-space: nowrap;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    }
+    .laser-label.active {
+      opacity: 1;
+    }
+
+    .lecture-focus-target {
+      outline: 2px solid var(--primary) !important;
+      box-shadow: 0 0 35px rgba(0, 180, 216, 0.55) !important;
+      transition: all 0.35s ease;
+    }
+
+    /* Floating Lecture Teleprompter / Subtitles Panel - HIDDEN BY DEFAULT! */
+    .lecture-panel {
+      position: fixed;
+      bottom: 74px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1040px, 94vw);
+      background: rgba(8, 16, 29, 0.96);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 180, 216, 0.45);
+      border-radius: 18px;
+      padding: 12px 22px;
+      z-index: 950;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .lecture-panel.collapsed {
+      transform: translateX(-50%) translateY(calc(100% + 35px));
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .lecture-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 6px;
+    }
+
+    .lecturer-info-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lecturer-avatar {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent-emerald) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+    .lecturer-name-badge {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #F8FAFC;
+    }
+    .lecturer-voice-badge {
+      background: rgba(0, 180, 216, 0.15);
+      color: var(--primary-light);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 180, 216, 0.3);
+    }
+
+    .lecture-panel-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .audio-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #E2E8F0;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .audio-btn:hover {
+      background: var(--primary);
+      color: #050B14;
+    }
+    .audio-btn.active {
+      background: #10B981;
+      border-color: #10B981;
+      color: #050B14;
+    }
+
+    .auto-advance-label {
+      font-size: 0.78rem;
+      color: #94A3B8;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .lecture-transcript-text {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #E2E8F0;
+      max-height: 75px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    /* Slide Jump Menu / Drawer */
+    .drawer-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+    }
+
+    .drawer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 440px;
+      height: 100%;
+      background: #0B1526;
+      border-right: 1px solid var(--border-card);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      box-shadow: 10px 0 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-card);
+      padding-bottom: 1rem;
+    }
+
+    .drawer-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .drawer-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .drawer-list {
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer-item {
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #CBD5E1;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .drawer-item:hover, .drawer-item.active {
+      background: rgba(0, 180, 216, 0.15);
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(16, 185, 129, 0.95);
+      color: #050B14;
+      padding: 8px 22px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      z-index: 3000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+<!-- Gate Keamanan Akses Mahasiswa (PIN: UN2026) -->
+<style id="authGateStyle">
+  body > *:not(#authGateModal) { filter: blur(14px); pointer-events: none !important; user-select: none !important; }
+</style>
+<div id="authGateModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(5,11,20,0.96);backdrop-filter:blur(16px);z-index:9999999;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans','Inter',sans-serif;color:#F8FAFC;">
+  <div style="background:#0E1A2D;border:1px solid #1E3252;box-shadow:0 25px 50px -12px rgba(0,0,0,0.7),0 0 40px rgba(0,180,216,0.15);padding:2.5rem 2rem;border-radius:20px;max-width:440px;width:90%;text-align:center;">
+    <div style="width:64px;height:64px;background:rgba(0,180,216,0.12);border:1px solid rgba(0,180,216,0.3);border-radius:18px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </div>
+    <div style="display:inline-block;background:rgba(0,180,216,0.15);border:1px solid rgba(0,180,216,0.3);color:#00B4D8;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.75rem;">Universitas Nusantara Manado</div>
+    <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:0.5rem;color:#FFF;">Portal Perkuliahan Terkunci</h2>
+    <p style="font-size:0.88rem;color:#94A3B8;line-height:1.5;margin-bottom:1.5rem;">Materi perkuliahan ini dilindungi hak cipta khusus untuk mahasiswa kelas Pengolahan Sinyal Digital. Silakan masukkan PIN kelas.</p>
+    <form id="authGateForm" onsubmit="handleAuthSubmit(event)" style="display:flex;flex-direction:column;gap:12px;">
+      <input type="password" id="authGateInput" placeholder="Masukkan PIN Akses Kelas..." autofocus style="padding:12px 16px;border-radius:10px;background:#050B14;border:1px solid #2A4365;color:#FFF;font-size:1rem;text-align:center;letter-spacing:0.1em;outline:none;transition:border-color 0.2s;" />
+      <div id="authGateError" style="color:#EF4444;font-size:0.8rem;display:none;font-weight:500;">PIN salah! Silakan tanyakan PIN ke Dosen Pengampu (Pak Erik).</div>
+      <button type="submit" style="padding:12px;border-radius:10px;background:linear-gradient(135deg, #00B4D8 0%, #0077B6 100%);color:#FFF;border:none;font-weight:700;font-size:0.95rem;cursor:pointer;box-shadow:0 8px 20px rgba(0,180,216,0.3);">Buka Materi Kuliah 🔓</button>
+    </form>
+    <div style="margin-top:1.25rem;font-size:0.78rem;color:#64748B;">Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const TARGET_HASH = "c9c2169ba17de848a2d68b050b46f77f1c7e05256a6361ee338f4b9507b239be";
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+  function unlock() {
+    const style = document.getElementById("authGateStyle");
+    const modal = document.getElementById("authGateModal");
+    if (style) style.remove();
+    if (modal) modal.remove();
+  }
+  function checkAuth() {
+    const saved = localStorage.getItem("DSP_AUTH_TOKEN_UN");
+    if (saved === TARGET_HASH) {
+      unlock();
+      return true;
+    }
+    return false;
+  }
+  window.handleAuthSubmit = async function(e) {
+    e.preventDefault();
+    const input = document.getElementById("authGateInput");
+    const err = document.getElementById("authGateError");
+    if (!input) return;
+    const val = input.value.trim().toUpperCase();
+    const hash = await sha256(val);
+    if (hash === TARGET_HASH) {
+      localStorage.setItem("DSP_AUTH_TOKEN_UN", TARGET_HASH);
+      const modal = document.getElementById("authGateModal");
+      if (modal) {
+        modal.style.transition = "opacity 0.25s ease";
+        modal.style.opacity = "0";
+        setTimeout(() => {
+          unlock();
+        }, 250);
+      }
+    } else {
+      err.style.display = "block";
+      input.value = "";
+      input.focus();
+    }
+  };
+  checkAuth();
+})();
+</script>
+
+
+  <!-- Top Progress Bar -->
+  <div class="top-progress-bar">
+    <div class="top-progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Edge Navigation Zones -->
+  <div class="edge-nav-zone edge-nav-left" onclick="prevSlide()" title="Slide Sebelumnya (⬅ / PageUp)"></div>
+  <div class="edge-nav-zone edge-nav-right" onclick="nextSlide()" title="Slide Berikutnya (➔ / Space / PageDown)"></div>
+
+  <!-- Virtual Laser Pointer & Floating Label -->
+  <div class="virtual-laser" id="virtualLaser"></div>
+  <div class="laser-label" id="laserLabel">Penjelasan Dosen</div>
+
+  <!-- Audio Player for Lectures -->
+  <audio id="lectureAudio" preload="auto"></audio>
+
+  <!-- Presentation Viewport (Full Bleed Edge-to-Edge) -->
+  <main class="presentation-viewport" id="viewport">
+    
+    <div class="slide-title-view active">
+      <div class="title-badge-univ">Universitas Nusantara Manado • Fakultas Ilmu Komputer</div>
+      <div class="title-meeting-badge">PENGOLAHAN SINYAL DIGITAL — PERTEMUAN 04</div>
+      <h1 class="title-main">Sistem Waktu Diskrit & Sifat-Sifat Sistem</h1>
+      <p class="title-sub">Karakteristik Transformasi Input-Output, Pengujian Formal Linearitas (Prinsip Superposisi), Time-Invariance, Kausalitas, dan Stabilitas BIBO</p>
+      
+      <div class="title-meta-box">
+        <div class="meta-item">
+          <span class="meta-label">Capaian Pembelajaran</span>
+          <span class="meta-value">CPMK2 (CPL-A, CPL-B)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Bobot Asesmen RPS</span>
+          <span class="meta-value">5%</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Pendekatan Pedagogis</span>
+          <span class="meta-value">Outcome-Based Education (OBE) & Deep Learning</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Integrasi AI</span>
+          <span class="meta-value">Prompting, Debugging & Verifikasi Matematis</span>
+        </div>
+      </div>
+
+      <div class="lecturer-signature">
+        <span>👨‍🏫 Dosen Pengampu: <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong> (NIDN: 0902109201)</span>
+      </div>
+
+      <div class="title-cta-group">
+        <button class="btn-cta-start" onclick="nextSlide()">▶ Mulai Perkuliahan (Spasi / ➔)</button>
+        <button class="btn-cta-fullscreen" onclick="toggleFullScreen()">⛶ Layar Penuh (F5 / F)</button>
+      </div>
+    </div>
+    
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">KONSEP DASAR</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Konsep Sistem Waktu Diskrit: Operator Transformasi</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 2 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Definisi Formal Sistem Diskrit</h3>
+                <ul class="card-list"><li>Sistem waktu diskrit adalah sebuah operator matematik atau piranti komputasi T[ . ] yang memetakan sinyal masukan (input sequence) x[n] menjadi sinyal keluaran (output sequence) y[n].</li><li>Notasi Operator: y[n] = T{ x[n] }.</li><li>Sistem dapat berupa rangkaian keras elektronik (ASIC, FPGA, DSP processor) atau algoritma baris kode perangkat lunak (Python, C++).</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Mengapa Pengujian Sifat Sistem Sangat Krusial?</h3>
+                <ul class="card-list"><li>Sebelum mendesain filter, melakukan analisis spektrum, atau merancang kendali cerdas, kita wajib mengetahui watak dasar sistem yang dihadapi.</li><li>Jika sistem terbukti Linear dan Time-Invariant (LTI), kita dapat memanfaatkan matematika konvolusi dan Transformasi Fourier/Z yang sangat kuat.</li><li>Jika sistem terbukti non-linear atau time-varying, metode LTI standar tidak dapat diterapkan secara langsung dan memerlukan pendekatan khusus.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">SIFAT SISTEM</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Sifat 1: Linearitas (Linearity & Superposition)</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 3 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="formula-banner">
+              <h4>Prinsip Superposisi (Homogenitas & Aditivitas)</h4>
+              <div class="katex-eq">$$\mathcal{T}\big(a x_1[n] + b x_2[n]\big) = a \mathcal{T}\big(x_1[n]\big) + b \mathcal{T}\big(x_2[n]\big) = a y_1[n] + b y_2[n]$$</div>
+            </div>
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📐 Keterangan Variabel & Makna Fisik</h3>
+                <ul class="card-list"><li>T[ . ]: Operator transformasi sistem.</li><li>x1[n], x2[n]: Dua sinyal masukan sembarang.</li><li>y1[n], y2[n]: Respons output masing-masing terhadap masukan x1[n] dan x2[n].</li><li>a, b: Konstanta skalar pengali sembarang (dapat berupa bilangan real atau kompleks).</li><li>Aditivitas: Respons terhadap jumlahan input sama dengan jumlahan respons individual.</li><li>Homogenitas (Penskalaan): Penskalaan input menghasilkan penskalaan proporsional pada output.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🔢 Contoh Perhitungan Bertahap</h3>
+                <ul class="card-list"><li>Uji Cepat Non-Linearitas (Zero-Input Zero-Output Rule):</li><li>Jika input x[n] = 0 menghasilkan output y[n] != 0, maka sistem tersebut DIPASTIKAN NON-LINEAR!</li><li>Contoh: y[n] = 2 x[n] + 3. Jika x[n] = 0, y[n] = 3 != 0. Sistem ini non-linear (affine system).</li><li>Contoh Linear: y[n] = n * x[n]. Uji: T{a x1[n] + b x2[n]} = n(a x1[n] + b x2[n]) = a(n x1[n]) + b(n x2[n]) = a y1[n] + b y2[n]. Terbukti linear murni!</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">PEMBUKTIAN MATEMATIS</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Contoh Uji Analitis: Sistem Linear vs Non-Linear</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 4 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Kasus A: y[n] = (x[n])^2 (Sistem Kuadrat)</h3>
+                <ul class="card-list"><li>Langkah 1: Bentuk kombinasi linier input: x3[n] = a x1[n] + b x2[n].</li><li>Langkah 2: Hitung respons y3[n] = T{x3[n]} = (a x1[n] + b x2[n])^2.</li><li>Ekspansi: y3[n] = a^2 (x1[n])^2 + b^2 (x2[n])^2 + 2 a b x1[n] x2[n].</li><li>Langkah 3: Bandingkan dengan kombinasi output: a y1[n] + b y2[n] = a (x1[n])^2 + b (x2[n])^2.</li><li>Kesimpulan: Karena y3[n] != a y1[n] + b y2[n] (muncul suku silang 2ab x1 x2), maka SISTEM TIDAK LINEAR (NON-LINEAR)!</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Kasus B: y[n] = x[n - 1] - 0.5 x[n - 2]</h3>
+                <ul class="card-list"><li>Langkah 1: Input x3[n] = a x1[n] + b x2[n].</li><li>Langkah 2: y3[n] = (a x1[n-1] + b x2[n-1]) - 0.5 (a x1[n-2] + b x2[n-2]).</li><li>Langkah 3: Kelompokkan konstanta a dan b:</li><li>y3[n] = a [x1[n-1] - 0.5 x1[n-2]] + b [x2[n-1] - 0.5 x2[n-2]].</li><li>Perhatikan bahwa bagian dalam kurung siku adalah tepat y1[n] dan y2[n]!</li><li>Kesimpulan: y3[n] = a y1[n] + b y2[n]. SISTEM TERBUKTI LINEAR!</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">SIFAT SISTEM</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Sifat 2: Time-Invariance (Invarian Waktu)</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 5 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="formula-banner">
+              <h4>Syarat Mutlak Sistem Invarian Waktu</h4>
+              <div class="katex-eq">$$x_1[n] = x[n - k] \implies y_1[n] = \mathcal{T}\big(x[n - k]\big) = y[n - k] \quad \text{untuk setiap } k \in \mathbb{Z}$$</div>
+            </div>
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📐 Keterangan Variabel & Makna Fisik</h3>
+                <ul class="card-list"><li>k: Nilai pergeseran waktu bilangan bulat sembarang.</li><li>y[n - k]: Respons output asli yang digeser sejauh k sampel.</li><li>T{ x[n - k] }: Respons output baru ketika sistem diberi masukan yang telah digeser.</li><li>Prinsip Fisik: Karakteristik dan parameter sistem tidak berubah seiring berjalannya waktu kalender. Eksperimen hari ini memberikan hasil yang sama persis dengan eksperimen besok.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🔢 Contoh Perhitungan Bertahap</h3>
+                <ul class="card-list"><li>Kaidah Deteksi Cepat Sistem Time-Varying:</li><li>1. Koefisien Eksplisit n: Jika persamaan memiliki koefisien pengali yang bergantung langsung pada variabel n (misal y[n] = n x[n] atau y[n] = cos(0.2 pi n) x[n]), sistem DIPASTIKAN TIME-VARYING!</li><li>2. Transformasi Sumbu Waktu pada Input: Jika input mengalami scaling waktu atau pembalikan (misal y[n] = x[2n] atau y[n] = x[-n]), sistem DIPASTIKAN TIME-VARYING!</li><li>3. Jika seluruh koefisien konstan dan indeks waktu hanya berupa pergeseran murni (misal y[n] = 3 x[n-1] + 2 x[n-4]), sistem TERBUKTI TIME-INVARIANT!</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">PEMBUKTIAN MATEMATIS</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Contoh Uji Analitis: Time-Invariant vs Time-Varying</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 6 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Kasus A: y[n] = x[2n] (Kompresor Waktu)</h3>
+                <ul class="card-list"><li>Langkah 1: Berikan input tergeser x1[n] = x[n - k].</li><li>Langkah 2: Respons baru y1[n] = T{x1[n]} = x1[2n] = x[2n - k]. (Hanya n yang diganti 2n).</li><li>Langkah 3: Geser output asli y[n] sejauh k sampel: y[n - k] = x[2(n - k)] = x[2n - 2k].</li><li>Langkah 4: Bandingkan y1[n] dengan y[n - k]:</li><li>x[2n - k] != x[2n - 2k].</li><li>Kesimpulan: y1[n] != y[n - k]. SISTEM ADALAH TIME-VARYING (TIDAK INVARIAN WAKTU)!</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Kasus B: y[n] = 3 x[n] + x[n - 3]</h3>
+                <ul class="card-list"><li>Langkah 1: Input tergeser x1[n] = x[n - k].</li><li>Langkah 2: Respons baru y1[n] = 3 x1[n] + x1[n - 3] = 3 x[n - k] + x[n - k - 3].</li><li>Langkah 3: Geser output asli y[n] sejauh k sampel: y[n - k] = 3 x[n - k] + x[(n - k) - 3].</li><li>Langkah 4: Evaluasi kesamaan: y1[n] tepat sama dengan y[n - k] untuk seluruh nilai k.</li><li>Kesimpulan: SISTEM ADALAH TIME-INVARIANT (INVARIAN WAKTU)!</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">SIFAT SISTEM</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Sifat 3: Kausalitas (Causality)</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 7 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+                <div class="card accent-blue">
+                  <h3 class="card-title blue">📌 Definisi Kausalitas Fisik</h3>
+                  <ul class="card-list"><li>Sistem disebut Kausal jika output pada waktu n saat ini y[n] HANYA bergantung pada nilai input saat ini x[n] dan input masa lalu (x[n-1], x[n-2], ...).</li><li>Sistem sama sekali tidak bergantung pada nilai input masa depan (x[n+1], x[n+2], ...).</li><li>Prinsip 'Tidak dapat meramal masa depan'.</li></ul>
+                </div>
+                
+                <div class="card accent-green">
+                  <h3 class="card-title green">📌 Implementasi Real-Time</h3>
+                  <ul class="card-list"><li>Seluruh sistem pemrosesan sinyal real-time (live audio, radar aktif, kendali motor) WAJIB bersifat kausal.</li><li>Contoh Kausal: y[n] = 0.5 x[n] + 0.5 x[n-1] (Moving Average mundur).</li><li>Contoh Non-Kausal: y[n] = (x[n+1] + x[n] + x[n-1]) / 3 (Membutuhkan sampel masa depan x[n+1]).</li></ul>
+                </div>
+                
+                <div class="card accent-amber">
+                  <h3 class="card-title amber">📌 Aplikasi Non-Kausal Offline</h3>
+                  <ul class="card-list"><li>Apakah sistem non-kausal berguna? Ya, sangat berguna dalam pemrosesan data offline!</li><li>Contoh: Pemrosesan rekaman audio yang sudah tersimpan di harddisk, restorasi foto digital, atau analisis data seismik historis.</li><li>Karena seluruh data sudah ada di memori, indeks n+1 dapat diakses bebas.</li></ul>
+                </div>
+                </div>
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">LANDASAN MATEMATIS</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Sifat 4: Stabilitas BIBO (Bounded-Input Bounded-Output)</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 8 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="formula-banner">
+              <h4>Kriteria Kestabilan BIBO Sistem Diskrit</h4>
+              <div class="katex-eq">$$|x[n]| \le M_x < \infty \quad \forall n \implies |y[n]| \le M_y < \infty \quad \forall n$$</div>
+            </div>
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📐 Keterangan Variabel & Makna Fisik</h3>
+                <ul class="card-list"><li>Mx: Batas atas positif berhingga dari amplitudo sinyal masukan.</li><li>My: Batas atas positif berhingga dari amplitudo sinyal keluaran yang dihasilkan.</li><li>BIBO Stable: Jika setiap input yang terbatas (tidak pernah meledak ke tak terhingga) dijamin menghasilkan output yang juga selalu terbatas.</li><li>Kondisi Unstable: Sistem yang output-nya dapat berosilasi tak hingga atau melonjak divergen ke tak terhingga meskipun input-nya sangat kecil.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🔢 Contoh Perhitungan Bertahap</h3>
+                <ul class="card-list"><li>Contoh Sistem Akumulator Tak Terbatas: y[n] = sum_{k=-inf}^{n} x[k].</li><li>Uji Stabilitas: Berikan input terbatas berupa unit step x[n] = u[n] (amplitudo |x[n]| <= 1, terbatas).</li><li>Hitung output untuk n >= 0: y[n] = sum_{k=0}^{n} 1 = n + 1.</li><li>Evaluasi Limit: Saat n -> inf, y[n] -> inf. Output menjadi tak terbatas (divergen)!</li><li>Kesimpulan: Sistem Akumulator murni TIDAK STABIL BIBO!</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">SIFAT SISTEM</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Sifat 5: Memori Sistem (Memoryless vs Dynamic)</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 9 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Sistem Tanpa Memori (Memoryless / Static)</h3>
+                <ul class="card-list"><li>Output pada waktu n saat ini HANYA bergantung pada input pada waktu n saat ini saja.</li><li>Sistem tidak memerlukan komponen register memori (unit delay element) untuk menyimpan data lama.</li><li>Bentuk Umum: y[n] = f( x[n] ).</li><li>Contoh: y[n] = 5 x[n], y[n] = (x[n])^3, y[n] = sign( x[n] ).</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Sistem Dengan Memori (Dynamic)</h3>
+                <ul class="card-list"><li>Output saat ini bergantung pada nilai input di masa lalu atau masa depan.</li><li>Membutuhkan register flip-flop / buffer memori RAM untuk menyimpan sampel terdahulu.</li><li>Memori Berhingga (Finite Memory): Bergantung pada M sampel masa lalu (misal filter FIR).</li><li>Memori Tak Berhingga (Infinite Memory): Bergantung pada seluruh riwayat masa lalu melalui umpan balik output (misal filter IIR).</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">KOMPUTASI & KODE</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Implementasi Python: Framework Pengujian Sifat Sistem</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 10 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📖 Pengujian Empiris Numerik Sifat Sistem</h3>
+                <ul class="card-list"><li>Meskipun pembuktian matematis bersifat formal, kita dapat membangun script pengujian empiris menggunakan sinyal acak (random signals) untuk mendeteksi pelanggaran sifat secara otomatis.</li><li>Jika ditemukan minimal satu pasang sinyal acak yang melanggar rumus superposisi, sistem terbukti 100% non-linear.</li></ul>
+              </div>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="code-title">Python Implementation (NumPy / SciPy)</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Salin Kode</button>
+                </div>
+                <pre><code class="language-python">import numpy as np
+
+def test_system_linearity(system_func, tolerance=1e-6):
+    # Pembangkitan dua sinyal acak
+    n = np.arange(0, 50)
+    x1 = np.random.randn(len(n))
+    x2 = np.random.randn(len(n))
+    a, b = 2.5, -1.8
+    
+    # Jalur 1: Superposisi input terlebih dahulu
+    x_comb = a * x1 + b * x2
+    y_from_comb = system_func(x_comb)
+    
+    # Jalur 2: Superposisi output individual
+    y1 = system_func(x1)
+    y2 = system_func(x2)
+    y_superposed = a * y1 + b * y2
+    
+    # Evaluasi selisih maksimum
+    max_err = np.max(np.abs(y_from_comb - y_superposed))
+    is_linear = max_err < tolerance
+    return is_linear, max_err
+
+# Uji Coba Dua Sistem Berbeda
+sys_linear = lambda x: 3.0 * x + np.roll(x, 1)
+sys_nonlinear = lambda x: x**2
+
+print('Sys Linear:', test_system_linearity(sys_linear))
+print('Sys Non-Linear:', test_system_linearity(sys_nonlinear))</code></pre>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">PRAKTIKUM & HANDS-ON</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Praktikum Mandiri Lab 04: Pengujian Sifat Sistem Diskrit</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 11 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Lembar Instruksi Praktikum 04</h3>
+                <ul class="card-list"><li>Judul: Uji Mandiri Sifat-Sifat Sistem Waktu Diskrit Menggunakan Python.</li><li>Sistem 1: y[n] = x[n] - 2 x[n-1] + x[n-2] (Diferensiator Orde Dua).</li><li>Sistem 2: y[n] = n * x[n] (Time-Varying Amplifier).</li><li>Sistem 3: y[n] = np.log10(np.abs(x[n]) + 1e-4) (Kompresor Logaritmik).</li><li>Sistem 4: y[n] = x[n + 1] - x[n] (Forward Difference Non-Kausal).</li><li>Tugas: Tulis script otomatis untuk menguji Linearitas, Time-Invariance, dan Kausalitas dari ke-4 sistem di atas.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Rubrik Laporan & Analisis</h3>
+                <ul class="card-list"><li>Tabel Evaluasi Wajib: Buat tabel matriks perbandingan sifat (Linear?, TI?, Kausal?, Stabil BIBO?, Memori?).</li><li>Pembuktian Analitis: Sertakan penurunan rumus matematika manual untuk memvalidasi hasil eksekusi program Python.</li><li>Interpretasi Kegagalan: Jelaskan secara konseptual mengapa Sistem 2 gagal dalam uji Time-Invariance saat diuji dengan fungsi np.roll().</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">INTEGRASI AI</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Integrasi AI: Verifikasi Pembuktian Formal Matematika</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 12 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Prompt AI untuk Proof Checking</h3>
+                <ul class="card-list"><li>Prompt Efektif: 'Periksa langkah pembuktian saya mengenai kestabilan BIBO sistem y[n] = e^(x[n]). Apakah asumsi bahwa |x[n]| <= M berhingga menjamin |y[n]| <= e^M selalu berhingga? Adakah celah logika?'</li><li>SymPy Generation: Minta AI membuat kode berbasis pustaka Python SymPy untuk melakukan pengujian analitis diferensial persamaan beda.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Kewajiban Konfirmasi Mandiri</h3>
+                <ul class="card-list"><li>Verifikasi Sifat Homogenitas vs Aditivitas: Waspadai kesalahan AI yang sering menyatakan sistem linear hanya karena memenuhi aditivitas, padahal gagal pada homogenitas bilangan kompleks.</li><li>Pemeriksaan Kausalitas: Pastikan mahasiswa memahami secara mandiri alasan fisik mengapa sistem non-kausal tidak dapat dioperasikan pada siaran langsung (live streaming).</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">EVALUASI PEMBELAJARAN</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Latihan Soal HOTS: Matriks Klasifikasi 5 Sistem</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 13 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+                <div class="card accent-blue">
+                  <h3 class="card-title blue">📌 Sistem 1 & 2</h3>
+                  <ul class="card-list"><li>Sistem A: y[n] = x[n] * u[n]. Uji linearitas, time-invariance, dan kausalitas!</li><li>Sistem B: y[n] = cos(x[n]). Tentukan apakah sistem stabil BIBO dan memiliki memori!</li></ul>
+                </div>
+                
+                <div class="card accent-green">
+                  <h3 class="card-title green">📌 Sistem 3 & 4</h3>
+                  <ul class="card-list"><li>Sistem C: y[n] = sum_{k=n-2}^{n+2} x[k]. Apakah sistem ini kausal? Mengapa?</li><li>Sistem D: y[n] = x[-n]. Buktikan secara analitis bahwa sistem ini time-varying!</li></ul>
+                </div>
+                
+                <div class="card accent-amber">
+                  <h3 class="card-title amber">📌 Sistem 5 (Tantangan)</h3>
+                  <ul class="card-list"><li>Sistem E: y[n] = Re{ x[n] } di mana input x[n] adalah sekuens bilangan kompleks.</li><li>Uji apakah sistem ini linear terhadap skalar kompleks a = j!</li></ul>
+                </div>
+                </div>
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">REFLEKSI & RANGKUMAN</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Rangkuman Pertemuan 04 & Refleksi Pembelajaran</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 14 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-3">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">💡 Berkesadaran (Mindful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Memahami tujuan belajar, proses berpikir, dan evaluasi pemahaman.</p>
+                <ul class="card-list"><li>Saya menyadari bahwa menguji sistem membutuhkan ketelitian matematis ganda: superposisi input vs superposisi output.</li><li>Saya memahami bahwa asumsi kestabilan BIBO adalah batas keselamatan yang mencegah speaker terbakar atau sistem kendali meledak.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🌍 Bermakna (Meaningful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Kaitan konkret dengan industri teknologi, telekomunikasi & AI.</p>
+                <ul class="card-list"><li>Klasifikasi sistem menjadi Linear Time-Invariant (LTI) adalah 'tiket emas' yang membuka gerbang teori konvolusi dan filter digital pada pertemuan selanjutnya.</li><li>Industri teknologi bergantung pada kepastian bahwa sistem yang dipasang di lapangan bersifat time-invariant.</li></ul>
+              </div>
+              <div class="card accent-amber">
+                <h3 class="card-title amber">✨ Menggembirakan (Joyful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Eksplorasi interaktif, visualisasi sinyal, dan tantangan kode.</p>
+                <ul class="card-list"><li>Membangun fungsi automated tester di Python yang mampu mengetes kebenaran matematika sistem memberikan rasa percaya diri komputasi yang tinggi.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">REFERENSI & TUGAS</span>
+                <span class="badge-cpmk-sm">CPMK2 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Tindak Lanjut & Referensi Perkuliahan</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 15 / 15</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📋 Rangkuman Inti Pertemuan 4</h3>
+                <ul class="card-list"><li>Linearitas diuji dengan prinsip superposisi T{a x1 + b x2} = a y1 + b y2.</li><li>Time-invariance mensyaratkan keterlambatan input menghasilkan keterlambatan output identik.</li><li>Kausalitas melarang ketergantungan pada input masa depan.</li><li>Stabilitas BIBO menjamin output terbatas untuk setiap input terbatas.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🎯 Tugas Mandiri & Ketercapaian OBE</h3>
+                <ul class="card-list"><li>Unggah Laporan Praktikum Lab 04 ke LMS sebelum pertemuan minggu depan.</li><li>Baca Bab 2 Oppenheim bagian 'Linear Time-Invariant Systems and Convolution'.</li><li>Persiapkan diri untuk memahami respons impuls h[n] pada Pertemuan 5.</li></ul>
+                <h4 style="font-size:1.05rem; color:#F1F5F9; margin-top:1.2rem; margin-bottom:0.6rem;">Referensi Akademik Terverifikasi:</h4>
+                <ul class="card-list"><li style='font-size:0.92rem; color:#CBD5E1;'>📖 Oppenheim, A. V., & Schafer, R. W. (2010). Discrete-Time Signal Processing (3rd ed.). Pearson, Bab 2.2 (Discrete-Time Systems).</li><li style='font-size:0.92rem; color:#CBD5E1;'>📖 McClellan, J. H., Schafer, R. W., & Yoder, M. A. (2016). DSP First (2nd ed.). Pearson, Bab 4.</li><li style='font-size:0.92rem; color:#CBD5E1;'>📖 Mitra, S. K. (2011). Digital Signal Processing: A Computer-Based Approach (4th ed.). McGraw-Hill, Bab 2.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+  </main>
+
+  <!-- Floating Presenter HUD -->
+  <div class="presenter-bar" id="presenterBar">
+    <button class="bar-btn" onclick="prevSlide()" title="Slide Sebelumnya (⬅)">◀ Prev</button>
+    <span class="bar-indicator" id="slideIndicator" onclick="toggleDrawer()" title="Klik untuk daftar slide (M)">Slide 1 / 15</span>
+    <button class="bar-btn-primary" onclick="nextSlide()" title="Slide Berikutnya (➔ / Spasi)">Next ▶</button>
+    <div class="bar-divider"></div>
+    <button class="bar-btn" id="btnPresenterLecture" onclick="togglePlayLecture()" style="border-color:#10B981; color:#6EE7B7;" title="Putar Suara & Penjelasan Dosen (P)">🎙️ Dengar Penjelasan (P)</button>
+    <button class="bar-btn bar-btn-record" id="btnRecordVideo" onclick="toggleRecordLecture()" title="Rekam Layar + Suara Otomatis dari Menit 0 dan Auto-Download saat Selesai">🔴 Rekam Video (Auto)</button>
+    <button class="bar-btn" id="btnTogglePanel" onclick="toggleLecturePanel()" title="Tampilkan/Sembunyikan Naskah Dosen (T)">📜 Naskah</button>
+    <button class="bar-btn" onclick="toggleFullScreen()" title="Mode Layar Penuh (F5 / F)">⛶ Layar Penuh</button>
+    <button class="bar-btn" onclick="toggleDrawer()" title="Daftar Slide (M)">☰ Menu</button>
+    <a href="04_Pertemuan_04_Pengolahan_Sinyal_Digital.pptx" class="bar-btn" download title="Download file PowerPoint">📥 PPTX</a>
+    <a href="https://canva.link/0p27fg52m1k06l3" target="_blank" class="bar-btn" style="border-color:#7D2AE8; color:#D8B4FE;" title="Buka di Canva">🎨 Canva</a>
+    <a href="index.html" class="bar-btn" title="Kembali ke Hub Perkuliahan">🏠 Hub</a>
+  </div>
+
+  <!-- Floating Lecture Teleprompter Panel - COLLAPSED / HIDDEN BY DEFAULT! -->
+  <div class="lecture-panel collapsed" id="lecturePanel">
+    <div class="lecture-panel-header">
+      <div class="lecturer-info-bar">
+        <div class="lecturer-avatar">👨‍🏫</div>
+        <span class="lecturer-name-badge">Penjelasan Kuliah: <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong></span>
+        <span class="lecturer-voice-badge">Suara AI Ardi Neural</span>
+      </div>
+      <div class="lecture-panel-controls">
+        <button class="audio-btn active" id="btnPlayLecture" onclick="togglePlayLecture()">⏸ Jeda</button>
+        <button class="audio-btn" onclick="replaySlideLecture()">🔄 Ulangi</button>
+        <label class="auto-advance-label">
+          <input type="checkbox" id="autoAdvanceCheck" checked> Auto-Lanjut Slide
+        </label>
+        <button class="audio-btn" onclick="toggleLecturePanel()" title="Sembunyikan Panel (T)">✕ Tutup</button>
+      </div>
+    </div>
+    <div class="lecture-transcript-text" id="lectureTranscript">
+      Memuat naskah penjelasan dosen...
+    </div>
+  </div>
+
+  <!-- Slide Jump Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()">
+    <div class="drawer" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <h3 class="drawer-title">Daftar Slide Pertemuan 4</h3>
+        <button class="drawer-close" onclick="toggleDrawer()">✕</button>
+      </div>
+      <div class="drawer-list" id="drawerList">
+        <div class="drawer-item active" onclick="goToSlide(0)">1. Judul & Identitas Perkuliahan</div>
+<div class="drawer-item" onclick="goToSlide(1)">2. Konsep Sistem Waktu Diskrit: Operator Transformasi</div>
+<div class="drawer-item" onclick="goToSlide(2)">3. Sifat 1: Linearitas (Linearity & Superposition)</div>
+<div class="drawer-item" onclick="goToSlide(3)">4. Contoh Uji Analitis: Sistem Linear vs Non-Linear</div>
+<div class="drawer-item" onclick="goToSlide(4)">5. Sifat 2: Time-Invariance (Invarian Waktu)</div>
+<div class="drawer-item" onclick="goToSlide(5)">6. Contoh Uji Analitis: Time-Invariant vs Time-Varying</div>
+<div class="drawer-item" onclick="goToSlide(6)">7. Sifat 3: Kausalitas (Causality)</div>
+<div class="drawer-item" onclick="goToSlide(7)">8. Sifat 4: Stabilitas BIBO (Bounded-Input Bounded-Output)</div>
+<div class="drawer-item" onclick="goToSlide(8)">9. Sifat 5: Memori Sistem (Memoryless vs Dynamic)</div>
+<div class="drawer-item" onclick="goToSlide(9)">10. Implementasi Python: Framework Pengujian Sifat Sistem</div>
+<div class="drawer-item" onclick="goToSlide(10)">11. Praktikum Mandiri Lab 04: Pengujian Sifat Sistem Diskrit</div>
+<div class="drawer-item" onclick="goToSlide(11)">12. Integrasi AI: Verifikasi Pembuktian Formal Matematika</div>
+<div class="drawer-item" onclick="goToSlide(12)">13. Latihan Soal HOTS: Matriks Klasifikasi 5 Sistem</div>
+<div class="drawer-item" onclick="goToSlide(13)">14. Rangkuman Pertemuan 04 & Refleksi Pembelajaran</div>
+<div class="drawer-item" onclick="goToSlide(14)">15. Tindak Lanjut & Referensi Perkuliahan</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide, .slide-title-view');
+    const totalSlides = slides.length;
+    const slideIndicator = document.getElementById('slideIndicator');
+    const progressFill = document.getElementById('progressFill');
+    const presenterBar = document.getElementById('presenterBar');
+    const toast = document.getElementById('toast');
+
+    // Lecture & Audio Elements
+    const LECTURE_DATA = {"1": {"title": "Judul & Identitas Perkuliahan", "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-4. Hari ini kita akan mengkaji secara komprehensif topik utama: Sistem Waktu Diskrit & Sifat-Sifat Sistem. Karakteristik Transformasi Input-Output, Pengujian Formal Linearitas (Prinsip Superposisi), Time-Invariance, Kausalitas, dan Stabilitas BIBO. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK2 (CPL-A, CPL-B) dengan bobot evaluasi sebesar 5 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.", "laser_steps": [{"time": 2, "target": ".title-badge-univ", "text": "Universitas Nusantara Manado"}, {"time": 7, "target": ".title-main", "text": "Topik: Sistem Waktu Diskrit & Sifat-Sifat "}, {"time": 14, "target": ".title-meta-box", "text": "Capaian CPMK2 (CPL-A, CPL-B)"}, {"time": 22, "target": ".lecturer-signature", "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."}, {"time": 28, "target": ".title-cta-group", "text": "Mulai Perkuliahan"}]}, "2": {"title": "Konsep Sistem Waktu Diskrit: Operator Transformasi", "script": "Pada slide ini, kita membahas Konsep Sistem Waktu Diskrit: Operator Transformasi. Mari kita perhatikan kolom sebelah kiri mengenai Definisi Formal Sistem Diskrit. Sistem waktu diskrit adalah sebuah operator matematik atau piranti komputasi T[ . ] yang memetakan sinyal masukan (input sequence) x[n] menjadi sinyal keluaran (output sequence) y[n]. Notasi Operator: y[n] = T{ x[n] }. Sistem dapat berupa rangkaian keras elektronik (ASIC, FPGA, DSP processor) atau algoritma baris kode perangkat lunak (Python, C++). Sekarang, mari kita tinjau kolom sebelah kanan mengenai Mengapa Pengujian Sifat Sistem Sangat Krusial?. Mengapa hal ini sangat fundamental? Sebelum mendesain filter, melakukan analisis spektrum, atau merancang kendali cerdas, kita wajib mengetahui watak dasar sistem yang dihadapi. Jika sistem terbukti Linear dan Time-Invariant (LTI), kita dapat memanfaatkan matematika konvolusi dan Transformasi Fourier/Z yang sangat kuat. Jika sistem terbukti non-linear atau time-varying, metode LTI standar tidak dapat diterapkan secara langsung dan memerlukan pendekatan khusus. ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Definisi Formal Sistem Diskrit"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Mengapa Pengujian Sifat Sistem"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "3": {"title": "Sifat 1: Linearitas (Linearity & Superposition)", "script": "Pada slide ini, kita membahas Sifat 1: Linearitas (Linearity & Superposition). Perhatikan persamaan matematika inti untuk Prinsip Superposisi (Homogenitas & Aditivitas) di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. T[ . ]: Operator transformasi sistem. x1[n], x2[n]: Dua sinyal masukan sembarang. y1[n], y2[n]: Respons output masing-masing terhadap masukan x1[n] dan x2[n]. a, b: Konstanta skalar pengali sembarang (dapat berupa bilangan real atau kompleks). Aditivitas: Respons terhadap jumlahan input sama dengan jumlahan respons individual. Homogenitas (Penskalaan): Penskalaan input menghasilkan penskalaan proporsional pada output. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Uji Cepat Non-Linearitas (Zero-Input Zero-Output Rule): Jika input x[n] = 0 menghasilkan output y[n] != 0, maka sistem tersebut DIPASTIKAN NON-LINEAR! Contoh: y[n] = 2 x[n] + 3. Jika x[n] = 0, y[n] = 3 != 0. Sistem ini non-linear (affine system). Contoh Linear: y[n] = n * x[n]. Uji: T{a x1[n] + b x2[n]} = n(a x1[n] + b x2[n]) = a(n x1[n]) + b(n x2[n]) = a y1[n] + b y2[n]. Terbukti linear murni! ", "laser_steps": [{"time": 3, "target": ".formula-banner h4", "text": "Prinsip Superposisi (Homogenit"}, {"time": 9, "target": ".formula-banner .katex-display", "text": "Formulasi Matematis"}, {"time": 18, "target": ".grid-2 .card.accent-blue", "text": "Makna Fisis Variabel"}, {"time": 28, "target": ".grid-2 .card.accent-green", "text": "Langkah Perhitungan"}]}, "4": {"title": "Contoh Uji Analitis: Sistem Linear vs Non-Linear", "script": "Pada slide ini, kita membahas Contoh Uji Analitis: Sistem Linear vs Non-Linear. Mari kita perhatikan kolom sebelah kiri mengenai Kasus A: y[n] = (x[n])^2 (Sistem Kuadrat). Langkah 1: Bentuk kombinasi linier input: x3[n] = a x1[n] + b x2[n]. Langkah 2: Hitung respons y3[n] = T{x3[n]} = (a x1[n] + b x2[n])^2. Ekspansi: y3[n] = a^2 (x1[n])^2 + b^2 (x2[n])^2 + 2 a b x1[n] x2[n]. Langkah 3: Bandingkan dengan kombinasi output: a y1[n] + b y2[n] = a (x1[n])^2 + b (x2[n])^2. Kesimpulan: Karena y3[n] != a y1[n] + b y2[n] (muncul suku silang 2ab x1 x2), maka SISTEM TIDAK LINEAR (NON-LINEAR)! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kasus B: y[n] = x[n - 1] - 0.5 x[n - 2]. Mengapa hal ini sangat fundamental? Langkah 1: Input x3[n] = a x1[n] + b x2[n]. Langkah 2: y3[n] = (a x1[n-1] + b x2[n-1]) - 0.5 (a x1[n-2] + b x2[n-2]). Langkah 3: Kelompokkan konstanta a dan b: y3[n] = a [x1[n-1] - 0.5 x1[n-2]] + b [x2[n-1] - 0.5 x2[n-2]]. Perhatikan bahwa bagian dalam kurung siku adalah tepat y1[n] dan y2[n]! Kesimpulan: y3[n] = a y1[n] + b y2[n]. SISTEM TERBUKTI LINEAR! ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Kasus A: y[n] = (x[n])^2 (Sist"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Kasus B: y[n] = x[n - 1] - 0.5"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "5": {"title": "Sifat 2: Time-Invariance (Invarian Waktu)", "script": "Pada slide ini, kita membahas Sifat 2: Time-Invariance (Invarian Waktu). Perhatikan persamaan matematika inti untuk Syarat Mutlak Sistem Invarian Waktu di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. k: Nilai pergeseran waktu bilangan bulat sembarang. y[n - k]: Respons output asli yang digeser sejauh k sampel. T{ x[n - k] }: Respons output baru ketika sistem diberi masukan yang telah digeser. Prinsip Fisik: Karakteristik dan parameter sistem tidak berubah seiring berjalannya waktu kalender. Eksperimen hari ini memberikan hasil yang sama persis dengan eksperimen besok. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Kaidah Deteksi Cepat Sistem Time-Varying: 1. Koefisien Eksplisit n: Jika persamaan memiliki koefisien pengali yang bergantung langsung pada variabel n (misal y[n] = n x[n] atau y[n] = cos(0.2 pi n) x[n]), sistem DIPASTIKAN TIME-VARYING! 2. Transformasi Sumbu Waktu pada Input: Jika input mengalami scaling waktu atau pembalikan (misal y[n] = x[2n] atau y[n] = x[-n]), sistem DIPASTIKAN TIME-VARYING! 3. Jika seluruh koefisien konstan dan indeks waktu hanya berupa pergeseran murni (misal y[n] = 3 x[n-1] + 2 x[n-4]), sistem TERBUKTI TIME-INVARIANT! ", "laser_steps": [{"time": 3, "target": ".formula-banner h4", "text": "Syarat Mutlak Sistem Invarian "}, {"time": 9, "target": ".formula-banner .katex-display", "text": "Formulasi Matematis"}, {"time": 18, "target": ".grid-2 .card.accent-blue", "text": "Makna Fisis Variabel"}, {"time": 28, "target": ".grid-2 .card.accent-green", "text": "Langkah Perhitungan"}]}, "6": {"title": "Contoh Uji Analitis: Time-Invariant vs Time-Varying", "script": "Pada slide ini, kita membahas Contoh Uji Analitis: Time-Invariant vs Time-Varying. Mari kita perhatikan kolom sebelah kiri mengenai Kasus A: y[n] = x[2n] (Kompresor Waktu). Langkah 1: Berikan input tergeser x1[n] = x[n - k]. Langkah 2: Respons baru y1[n] = T{x1[n]} = x1[2n] = x[2n - k]. (Hanya n yang diganti 2n). Langkah 3: Geser output asli y[n] sejauh k sampel: y[n - k] = x[2(n - k)] = x[2n - 2k]. Langkah 4: Bandingkan y1[n] dengan y[n - k]: x[2n - k] != x[2n - 2k]. Kesimpulan: y1[n] != y[n - k]. SISTEM ADALAH TIME-VARYING (TIDAK INVARIAN WAKTU)! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kasus B: y[n] = 3 x[n] + x[n - 3]. Mengapa hal ini sangat fundamental? Langkah 1: Input tergeser x1[n] = x[n - k]. Langkah 2: Respons baru y1[n] = 3 x1[n] + x1[n - 3] = 3 x[n - k] + x[n - k - 3]. Langkah 3: Geser output asli y[n] sejauh k sampel: y[n - k] = 3 x[n - k] + x[(n - k) - 3]. Langkah 4: Evaluasi kesamaan: y1[n] tepat sama dengan y[n - k] untuk seluruh nilai k. Kesimpulan: SISTEM ADALAH TIME-INVARIANT (INVARIAN WAKTU)! ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Kasus A: y[n] = x[2n] (Kompres"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Kasus B: y[n] = 3 x[n] + x[n -"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "7": {"title": "Sifat 3: Kausalitas (Causality)", "script": "Pada slide ini, kita membahas Sifat 3: Kausalitas (Causality). Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Definisi Kausalitas Fisik. Sistem disebut Kausal jika output pada waktu n saat ini y[n] HANYA bergantung pada nilai input saat ini x[n] dan input masa lalu (x[n-1], x[n-2], ...). Sistem sama sekali tidak bergantung pada nilai input masa depan (x[n+1], x[n+2], ...). Prinsip 'Tidak dapat meramal masa depan'. Pilar ke-2 adalah Implementasi Real-Time. Seluruh sistem pemrosesan sinyal real-time (live audio, radar aktif, kendali motor) WAJIB bersifat kausal. Contoh Kausal: y[n] = 0.5 x[n] + 0.5 x[n-1] (Moving Average mundur). Contoh Non-Kausal: y[n] = (x[n+1] + x[n] + x[n-1]) / 3 (Membutuhkan sampel masa depan x[n+1]). Pilar ke-3 adalah Aplikasi Non-Kausal Offline. Apakah sistem non-kausal berguna? Ya, sangat berguna dalam pemrosesan data offline! Contoh: Pemrosesan rekaman audio yang sudah tersimpan di harddisk, restorasi foto digital, atau analisis data seismik historis. Karena seluruh data sudah ada di memori, indeks n+1 dapat diakses bebas. ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "Definisi Kausalitas Fisik"}, {"time": 14, "target": ".grid-3 .card:nth-child(2)", "text": "Implementasi Real-Time"}, {"time": 25, "target": ".grid-3 .card:nth-child(3)", "text": "Aplikasi Non-Kausal Offli"}]}, "8": {"title": "Sifat 4: Stabilitas BIBO (Bounded-Input Bounded-Output)", "script": "Pada slide ini, kita membahas Sifat 4: Stabilitas BIBO (Bounded-Input Bounded-Output). Perhatikan persamaan matematika inti untuk Kriteria Kestabilan BIBO Sistem Diskrit di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. Mx: Batas atas positif berhingga dari amplitudo sinyal masukan. My: Batas atas positif berhingga dari amplitudo sinyal keluaran yang dihasilkan. BIBO Stable: Jika setiap input yang terbatas (tidak pernah meledak ke tak terhingga) dijamin menghasilkan output yang juga selalu terbatas. Kondisi Unstable: Sistem yang output-nya dapat berosilasi tak hingga atau melonjak divergen ke tak terhingga meskipun input-nya sangat kecil. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Contoh Sistem Akumulator Tak Terbatas: y[n] = sum_{k=-inf}^{n} x[k]. Uji Stabilitas: Berikan input terbatas berupa unit step x[n] = u[n] (amplitudo |x[n]| <= 1, terbatas). Hitung output untuk n >= 0: y[n] = sum_{k=0}^{n} 1 = n + 1. Evaluasi Limit: Saat n -> inf, y[n] -> inf. Output menjadi tak terbatas (divergen)! Kesimpulan: Sistem Akumulator murni TIDAK STABIL BIBO! ", "laser_steps": [{"time": 3, "target": ".formula-banner h4", "text": "Kriteria Kestabilan BIBO Siste"}, {"time": 9, "target": ".formula-banner .katex-display", "text": "Formulasi Matematis"}, {"time": 18, "target": ".grid-2 .card.accent-blue", "text": "Makna Fisis Variabel"}, {"time": 28, "target": ".grid-2 .card.accent-green", "text": "Langkah Perhitungan"}]}, "9": {"title": "Sifat 5: Memori Sistem (Memoryless vs Dynamic)", "script": "Pada slide ini, kita membahas Sifat 5: Memori Sistem (Memoryless vs Dynamic). Mari kita perhatikan kolom sebelah kiri mengenai Sistem Tanpa Memori (Memoryless / Static). Output pada waktu n saat ini HANYA bergantung pada input pada waktu n saat ini saja. Sistem tidak memerlukan komponen register memori (unit delay element) untuk menyimpan data lama. Bentuk Umum: y[n] = f( x[n] ). Contoh: y[n] = 5 x[n], y[n] = (x[n])^3, y[n] = sign( x[n] ). Sekarang, mari kita tinjau kolom sebelah kanan mengenai Sistem Dengan Memori (Dynamic). Mengapa hal ini sangat fundamental? Output saat ini bergantung pada nilai input di masa lalu atau masa depan. Membutuhkan register flip-flop / buffer memori RAM untuk menyimpan sampel terdahulu. Memori Berhingga (Finite Memory): Bergantung pada M sampel masa lalu (misal filter FIR). Memori Tak Berhingga (Infinite Memory): Bergantung pada seluruh riwayat masa lalu melalui umpan balik output (misal filter IIR). ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Sistem Tanpa Memori (Memoryles"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Sistem Dengan Memori (Dynamic)"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "10": {"title": "Implementasi Python: Framework Pengujian Sifat Sistem", "script": "Pada slide ini, kita membahas Implementasi Python: Framework Pengujian Sifat Sistem. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Pengujian Empiris Numerik Sifat Sistem. Meskipun pembuktian matematis bersifat formal, kita dapat membangun script pengujian empiris menggunakan sinyal acak (random signals) untuk mendeteksi pelanggaran sifat secara otomatis. Jika ditemukan minimal satu pasang sinyal acak yang melanggar rumus superposisi, sistem terbukti 100% non-linear. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.", "laser_steps": [{"time": 3, "target": ".grid-2 .card.accent-blue", "text": "Pengujian Empiris Numerik Sifa"}, {"time": 12, "target": ".code-container .code-header", "text": "Kode Python DSP"}, {"time": 20, "target": ".code-container pre", "text": "Implementasi Vektorisasi"}]}, "11": {"title": "Praktikum Mandiri Lab 04: Pengujian Sifat Sistem Diskrit", "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 04: Pengujian Sifat Sistem Diskrit. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 04. Judul: Uji Mandiri Sifat-Sifat Sistem Waktu Diskrit Menggunakan Python. Sistem 1: y[n] = x[n] - 2 x[n-1] + x[n-2] (Diferensiator Orde Dua). Sistem 2: y[n] = n * x[n] (Time-Varying Amplifier). Sistem 3: y[n] = np.log10(np.abs(x[n]) + 1e-4) (Kompresor Logaritmik). Sistem 4: y[n] = x[n + 1] - x[n] (Forward Difference Non-Kausal). Tugas: Tulis script otomatis untuk menguji Linearitas, Time-Invariance, dan Kausalitas dari ke-4 sistem di atas. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Rubrik Laporan & Analisis. Mengapa hal ini sangat fundamental? Tabel Evaluasi Wajib: Buat tabel matriks perbandingan sifat (Linear?, TI?, Kausal?, Stabil BIBO?, Memori?). Pembuktian Analitis: Sertakan penurunan rumus matematika manual untuk memvalidasi hasil eksekusi program Python. Interpretasi Kegagalan: Jelaskan secara konseptual mengapa Sistem 2 gagal dalam uji Time-Invariance saat diuji dengan fungsi np.roll(). ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Lembar Instruksi Praktikum 04"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Rubrik Laporan & Analisis"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "12": {"title": "Integrasi AI: Verifikasi Pembuktian Formal Matematika", "script": "Pada slide ini, kita membahas Integrasi AI: Verifikasi Pembuktian Formal Matematika. Mari kita perhatikan kolom sebelah kiri mengenai Prompt AI untuk Proof Checking. Prompt Efektif: 'Periksa langkah pembuktian saya mengenai kestabilan BIBO sistem y[n] = e^(x[n]). Apakah asumsi bahwa |x[n]| <= M berhingga menjamin |y[n]| <= e^M selalu berhingga? Adakah celah logika?' SymPy Generation: Minta AI membuat kode berbasis pustaka Python SymPy untuk melakukan pengujian analitis diferensial persamaan beda. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Konfirmasi Mandiri. Mengapa hal ini sangat fundamental? Verifikasi Sifat Homogenitas vs Aditivitas: Waspadai kesalahan AI yang sering menyatakan sistem linear hanya karena memenuhi aditivitas, padahal gagal pada homogenitas bilangan kompleks. Pemeriksaan Kausalitas: Pastikan mahasiswa memahami secara mandiri alasan fisik mengapa sistem non-kausal tidak dapat dioperasikan pada siaran langsung (live streaming). ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Prompt AI untuk Proof Checking"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Kewajiban Konfirmasi Mandiri"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "13": {"title": "Latihan Soal HOTS: Matriks Klasifikasi 5 Sistem", "script": "Pada slide ini, kita membahas Latihan Soal HOTS: Matriks Klasifikasi 5 Sistem. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Sistem 1 & 2. Sistem A: y[n] = x[n] * u[n]. Uji linearitas, time-invariance, dan kausalitas! Sistem B: y[n] = cos(x[n]). Tentukan apakah sistem stabil BIBO dan memiliki memori! Pilar ke-2 adalah Sistem 3 & 4. Sistem C: y[n] = sum_{k=n-2}^{n+2} x[k]. Apakah sistem ini kausal? Mengapa? Sistem D: y[n] = x[-n]. Buktikan secara analitis bahwa sistem ini time-varying! Pilar ke-3 adalah Sistem 5 (Tantangan). Sistem E: y[n] = Re{ x[n] } di mana input x[n] adalah sekuens bilangan kompleks. Uji apakah sistem ini linear terhadap skalar kompleks a = j! ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "Sistem 1 & 2"}, {"time": 14, "target": ".grid-3 .card:nth-child(2)", "text": "Sistem 3 & 4"}, {"time": 25, "target": ".grid-3 .card:nth-child(3)", "text": "Sistem 5 (Tantangan)"}]}, "14": {"title": "Rangkuman Pertemuan 04 & Refleksi Pembelajaran", "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 04 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa menguji sistem membutuhkan ketelitian matematis ganda: superposisi input vs superposisi output. Saya memahami bahwa asumsi kestabilan BIBO adalah batas keselamatan yang mencegah speaker terbakar atau sistem kendali meledak. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Klasifikasi sistem menjadi Linear Time-Invariant (LTI) adalah 'tiket emas' yang membuka gerbang teori konvolusi dan filter digital pada pertemuan selanjutnya. Industri teknologi bergantung pada kepastian bahwa sistem yang dipasang di lapangan bersifat time-invariant. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Membangun fungsi automated tester di Python yang mampu mengetes kebenaran matematika sistem memberikan rasa percaya diri komputasi yang tinggi. ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "Berkesadaran (Mindful)"}, {"time": 15, "target": ".grid-3 .card:nth-child(2)", "text": "Bermakna (Meaningful)"}, {"time": 27, "target": ".grid-3 .card:nth-child(3)", "text": "Menggembirakan (Joyful)"}]}, "15": {"title": "Tindak Lanjut & Referensi Perkuliahan", "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-4: Linearitas diuji dengan prinsip superposisi T{a x1 + b x2} = a y1 + b y2. Time-invariance mensyaratkan keterlambatan input menghasilkan keterlambatan output identik. Kausalitas melarang ketergantungan pada input masa depan. Stabilitas BIBO menjamin output terbatas untuk setiap input terbatas. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Unggah Laporan Praktikum Lab 04 ke LMS sebelum pertemuan minggu depan. Baca Bab 2 Oppenheim bagian 'Linear Time-Invariant Systems and Convolution'. Persiapkan diri untuk memahami respons impuls h[n] pada Pertemuan 5. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!", "laser_steps": [{"time": 3, "target": ".grid-2 .card.accent-blue", "text": "Rangkuman Inti Kuliah"}, {"time": 15, "target": ".grid-2 .card.accent-green", "text": "Tugas Mandiri OBE"}, {"time": 25, "target": ".grid-2 .card.accent-green h4", "text": "Referensi Akademik"}]}};
+    const lectureAudio = document.getElementById('lectureAudio');
+    const lecturePanel = document.getElementById('lecturePanel');
+    const lectureTranscript = document.getElementById('lectureTranscript');
+    const btnPlayLecture = document.getElementById('btnPlayLecture');
+    const btnPresenterLecture = document.getElementById('btnPresenterLecture');
+    const btnRecordVideo = document.getElementById('btnRecordVideo');
+    const autoAdvanceCheck = document.getElementById('autoAdvanceCheck');
+    const virtualLaser = document.getElementById('virtualLaser');
+    const laserLabel = document.getElementById('laserLabel');
+
+    let currentLaserTarget = null;
+    let isLecturePlaying = false;
+    let mouseTimer = null;
+
+    // Recording State (StudioRecorder Engine)
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecording = false;
+    let recordingStream = null;
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        s.classList.toggle('active', idx === currentSlide);
+      });
+      slideIndicator.textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+      progressFill.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+
+      document.querySelectorAll('.drawer-item').forEach((item, idx) => {
+        item.classList.toggle('active', idx === currentSlide);
+      });
+
+      virtualLaser.classList.remove('active');
+      laserLabel.classList.remove('active');
+      clearHighlight();
+
+      loadSlideLecture(currentSlide + 1, isLecturePlaying);
+
+      if (window.renderMathInElement) {
+        renderMathInElement(slides[currentSlide], {
+          delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: false}
+          ]
+        });
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentSlide = index;
+        updateSlide();
+        toggleDrawer(false);
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().then(() => {
+          showToast("Mode Layar Penuh Aktif (Tekan Esc / F untuk keluar)");
+        }).catch(err => console.warn(err));
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function toggleDrawer(forceState) {
+      const overlay = document.getElementById('drawerOverlay');
+      if (forceState !== undefined) {
+        overlay.style.display = forceState ? 'block' : 'none';
+      } else {
+        overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    function toggleLecturePanel() {
+      lecturePanel.classList.toggle('collapsed');
+    }
+
+    function moveLaserTo(targetSelector, labelText) {
+      clearHighlight();
+      if (!targetSelector) {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        return;
+      }
+
+      const activeSlide = slides[currentSlide];
+      const targetEl = activeSlide.querySelector(targetSelector) || document.querySelector(targetSelector);
+
+      if (targetEl) {
+        const rect = targetEl.getBoundingClientRect();
+        const laserX = rect.left + rect.width * 0.35;
+        const laserY = rect.top + rect.height * 0.45;
+
+        virtualLaser.style.left = `${laserX}px`;
+        virtualLaser.style.top = `${laserY}px`;
+        virtualLaser.classList.add('active');
+
+        laserLabel.style.left = `${laserX}px`;
+        laserLabel.style.top = `${laserY}px`;
+        laserLabel.textContent = labelText || "Poin Penjelasan";
+        laserLabel.classList.add('active');
+
+        targetEl.classList.add('lecture-focus-target');
+        currentLaserTarget = targetEl;
+      } else {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+      }
+    }
+
+    function clearHighlight() {
+      if (currentLaserTarget) {
+        currentLaserTarget.classList.remove('lecture-focus-target');
+        currentLaserTarget = null;
+      }
+    }
+
+    function loadSlideLecture(slideNum, autoStart = true) {
+      const data = LECTURE_DATA[slideNum];
+      if (!data) return;
+
+      lectureTranscript.innerHTML = data.script;
+      const audioFolder = "audio_pertemuan_04";
+      lectureAudio.src = `${audioFolder}/slide_${String(slideNum).padStart(2, '0')}.mp3`;
+      
+      if (autoStart && isLecturePlaying) {
+        lectureAudio.play().then(() => {
+          btnPlayLecture.textContent = "⏸ Jeda";
+          btnPresenterLecture.textContent = "⏸ Jeda Kuliah (P)";
+        }).catch(err => console.log(err));
+      } else {
+        btnPlayLecture.textContent = "▶ Lanjutkan";
+        btnPresenterLecture.textContent = "🎙️ Dengar Penjelasan (P)";
+      }
+    }
+
+    function togglePlayLecture() {
+      if (lectureAudio.paused) {
+        isLecturePlaying = true;
+        lectureAudio.play().then(() => {
+          btnPlayLecture.textContent = "⏸ Jeda";
+          btnPresenterLecture.textContent = "⏸ Jeda Kuliah (P)";
+          showToast("▶ Memutar Penjelasan Dosen & Kursor Laser Aktif");
+        }).catch(err => {
+          console.warn("Autoplay block:", err);
+        });
+      } else {
+        isLecturePlaying = false;
+        lectureAudio.pause();
+        btnPlayLecture.textContent = "▶ Lanjutkan";
+        btnPresenterLecture.textContent = "🎙️ Dengar Penjelasan (P)";
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        clearHighlight();
+        showToast("⏸ Penjelasan Dosen Dijeda");
+      }
+    }
+
+    function replaySlideLecture() {
+      lectureAudio.currentTime = 0;
+      isLecturePlaying = true;
+      lectureAudio.play();
+      btnPlayLecture.textContent = "⏸ Jeda";
+    }
+
+    lectureAudio.addEventListener('timeupdate', () => {
+      const currentTime = lectureAudio.currentTime;
+      const slideNum = currentSlide + 1;
+      const data = LECTURE_DATA[slideNum];
+      if (!data || !data.laser_steps) return;
+
+      let activeStep = null;
+      for (let i = data.laser_steps.length - 1; i >= 0; i--) {
+        if (currentTime >= data.laser_steps[i].time) {
+          activeStep = data.laser_steps[i];
+          break;
+        }
+      }
+
+      if (activeStep) {
+        moveLaserTo(activeStep.target, activeStep.text);
+      } else {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        clearHighlight();
+      }
+    });
+
+    lectureAudio.addEventListener('ended', () => {
+      virtualLaser.classList.remove('active');
+      laserLabel.classList.remove('active');
+      clearHighlight();
+
+      if (autoAdvanceCheck.checked && currentSlide < totalSlides - 1) {
+        showToast("✓ Slide selesai. Melanjutkan ke slide berikutnya...");
+        setTimeout(() => {
+          nextSlide();
+        }, 1400);
+      } else if (currentSlide >= totalSlides - 1) {
+        showToast("🎉 Seluruh materi perkuliahan selesai!");
+        if (isRecording) {
+          stopRecordingLecture();
+        }
+      }
+    });
+
+    // ==========================================
+    // STUDIO RECORDER ENGINE (AUTO-RECORD & AUTO-DOWNLOAD)
+    // ==========================================
+    async function toggleRecordLecture() {
+      if (isRecording) {
+        stopRecordingLecture();
+      } else {
+        await startRecordingLecture();
+      }
+    }
+
+    async function startRecordingLecture() {
+      try {
+        // Pastikan naskah teleprompter tertutup rapat agar rekaman 100% bersih
+        lecturePanel.classList.add('collapsed');
+
+        showToast("🎬 Pilih tab browser ini dan klik Share dengan Audio untuk mulai merekam!");
+        recordingStream = await navigator.mediaDevices.getDisplayMedia({
+          video: {
+            displaySurface: "browser",
+            frameRate: 60
+          },
+          audio: true,
+          preferCurrentTab: true
+        });
+
+        recordedChunks = [];
+        const mimeTypes = [
+          'video/webm;codecs=vp9,opus',
+          'video/webm;codecs=vp8,opus',
+          'video/webm',
+          'video/mp4'
+        ];
+        let selectedMime = mimeTypes.find(m => MediaRecorder.isTypeSupported(m)) || '';
+
+        mediaRecorder = new MediaRecorder(recordingStream, selectedMime ? { mimeType: selectedMime } : {});
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) {
+            recordedChunks.push(e.data);
+          }
+        };
+
+        mediaRecorder.onstop = () => {
+          downloadRecordedVideo();
+        };
+
+        // User stop stream manually
+        recordingStream.getVideoTracks()[0].onended = () => {
+          if (isRecording) stopRecordingLecture();
+        };
+
+        mediaRecorder.start(1000);
+        isRecording = true;
+
+        btnRecordVideo.classList.add('recording');
+        btnRecordVideo.innerHTML = "⏹ Berhenti Rekam";
+
+        // Rewind ke menit nol (Slide 1) dan mulai narasi
+        currentSlide = 0;
+        updateSlide();
+        autoAdvanceCheck.checked = true;
+        
+        setTimeout(() => {
+          isLecturePlaying = true;
+          lectureAudio.currentTime = 0;
+          lectureAudio.play().catch(e => console.log(e));
+          showToast("🔴 Merekam Aktif dari Menit 0! Video akan otomatis terunduh saat slide terakhir selesai.");
+        }, 1500);
+
+      } catch (err) {
+        console.error("Recording error:", err);
+        showToast("❌ Gagal memulai rekaman: " + err.message);
+      }
+    }
+
+    function stopRecordingLecture() {
+      if (!isRecording) return;
+      isRecording = false;
+
+      btnRecordVideo.classList.remove('recording');
+      btnRecordVideo.innerHTML = "🔴 Rekam Video (Auto)";
+
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+      }
+      if (recordingStream) {
+        recordingStream.getTracks().forEach(t => t.stop());
+      }
+      showToast("💾 Memproses berkas video... Mengunduh otomatis!");
+    }
+
+    function downloadRecordedVideo() {
+      const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      const safeTitle = "Sistem Waktu Diskrit & Sifat-Sifat Sistem".replace(/[^a-zA-Z0-9]/g, '_');
+      a.download = `Pertemuan_04_${safeTitle}_Video_Kuliah.webm`;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast("✅ Video kuliah berhasil diunduh ke folder Downloads Anda!");
+      }, 500);
+    }
+
+    // Auto-hide presenter bar in fullscreen
+    function resetMouseTimer() {
+      presenterBar.classList.remove('autohide');
+      clearTimeout(mouseTimer);
+      if (document.fullscreenElement) {
+        mouseTimer = setTimeout(() => {
+          presenterBar.classList.add('autohide');
+        }, 3000);
+      }
+    }
+    document.addEventListener('mousemove', resetMouseTimer);
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F' || e.key === 'F5') {
+        e.preventDefault();
+        toggleFullScreen();
+      } else if (e.key === 'm' || e.key === 'M') {
+        toggleDrawer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        togglePlayLecture();
+      } else if (e.key === 't' || e.key === 'T') {
+        toggleLecturePanel();
+      } else if (e.key === 'Escape') {
+        toggleDrawer(false);
+      } else if (e.key === 'Home') {
+        currentSlide = 0;
+        updateSlide();
+      } else if (e.key === 'End') {
+        currentSlide = totalSlides - 1;
+        updateSlide();
+      }
+    });
+
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-container').querySelector('code');
+      navigator.clipboard.writeText(codeBlock.innerText).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Tersalin!';
+        btn.style.background = '#10B981';
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.style.background = '';
+        }, 2000);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      updateSlide();
+    });
+  </script>
+</body>
+</html>

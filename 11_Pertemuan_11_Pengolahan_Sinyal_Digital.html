@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transformasi-Z & Analisis Fungsi Sistem - Pengolahan Sinyal Digital UN Manado</title>
+  
+  <!-- Fonts: Inter, Fira Code & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for crisp mathematical formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <!-- Prism.js for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #050B14;
+      --bg-surface: #0A1322;
+      --bg-card: rgba(14, 26, 47, 0.78);
+      --border-card: #1E3252;
+      --primary: #00B4D8;
+      --primary-light: #90E0EF;
+      --accent-blue: #0077B6;
+      --accent-emerald: #10B981;
+      --accent-amber: #F59E0B;
+      --accent-red: #EF4444;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --code-bg: #050B14;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 180, 216, 0.35);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      user-select: none;
+    }
+
+    /* Presentation Viewport - 100% Fullscreen Canvas */
+    .presentation-viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 25%, #0E1A2E 0%, #050B14 100%);
+    }
+
+    /* Top Global Slim Progress Indicator */
+    .top-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 999;
+    }
+
+    .top-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent-emerald) 100%);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+
+    /* Base Slide Definition (Strict Display Control) */
+    .slide {
+      display: none !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      padding: 2.2rem 4rem 4.8rem 4rem;
+      box-sizing: border-box;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .slide.active {
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    /* Title Slide Specific Full Screen Centering */
+    .slide-title-view {
+      display: none !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      padding: 3rem 6rem 5.5rem 6rem;
+      box-sizing: border-box;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .slide-title-view.active {
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    .title-badge-univ {
+      color: var(--primary);
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+      background: rgba(0, 180, 216, 0.12);
+      border: 1px solid rgba(0, 180, 216, 0.35);
+      padding: 6px 18px;
+      border-radius: 30px;
+      display: inline-block;
+    }
+
+    .title-meeting-badge {
+      color: var(--accent-amber);
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .title-main {
+      font-size: clamp(2.4rem, 4.2vw, 4.2rem);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.18;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF 30%, #90E0EF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      max-width: 1200px;
+    }
+
+    .title-sub {
+      font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+      color: #94A3B8;
+      max-width: 1100px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .title-meta-box {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.2rem 2.2rem;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 2.2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: left;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .meta-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .lecturer-signature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #F1F5F9;
+      font-size: 1.12rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .title-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-cta-start {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%);
+      color: #050B14;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 12px 28px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0, 180, 216, 0.35);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-cta-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(0, 180, 216, 0.5);
+    }
+
+    .btn-cta-fullscreen {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 1.02rem;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Slide Header on Content Slides */
+    .slide-header {
+      margin-bottom: 1.3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .slide-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.35rem;
+    }
+
+    .badge-univ-sm {
+      background: rgba(0, 180, 216, 0.12);
+      border: 1px solid rgba(0, 180, 216, 0.35);
+      color: var(--primary);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .slide-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+    }
+
+    .badge-cpmk-sm {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--accent-emerald);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .slide-title {
+      font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .slide-header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .slide-counter-badge {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .slide-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Full-Screen Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 14px;
+      padding: 1.6rem 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      overflow-y: auto;
+      backdrop-filter: blur(12px);
+    }
+
+    .card.accent-blue { border-top: 4px solid var(--primary); }
+    .card.accent-green { border-top: 4px solid var(--accent-emerald); }
+    .card.accent-amber { border-top: 4px solid var(--accent-amber); }
+
+    .card-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .card-title.blue { color: var(--primary); }
+    .card-title.green { color: var(--accent-emerald); }
+    .card-title.amber { color: var(--accent-amber); }
+
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .card-list li {
+      font-size: clamp(0.95rem, 1.1vw, 1.08rem);
+      line-height: 1.55;
+      color: #E2E8F0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .card-list li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.3rem;
+      line-height: 1.2;
+    }
+
+    /* Formula Banner */
+    .formula-banner {
+      background: linear-gradient(135deg, rgba(0, 180, 216, 0.14) 0%, rgba(14, 26, 47, 0.95) 100%);
+      border: 1px solid rgba(0, 180, 216, 0.45);
+      border-radius: 14px;
+      padding: 1.1rem 2.2rem;
+      margin-bottom: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-shrink: 0;
+      box-shadow: 0 8px 24px rgba(0, 180, 216, 0.12);
+    }
+
+    .formula-banner h4 {
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .formula-banner .katex-display {
+      margin: 0.45rem 0;
+      color: #FFFFFF;
+      font-size: clamp(1.4rem, 2.2vw, 2.0rem);
+    }
+
+    /* Code Container Full Height */
+    .code-container {
+      background: var(--code-bg);
+      border: 1px solid #1E3252;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .code-header {
+      background: #0E1A2D;
+      padding: 9px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1E3252;
+      flex-shrink: 0;
+    }
+
+    .code-title {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      color: var(--primary-light);
+      font-weight: 600;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #E2E8F0;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    pre[class*="language-"] {
+      margin: 0;
+      padding: 1.2rem 1.5rem;
+      background: transparent !important;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      overflow-x: auto;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    /* Floating Presenter Control HUD */
+    .presenter-bar {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 19, 34, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 40px;
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .presenter-bar.autohide {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(20px);
+    }
+
+    .presenter-bar:hover {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: translateX(-50%) translateY(0) !important;
+    }
+
+    .bar-btn {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #CBD5E1;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .bar-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #050B14;
+    }
+
+    .bar-btn-record {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #EF4444;
+      color: #FCA5A5;
+      font-weight: 700;
+    }
+    .bar-btn-record:hover {
+      background: #EF4444;
+      color: #FFF;
+    }
+    .bar-btn-record.recording {
+      background: #EF4444;
+      color: #FFF;
+      animation: recordBlink 1s infinite alternate;
+    }
+    @keyframes recordBlink {
+      0% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+
+    .bar-btn-primary {
+      background: var(--primary);
+      border: 1px solid var(--primary);
+      color: #050B14;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .bar-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      margin: 0 4px;
+    }
+
+    .bar-indicator {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      padding: 4px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* Edge Click Zones */
+    .edge-nav-zone {
+      position: fixed;
+      top: 0;
+      bottom: 70px;
+      width: 5vw;
+      z-index: 50;
+      cursor: pointer;
+      opacity: 0;
+    }
+    .edge-nav-left { left: 0; }
+    .edge-nav-right { right: 0; }
+
+    /* Virtual Laser Pointer */
+    .virtual-laser {
+      position: fixed;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #FF0055;
+      box-shadow: 0 0 12px #FF0055, 0 0 24px #FF0055, 0 0 38px #FF5588;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: top 0.75s cubic-bezier(0.22, 1, 0.36, 1), left 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+      opacity: 0;
+    }
+    .virtual-laser.active {
+      opacity: 1;
+      animation: laserPulse 1.2s infinite alternate;
+    }
+    @keyframes laserPulse {
+      0% { transform: translate(-50%, -50%) scale(0.85); box-shadow: 0 0 8px #FF0055; }
+      100% { transform: translate(-50%, -50%) scale(1.35); box-shadow: 0 0 24px #FF0055, 0 0 40px #FF0055; }
+    }
+
+    .laser-label {
+      position: fixed;
+      background: rgba(10, 19, 34, 0.95);
+      border: 1px solid #FF0055;
+      color: #FFF;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(18px, -18px);
+      transition: top 0.75s cubic-bezier(0.22, 1, 0.36, 1), left 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+      opacity: 0;
+      white-space: nowrap;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    }
+    .laser-label.active {
+      opacity: 1;
+    }
+
+    .lecture-focus-target {
+      outline: 2px solid var(--primary) !important;
+      box-shadow: 0 0 35px rgba(0, 180, 216, 0.55) !important;
+      transition: all 0.35s ease;
+    }
+
+    /* Floating Lecture Teleprompter / Subtitles Panel - HIDDEN BY DEFAULT! */
+    .lecture-panel {
+      position: fixed;
+      bottom: 74px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1040px, 94vw);
+      background: rgba(8, 16, 29, 0.96);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 180, 216, 0.45);
+      border-radius: 18px;
+      padding: 12px 22px;
+      z-index: 950;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .lecture-panel.collapsed {
+      transform: translateX(-50%) translateY(calc(100% + 35px));
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .lecture-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 6px;
+    }
+
+    .lecturer-info-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lecturer-avatar {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent-emerald) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+    .lecturer-name-badge {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #F8FAFC;
+    }
+    .lecturer-voice-badge {
+      background: rgba(0, 180, 216, 0.15);
+      color: var(--primary-light);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 180, 216, 0.3);
+    }
+
+    .lecture-panel-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .audio-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #E2E8F0;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .audio-btn:hover {
+      background: var(--primary);
+      color: #050B14;
+    }
+    .audio-btn.active {
+      background: #10B981;
+      border-color: #10B981;
+      color: #050B14;
+    }
+
+    .auto-advance-label {
+      font-size: 0.78rem;
+      color: #94A3B8;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .lecture-transcript-text {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #E2E8F0;
+      max-height: 75px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    /* Slide Jump Menu / Drawer */
+    .drawer-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+    }
+
+    .drawer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 440px;
+      height: 100%;
+      background: #0B1526;
+      border-right: 1px solid var(--border-card);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      box-shadow: 10px 0 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-card);
+      padding-bottom: 1rem;
+    }
+
+    .drawer-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .drawer-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .drawer-list {
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer-item {
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #CBD5E1;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .drawer-item:hover, .drawer-item.active {
+      background: rgba(0, 180, 216, 0.15);
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(16, 185, 129, 0.95);
+      color: #050B14;
+      padding: 8px 22px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      z-index: 3000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+<!-- Gate Keamanan Akses Mahasiswa (PIN: UN2026) -->
+<style id="authGateStyle">
+  body > *:not(#authGateModal) { filter: blur(14px); pointer-events: none !important; user-select: none !important; }
+</style>
+<div id="authGateModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(5,11,20,0.96);backdrop-filter:blur(16px);z-index:9999999;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans','Inter',sans-serif;color:#F8FAFC;">
+  <div style="background:#0E1A2D;border:1px solid #1E3252;box-shadow:0 25px 50px -12px rgba(0,0,0,0.7),0 0 40px rgba(0,180,216,0.15);padding:2.5rem 2rem;border-radius:20px;max-width:440px;width:90%;text-align:center;">
+    <div style="width:64px;height:64px;background:rgba(0,180,216,0.12);border:1px solid rgba(0,180,216,0.3);border-radius:18px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </div>
+    <div style="display:inline-block;background:rgba(0,180,216,0.15);border:1px solid rgba(0,180,216,0.3);color:#00B4D8;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.75rem;">Universitas Nusantara Manado</div>
+    <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:0.5rem;color:#FFF;">Portal Perkuliahan Terkunci</h2>
+    <p style="font-size:0.88rem;color:#94A3B8;line-height:1.5;margin-bottom:1.5rem;">Materi perkuliahan ini dilindungi hak cipta khusus untuk mahasiswa kelas Pengolahan Sinyal Digital. Silakan masukkan PIN kelas.</p>
+    <form id="authGateForm" onsubmit="handleAuthSubmit(event)" style="display:flex;flex-direction:column;gap:12px;">
+      <input type="password" id="authGateInput" placeholder="Masukkan PIN Akses Kelas..." autofocus style="padding:12px 16px;border-radius:10px;background:#050B14;border:1px solid #2A4365;color:#FFF;font-size:1rem;text-align:center;letter-spacing:0.1em;outline:none;transition:border-color 0.2s;" />
+      <div id="authGateError" style="color:#EF4444;font-size:0.8rem;display:none;font-weight:500;">PIN salah! Silakan tanyakan PIN ke Dosen Pengampu (Pak Erik).</div>
+      <button type="submit" style="padding:12px;border-radius:10px;background:linear-gradient(135deg, #00B4D8 0%, #0077B6 100%);color:#FFF;border:none;font-weight:700;font-size:0.95rem;cursor:pointer;box-shadow:0 8px 20px rgba(0,180,216,0.3);">Buka Materi Kuliah 🔓</button>
+    </form>
+    <div style="margin-top:1.25rem;font-size:0.78rem;color:#64748B;">Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const TARGET_HASH = "c9c2169ba17de848a2d68b050b46f77f1c7e05256a6361ee338f4b9507b239be";
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+  function unlock() {
+    const style = document.getElementById("authGateStyle");
+    const modal = document.getElementById("authGateModal");
+    if (style) style.remove();
+    if (modal) modal.remove();
+  }
+  function checkAuth() {
+    const saved = localStorage.getItem("DSP_AUTH_TOKEN_UN");
+    if (saved === TARGET_HASH) {
+      unlock();
+      return true;
+    }
+    return false;
+  }
+  window.handleAuthSubmit = async function(e) {
+    e.preventDefault();
+    const input = document.getElementById("authGateInput");
+    const err = document.getElementById("authGateError");
+    if (!input) return;
+    const val = input.value.trim().toUpperCase();
+    const hash = await sha256(val);
+    if (hash === TARGET_HASH) {
+      localStorage.setItem("DSP_AUTH_TOKEN_UN", TARGET_HASH);
+      const modal = document.getElementById("authGateModal");
+      if (modal) {
+        modal.style.transition = "opacity 0.25s ease";
+        modal.style.opacity = "0";
+        setTimeout(() => {
+          unlock();
+        }, 250);
+      }
+    } else {
+      err.style.display = "block";
+      input.value = "";
+      input.focus();
+    }
+  };
+  checkAuth();
+})();
+</script>
+
+
+  <!-- Top Progress Bar -->
+  <div class="top-progress-bar">
+    <div class="top-progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Edge Navigation Zones -->
+  <div class="edge-nav-zone edge-nav-left" onclick="prevSlide()" title="Slide Sebelumnya (⬅ / PageUp)"></div>
+  <div class="edge-nav-zone edge-nav-right" onclick="nextSlide()" title="Slide Berikutnya (➔ / Space / PageDown)"></div>
+
+  <!-- Virtual Laser Pointer & Floating Label -->
+  <div class="virtual-laser" id="virtualLaser"></div>
+  <div class="laser-label" id="laserLabel">Penjelasan Dosen</div>
+
+  <!-- Audio Player for Lectures -->
+  <audio id="lectureAudio" preload="auto"></audio>
+
+  <!-- Presentation Viewport (Full Bleed Edge-to-Edge) -->
+  <main class="presentation-viewport" id="viewport">
+    
+    <div class="slide-title-view active">
+      <div class="title-badge-univ">Universitas Nusantara Manado • Fakultas Ilmu Komputer</div>
+      <div class="title-meeting-badge">PENGOLAHAN SINYAL DIGITAL — PERTEMUAN 11</div>
+      <h1 class="title-main">Transformasi-Z & Analisis Fungsi Sistem</h1>
+      <p class="title-sub">Generalisasi Transformasi Fourier pada Bidang Kompleks Z, Region of Convergence (ROC), Diagram Pole-Zero, Fungsi Transfer H(z), dan Evaluasi Kestabilan Sistem LTI</p>
+      
+      <div class="title-meta-box">
+        <div class="meta-item">
+          <span class="meta-label">Capaian Pembelajaran</span>
+          <span class="meta-value">CPMK3 (CPL-A, CPL-B)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Bobot Asesmen RPS</span>
+          <span class="meta-value">6%</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Pendekatan Pedagogis</span>
+          <span class="meta-value">Outcome-Based Education (OBE) & Deep Learning</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Integrasi AI</span>
+          <span class="meta-value">Prompting, Debugging & Verifikasi Matematis</span>
+        </div>
+      </div>
+
+      <div class="lecturer-signature">
+        <span>👨‍🏫 Dosen Pengampu: <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong> (NIDN: 0902109201)</span>
+      </div>
+
+      <div class="title-cta-group">
+        <button class="btn-cta-start" onclick="nextSlide()">▶ Mulai Perkuliahan (Spasi / ➔)</button>
+        <button class="btn-cta-fullscreen" onclick="toggleFullScreen()">⛶ Layar Penuh (F5 / F)</button>
+      </div>
+    </div>
+    
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">FILOSOFI & KONSEP</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Filosofi Transformasi-Z: Generalisasi Fourier</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 2 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Keterbatasan Transformasi Fourier (DTFT)</h3>
+                <ul class="card-list"><li>DTFT hanya dapat diterapkan pada sinyal atau sistem yang stabil (memenuhi syarat sum |x[n]| < inf).</li><li>Bagaimana jika kita harus menganalisis sistem yang tidak stabil, sistem dengan osilasi tak teredam, atau sistem transien yang bertumbuh seiring waktu?</li><li>DTFT gagal dan divergen untuk kelas sistem tersebut!</li><li>Solusi: Perluas variabel frekuensi kompleks e^(jw) menjadi variabel bilangan kompleks sembarang z = r e^(jw). Lahirlah Transformasi-Z!</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Transformasi-Z sebagai 'Aljabar Sakti' DSP</h3>
+                <ul class="card-list"><li>Transformasi-Z adalah padanan domain diskrit dari Transformasi Laplace pada sistem kontinu.</li><li>Mengubah operasi konvolusi waktu dan persamaan beda diferensial LCCDE yang rumit menjadi operasi perkalian dan pembagian pecahan aljabar polinomial biasa!</li><li>Memberikan gambaran visual geometris yang sangat intuitif mengenai kestabilan dan resonansi sistem melalui diagram Pole-Zero.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">LANDASAN MATEMATIS</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Definisi Formal Transformasi-Z & Bidang Kompleks Z</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 3 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="formula-banner">
+              <h4>Persamaan Transformasi-Z Dua Sisi (Bilateral)</h4>
+              <div class="katex-eq">$$X(z) = \mathcal{Z}\{x[n]\} = \sum_{n=-\infty}^{\infty} x[n] z^{-n} \qquad (z = r e^{j\omega} \in \mathbb{C})$$</div>
+            </div>
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📐 Keterangan Variabel & Makna Fisik</h3>
+                <ul class="card-list"><li>x[n]: Sinyal domain waktu diskrit.</li><li>z: Variabel bilangan kompleks kontinu pada bidang-Z (Z-plane).</li><li>r = |z|: Jari-jari lingkaran (magnitude) pada bidang-Z.</li><li>omega = angle z: Sudut fase frekuensi pada bidang-Z.</li><li>Hubungan dengan DTFT: Jika kita mengevaluasi Transformasi-Z tepat pada lingkaran satuan (Unit Circle di mana r = |z| = 1, sehingga z = e^(jw)), Transformasi-Z berubah menjadi tepat DTFT!</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🔢 Contoh Perhitungan Bertahap</h3>
+                <ul class="card-list"><li>Substitusi z = r e^(jw) ke dalam rumus Transformasi-Z:</li><li>X(r e^(jw)) = sum_{n=-inf}^{inf} x[n] (r e^(jw))^(-n) = sum_{n=-inf}^{inf} [ x[n] r^(-n) ] e^(-jw n).</li><li>Perhatikan dengan seksama: Transformasi-Z adalah DTFT dari sinyal x[n] yang dikalikan dengan faktor pembobot eksponensial r^(-n)!</li><li>Faktor r^(-n) ini dapat meredam sinyal yang bertumbuh sehingga deret jumlahan konvergen!</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">LANDASAN TEORETIS</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Region of Convergence (ROC) & Sifat-Sifat Mutlaknya</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 4 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+                <div class="card accent-blue">
+                  <h3 class="card-title blue">📌 Definisi Region of Convergence (ROC)</h3>
+                  <ul class="card-list"><li>ROC adalah himpunan semua nilai z pada bidang kompleks di mana deret derau tak terhingga X(z) konvergen menuju nilai berhingga (|X(z)| < inf).</li><li>X(z) TIDAK MEMILIKI ARTI tanpa menyertakan spesifikasi daerah ROC-nya!</li><li>Dua sinyal waktu yang sangat berbeda (kausal vs antikausal) dapat memiliki ekspresi aljabar X(z) yang identik, dan hanya dibedakan oleh ROC-nya.</li></ul>
+                </div>
+                
+                <div class="card accent-green">
+                  <h3 class="card-title green">📌 Sifat Geometris ROC</h3>
+                  <ul class="card-list"><li>1. Berbentuk Cincin / Piringan konsentris yang berpusat di titik origin z = 0.</li><li>2. ROC TIDAK BOLEH MEMUAT POLE APAPUN (karena pada titik pole, nilai X(z) meledak ke tak terhingga).</li><li>3. Jika x[n] berdurasi berhingga, ROC adalah seluruh bidang-Z kecuali mungkin z = 0 atau z = inf.</li></ul>
+                </div>
+                
+                <div class="card accent-amber">
+                  <h3 class="card-title amber">📌 Kaitan ROC dengan Kausalitas</h3>
+                  <ul class="card-list"><li>Sekuens Sisi Kanan (Kausal): ROC meluas ke arah luar melampaui pole terluar: |z| > |p_max|.</li><li>Sekuens Sisi Kiri (Anti-Kausal): ROC meluas ke arah dalam menuju origin di dalam pole terdalam: |z| < |p_min|.</li><li>Sekuens Dua Sisi (Bilateral): ROC berbentuk cincin di antara dua pole: |p1| < |z| < |p2|.</li></ul>
+                </div>
+                </div>
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">FUNGSI TRANSFER SISTEM</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Fungsi Transfer Sistem H(z) & Persamaan Beda</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 5 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="formula-banner">
+              <h4>Hubungan Langsung Persamaan Beda LCCDE dengan H(z)</h4>
+              <div class="katex-eq">$$H(z) = \frac{Y(z)}{X(z)} = \frac{\sum_{k=0}^{M} b_k z^{-k}}{\sum_{k=0}^{N} a_k z^{-k}} = \frac{b_0 + b_1 z^{-1} + \dots + b_M z^{-M}}{a_0 + a_1 z^{-1} + \dots + a_N z^{-N}}$$</div>
+            </div>
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📐 Keterangan Variabel & Makna Fisik</h3>
+                <ul class="card-list"><li>H(z): Fungsi Transfer (System Function) dari sistem LTI.</li><li>Y(z): Transformasi-Z dari sinyal keluaran y[n].</li><li>X(z): Transformasi-Z dari sinyal masukan x[n].</li><li>b_k: Koefisien masukan (feedforward) yang membentuk polinomial pembilang.</li><li>a_k: Koefisien keluaran (feedback) yang membentuk polinomial penyebut.</li><li>Teorema Pergeseran: Z{ x[n - k] } = z^(-k) X(z). Tunda 1 sampel ekuivalen dengan perkalian z^(-1).</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🔢 Contoh Perhitungan Bertahap</h3>
+                <ul class="card-list"><li>Contoh: Diberikan persamaan beda y[n] - 0.9 y[n-1] = x[n] + 0.5 x[n-1].</li><li>Langkah 1: Terapkan Transformasi-Z pada kedua sisi persamaan:</li><li>Y(z) - 0.9 z^(-1) Y(z) = X(z) + 0.5 z^(-1) X(z).</li><li>Langkah 2: Faktorkan Y(z) dan X(z): Y(z) [1 - 0.9 z^(-1)] = X(z) [1 + 0.5 z^(-1)].</li><li>Langkah 3: Bagi Y(z) dengan X(z) untuk memperoleh H(z):</li><li>H(z) = (1 + 0.5 z^(-1)) / (1 - 0.9 z^(-1)) = (z + 0.5) / (z - 0.9).</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">DIAGRAM POLE-ZERO</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Diagram Pole-Zero: Anatomi Arsitektur Sistem</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 6 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+                <div class="card accent-blue">
+                  <h3 class="card-title blue">📌 Definisi Zero (Akar Pembilang)</h3>
+                  <ul class="card-list"><li>Nilai z di mana pembilang H(z) bernilai nol, sehingga H(z) = 0.</li><li>Disimbolkan dengan lingkaran kecil (o) pada diagram bidang-Z.</li><li>Zero 'menarik turun' nilai respons frekuensi menuju nol (meredam frekuensi).</li></ul>
+                </div>
+                
+                <div class="card accent-green">
+                  <h3 class="card-title green">📌 Definisi Pole (Akar Penyebut)</h3>
+                  <ul class="card-list"><li>Nilai z di mana penyebut H(z) bernilai nol, sehingga H(z) meledak ke tak terhingga (H(z) -> inf).</li><li>Disimbolkan dengan tanda silang (x) pada diagram bidang-Z.</li><li>Pole 'mendorong naik' respons frekuensi membentuk puncak resonansi (memperkuat frekuensi).</li></ul>
+                </div>
+                
+                <div class="card accent-amber">
+                  <h3 class="card-title amber">📌 Faktorisasi Bentuk Pole-Zero</h3>
+                  <ul class="card-list"><li>H(z) = (b0 / a0) * [ product_{i=1}^M (1 - c_i z^-1) ] / [ product_{k=1}^N (1 - d_k z^-1) ].</li><li>c_i adalah lokasi zero, dan d_k adalah lokasi pole.</li><li>Tata letak geometris pole dan zero menentukan seluruh perilaku sistem secara komprehensif!</li></ul>
+                </div>
+                </div>
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">KESTABILAN SISTEM</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Kriteria Mutlak Kestabilan Sistem LTI Berbasis Pole-Zero</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 7 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Syarat Mutlak Stabilitas BIBO</h3>
+                <ul class="card-list"><li>Teorema Stabilitas Dasar: Sistem LTI stabil BIBO jika dan hanya jika ROC dari H(z) MEMUAT LINGKARAN SATUAN (Unit Circle |z| = 1).</li><li>Mengapa? Karena jika lingkaran satuan berada di dalam ROC, maka evaluasi z = e^(jw) konvergen, yang berarti respons frekuensi DTFT H(e^jw) ada dan berhingga!</li><li>Jika lingkaran satuan berada di luar ROC, sistem tidak stabil BIBO.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Kondisi Emas Sistem Kausal & Stabil</h3>
+                <ul class="card-list"><li>UNTUK SISTEM LTI YANG BERSIFAT KAUSAL:</li><li>Sistem stabil BIBO jika dan hanya jika SELURUH POLE TERLETAK TEPAT DI DALAM LINGKARAN SATUAN!</li><li>|p_k| < 1  untuk semua k = 1, 2, ..., N.</li><li>Jika ada minimal satu pole terletak di luar lingkaran satuan (|p| > 1), sistem kausal dipastikan TIDAK STABIL (output meledak divergen)!</li><li>Jika ada pole tunggal tepat pada lingkaran satuan (|p| = 1), sistem bersifat marginally stable (berosilasi terus-menerus tanpa henti).</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">ANALISIS GEOMETRIS</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Interpretasi Geometris: Dari Pole-Zero ke Respons Frekuensi</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 8 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="formula-banner">
+              <h4>Evaluasi Grafis Vektor Respons Frekuensi</h4>
+              <div class="katex-eq">$$\big|H(e^{j\omega})\big| = G \cdot \frac{\prod_{i=1}^{M} |e^{j\omega} - c_i|}{\prod_{k=1}^{N} |e^{j\omega} - d_k|} = G \cdot \frac{\text{Perkalian Jarak Titik Frekuensi ke Seluruh Zero}}{\text{Perkalian Jarak Titik Frekuensi ke Seluruh Pole}}$$</div>
+            </div>
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📐 Keterangan Variabel & Makna Fisik</h3>
+                <ul class="card-list"><li>e^(j omega): Titik frekuensi yang berjalan mengelilingi keliling lingkaran satuan dari omega = 0 hingga pi.</li><li>|e^(jw) - c_i|: Panjang vektor jarak geometris dari titik frekuensi ke zero ke-i.</li><li>|e^(jw) - d_k|: Panjang vektor jarak geometris dari titik frekuensi ke pole ke-k.</li><li>G: Faktor penguatan skalar konstan.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🔢 Contoh Perhitungan Bertahap</h3>
+                <ul class="card-list"><li>Kaidah Geometris Intuitif Dosen:</li><li>1. Ketika titik frekuensi e^(jw) bergerak mendekati sebuah POLE, jarak ke pole mengecil -> Penyebut mengecil -> Respons magnitudo MELONJAK NAIK (terbentuk puncak resonansi / passband filter).</li><li>2. Ketika titik frekuensi bergerak mendekati sebuah ZERO, jarak ke zero mengecil -> Pembilang mengecil -> Respons magnitudo ANJLOK TURUN MENDEKATI NOL (terbentuk notch null / stopband filter).</li><li>Hanya dengan melihat diagram lingkaran dan letak tanda silang (x) serta lingkaran (o), Anda dapat langsung menebak jenis filter tersebut (Low-pass, High-pass, Band-pass, atau Notch) tanpa menghitung satu rumus pun!</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">KOMPUTASI & KODE</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Implementasi Python: Diagram Pole-Zero dengan SciPy</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 9 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📖 Visualisasi Z-Plane Menggunakan scipy.signal.tf2zpk</h3>
+                <ul class="card-list"><li>scipy.signal.tf2zpk(b, a) mengubah koefisien polinomial pembilang b dan penyebut a menjadi akar-akar Zero (z), Pole (p), dan Gain (k).</li><li>Gambarkan lingkaran satuan beradius 1.0 menggunakan np.exp(1j * theta).</li><li>Plot pole dengan marker silang 'x' merah dan zero dengan marker lingkaran 'o' biru.</li></ul>
+              </div>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="code-title">Python Implementation (NumPy / SciPy)</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Salin Kode</button>
+                </div>
+                <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import tf2zpk
+
+# Definisikan Filter: H(z) = (1 - 0.5 z^-1) / (1 - 0.9 e^(j pi/4) z^-1)(1 - 0.9 e^(-j pi/4) z^-1)
+b = [1.0, -0.5]
+a = [1.0, -1.2728, 0.81] # Pole kompleks di r = 0.9, sudut = 45 derajat
+
+z, p, k = tf2zpk(b, a)
+
+plt.figure(figsize=(5, 5))
+# Gambar Lingkaran Satuan
+theta = np.linspace(0, 2*np.pi, 200)
+plt.plot(np.cos(theta), np.sin(theta), 'k--', alpha=0.5, label='Unit Circle (|z|=1)')
+
+# Plot Pole dan Zero
+plt.plot(np.real(z), np.imag(z), 'bo', ms=8, label='Zero (o)')
+plt.plot(np.real(p), np.imag(p), 'rx', ms=10, mew=2, label='Pole (x)')
+
+plt.axhline(0, color='gray', lw=0.5); plt.axvline(0, color='gray', lw=0.5)
+plt.title('Diagram Pole-Zero pada Bidang-Z')
+plt.xlabel('Real'); plt.ylabel('Imajiner'); plt.axis('equal'); plt.grid(True, alpha=0.3)
+plt.legend(); plt.show()
+print('Apakah Sistem Stabil?', np.all(np.abs(p) < 1.0))</code></pre>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">PRAKTIKUM & HANDS-ON</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Praktikum Mandiri Lab 11: Eksplorasi Kestabilan Sistem</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 10 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Lembar Instruksi Praktikum 11</h3>
+                <ul class="card-list"><li>Judul: Analisis Pergeseran Pole-Zero pada Bidang-Z dan Dampaknya Terhadap Kestabilan Sistem.</li><li>Eksperimen 1: Uji sistem dengan pole tunggal real: H(z) = 1 / (1 - p z^-1). Variasikan nilai p dari 0.5, 0.9, 1.0, hingga 1.1.</li><li>Simulasikan respons impuls h[n] hingga n = 40. Amati perbedaan tajam antara respons meluruh (p < 1), osilasi konstan (p = 1), dan ledakan divergen (p > 1).</li><li>Eksperimen 2: Rancang filter Notch pembatal frekuensi 60 Hz pada sistem dengan Fs = 600 Hz dengan meletakkan sepasang zero tepat pada lingkaran satuan di sudut w0 = 2*pi*(60/600) = 0.2 pi.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Tantangan Analisis & Evaluasi</h3>
+                <ul class="card-list"><li>Tantangan Praktik: Tambahkan sepasang pole di belakang zero notch pada jari-jari r = 0.95 dengan sudut yang sama. Amati bagaimana penambahan pole ini menyempitkan notch bandwidth sehingga sinyal selain 60 Hz tidak terdistorsi!</li><li>Pertanyaan Evaluasi: Mengapa filter FIR selalu dijamin stabil? Di mana lokasi seluruh pole dari filter FIR pada bidang-Z?</li><li>Output: Dokumentasikan notebook laporan dengan analisis diagram pole-zero dan respons frekuensi.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">INTEGRASI AI</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Integrasi AI: Faktorisasi Polinomial Orde Tinggi</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 11 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Pemanfaatan AI untuk Analisis Parsial</h3>
+                <ul class="card-list"><li>Prompt AI: 'Tuliskan kode Python menggunakan scipy.signal.residuez untuk melakukan Ekspansi Fraksi Parsial (Partial Fraction Expansion / PFE) dari transfer function H(z) = (2 + z^-1) / (1 - 0.7 z^-1 + 0.1 z^-2) dan tentukan respons impuls analitis h[n].'</li><li>AI Symbolic Root Finder: 'Cari akar-akar pole dan zero dari polinomial penyebut orde 6 menggunakan numpy.roots.'</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Kewajiban Validasi Mahasiswa</h3>
+                <ul class="card-list"><li>Pemeriksaan Format Pangkat Z: Perhatikan bahwa beberapa pustaka Python dan AI menggunakan format pangkat positif z, sementara DSP klasik Oppenheim menggunakan format delay z^(-1). Jangan sampai tertukar!</li><li>Verifikasi Sifat Konjugat: Pastikan bahwa setiap pole atau zero bilangan kompleks selalu hadir berpasangan dengan konjugatnya jika koefisien persamaan beda bernilai real.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">EVALUASI PEMBELAJARAN</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Latihan Soal HOTS Pertemuan 11</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 12 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Soal 1: Penentuan ROC & Kausalitas</h3>
+                <ul class="card-list"><li>Diberikan fungsi transfer: H(z) = 1 / [ (1 - 0.5 z^-1)(1 - 2 z^-1) ].</li><li>a) Tentukan lokasi seluruh pole dari sistem tersebut!</li><li>b) Ada 3 kemungkinan bentuk ROC yang berbeda. Sebutkan dan gambarkan sketsa ketiga ROC tersebut!</li><li>c) Untuk masing-masing ROC, tentukan apakah sistem bersifat kausal dan apakah sistem stabil BIBO!</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Soal 2: Inverse Z-Transform (PFE)</h3>
+                <ul class="card-list"><li>Sebuah sistem LTI kausal memiliki fungsi transfer:</li><li>H(z) = [ 1 - z^-1 ] / [ 1 - 0.8 z^-1 + 0.15 z^-2 ] dengan ROC |z| > 0.5.</li><li>a) Lakukan faktorisasi penyebut menjadi dua suku orde satu!</li><li>b) Uraikan H(z) menggunakan Partial Fraction Expansion (PFE)!</li><li>c) Tentukan persamaan analitis respons impuls h[n] untuk seluruh n!</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">REFLEKSI & RANGKUMAN</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Rangkuman Pertemuan 11 & Refleksi Pembelajaran</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 13 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-3">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">💡 Berkesadaran (Mindful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Memahami tujuan belajar, proses berpikir, dan evaluasi pemahaman.</p>
+                <ul class="card-list"><li>Saya menyadari bahwa Transformasi-Z melengkapi kekurangan Transformasi Fourier dalam menganalisis kestabilan sistem.</li><li>Saya memahami bahwa letak pole relatif terhadap lingkaran satuan |z|=1 adalah garis pemisah mutlak antara sistem yang aman stabil atau sistem yang meledak divergen.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🌍 Bermakna (Meaningful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Kaitan konkret dengan industri teknologi, telekomunikasi & AI.</p>
+                <ul class="card-list"><li>Setiap insinyur DSP dan kontrol modern memeriksa kestabilan filter digital mereka dengan melihat apakah semua pole berada di dalam lingkaran satuan sebelum kode diunggah ke prosesor perangkat keras.</li><li>Diagram Pole-Zero adalah bahasa visual universal sistem LTI.</li></ul>
+              </div>
+              <div class="card accent-amber">
+                <h3 class="card-title amber">✨ Menggembirakan (Joyful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Eksplorasi interaktif, visualisasi sinyal, dan tantangan kode.</p>
+                <ul class="card-list"><li>Melihat kaitan geometris yang begitu indah antara posisi titik silang pole pada bidang kompleks dengan tinggi rendahnya kurva grafik respons frekuensi memberikan pencerahan logika yang luar biasa.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">REFERENSI & TUGAS</span>
+                <span class="badge-cpmk-sm">CPMK3 (CPL-A, CPL-B)</span>
+              </div>
+              <h2 class="slide-title">Tindak Lanjut & Referensi Perkuliahan</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 14 / 14</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📋 Rangkuman Inti Pertemuan 11</h3>
+                <ul class="card-list"><li>Transformasi-Z: X(z) = sum x[n] z^(-n), z = r e^(jw).</li><li>ROC memuat lingkaran satuan jika dan hanya jika sistem stabil BIBO.</li><li>Sistem LTI kausal stabil mensyaratkan SELURUH POLE berada di dalam lingkaran satuan (|p| < 1).</li><li>Letak pole dan zero secara geometris membentuk kontur respons frekuensi H(e^jw).</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🎯 Tugas Mandiri & Ketercapaian OBE</h3>
+                <ul class="card-list"><li>Kumpulkan Laporan Praktikum Lab 11 ke LMS tepat waktu.</li><li>Baca Bab 7 Oppenheim mengenai Perancangan Filter Digital Finite Impulse Response (FIR).</li><li>Siapkan ringkasan karakteristik fungsi window (Hamming, Hanning, Blackman, Kaiser).</li></ul>
+                <h4 style="font-size:1.05rem; color:#F1F5F9; margin-top:1.2rem; margin-bottom:0.6rem;">Referensi Akademik Terverifikasi:</h4>
+                <ul class="card-list"><li style='font-size:0.92rem; color:#CBD5E1;'>📖 Oppenheim, A. V., & Schafer, R. W. (2010). Discrete-Time Signal Processing (3rd ed.). Pearson, Bab 3 (The z-Transform).</li><li style='font-size:0.92rem; color:#CBD5E1;'>📖 McClellan, J. H., Schafer, R. W., & Yoder, M. A. (2016). DSP First (2nd ed.). Pearson, Bab 8.</li><li style='font-size:0.92rem; color:#CBD5E1;'>📖 Proakis, J. G., & Manolakis, D. G. (2007). Digital Signal Processing. Prentice Hall, Bab 3.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+  </main>
+
+  <!-- Floating Presenter HUD -->
+  <div class="presenter-bar" id="presenterBar">
+    <button class="bar-btn" onclick="prevSlide()" title="Slide Sebelumnya (⬅)">◀ Prev</button>
+    <span class="bar-indicator" id="slideIndicator" onclick="toggleDrawer()" title="Klik untuk daftar slide (M)">Slide 1 / 14</span>
+    <button class="bar-btn-primary" onclick="nextSlide()" title="Slide Berikutnya (➔ / Spasi)">Next ▶</button>
+    <div class="bar-divider"></div>
+    <button class="bar-btn" id="btnPresenterLecture" onclick="togglePlayLecture()" style="border-color:#10B981; color:#6EE7B7;" title="Putar Suara & Penjelasan Dosen (P)">🎙️ Dengar Penjelasan (P)</button>
+    <button class="bar-btn bar-btn-record" id="btnRecordVideo" onclick="toggleRecordLecture()" title="Rekam Layar + Suara Otomatis dari Menit 0 dan Auto-Download saat Selesai">🔴 Rekam Video (Auto)</button>
+    <button class="bar-btn" id="btnTogglePanel" onclick="toggleLecturePanel()" title="Tampilkan/Sembunyikan Naskah Dosen (T)">📜 Naskah</button>
+    <button class="bar-btn" onclick="toggleFullScreen()" title="Mode Layar Penuh (F5 / F)">⛶ Layar Penuh</button>
+    <button class="bar-btn" onclick="toggleDrawer()" title="Daftar Slide (M)">☰ Menu</button>
+    <a href="11_Pertemuan_11_Pengolahan_Sinyal_Digital.pptx" class="bar-btn" download title="Download file PowerPoint">📥 PPTX</a>
+    <a href="https://canva.link/0p27fg52m1k06l3" target="_blank" class="bar-btn" style="border-color:#7D2AE8; color:#D8B4FE;" title="Buka di Canva">🎨 Canva</a>
+    <a href="index.html" class="bar-btn" title="Kembali ke Hub Perkuliahan">🏠 Hub</a>
+  </div>
+
+  <!-- Floating Lecture Teleprompter Panel - COLLAPSED / HIDDEN BY DEFAULT! -->
+  <div class="lecture-panel collapsed" id="lecturePanel">
+    <div class="lecture-panel-header">
+      <div class="lecturer-info-bar">
+        <div class="lecturer-avatar">👨‍🏫</div>
+        <span class="lecturer-name-badge">Penjelasan Kuliah: <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong></span>
+        <span class="lecturer-voice-badge">Suara AI Ardi Neural</span>
+      </div>
+      <div class="lecture-panel-controls">
+        <button class="audio-btn active" id="btnPlayLecture" onclick="togglePlayLecture()">⏸ Jeda</button>
+        <button class="audio-btn" onclick="replaySlideLecture()">🔄 Ulangi</button>
+        <label class="auto-advance-label">
+          <input type="checkbox" id="autoAdvanceCheck" checked> Auto-Lanjut Slide
+        </label>
+        <button class="audio-btn" onclick="toggleLecturePanel()" title="Sembunyikan Panel (T)">✕ Tutup</button>
+      </div>
+    </div>
+    <div class="lecture-transcript-text" id="lectureTranscript">
+      Memuat naskah penjelasan dosen...
+    </div>
+  </div>
+
+  <!-- Slide Jump Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()">
+    <div class="drawer" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <h3 class="drawer-title">Daftar Slide Pertemuan 11</h3>
+        <button class="drawer-close" onclick="toggleDrawer()">✕</button>
+      </div>
+      <div class="drawer-list" id="drawerList">
+        <div class="drawer-item active" onclick="goToSlide(0)">1. Judul & Identitas Perkuliahan</div>
+<div class="drawer-item" onclick="goToSlide(1)">2. Filosofi Transformasi-Z: Generalisasi Fourier</div>
+<div class="drawer-item" onclick="goToSlide(2)">3. Definisi Formal Transformasi-Z & Bidang Kompleks Z</div>
+<div class="drawer-item" onclick="goToSlide(3)">4. Region of Convergence (ROC) & Sifat-Sifat Mutlaknya</div>
+<div class="drawer-item" onclick="goToSlide(4)">5. Fungsi Transfer Sistem H(z) & Persamaan Beda</div>
+<div class="drawer-item" onclick="goToSlide(5)">6. Diagram Pole-Zero: Anatomi Arsitektur Sistem</div>
+<div class="drawer-item" onclick="goToSlide(6)">7. Kriteria Mutlak Kestabilan Sistem LTI Berbasis Pole-Zero</div>
+<div class="drawer-item" onclick="goToSlide(7)">8. Interpretasi Geometris: Dari Pole-Zero ke Respons Frekuensi</div>
+<div class="drawer-item" onclick="goToSlide(8)">9. Implementasi Python: Diagram Pole-Zero dengan SciPy</div>
+<div class="drawer-item" onclick="goToSlide(9)">10. Praktikum Mandiri Lab 11: Eksplorasi Kestabilan Sistem</div>
+<div class="drawer-item" onclick="goToSlide(10)">11. Integrasi AI: Faktorisasi Polinomial Orde Tinggi</div>
+<div class="drawer-item" onclick="goToSlide(11)">12. Latihan Soal HOTS Pertemuan 11</div>
+<div class="drawer-item" onclick="goToSlide(12)">13. Rangkuman Pertemuan 11 & Refleksi Pembelajaran</div>
+<div class="drawer-item" onclick="goToSlide(13)">14. Tindak Lanjut & Referensi Perkuliahan</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide, .slide-title-view');
+    const totalSlides = slides.length;
+    const slideIndicator = document.getElementById('slideIndicator');
+    const progressFill = document.getElementById('progressFill');
+    const presenterBar = document.getElementById('presenterBar');
+    const toast = document.getElementById('toast');
+
+    // Lecture & Audio Elements
+    const LECTURE_DATA = {"1": {"title": "Judul & Identitas Perkuliahan", "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-11. Hari ini kita akan mengkaji secara komprehensif topik utama: Transformasi-Z & Analisis Fungsi Sistem. Generalisasi Transformasi Fourier pada Bidang Kompleks Z, Region of Convergence (ROC), Diagram Pole-Zero, Fungsi Transfer H(z), dan Evaluasi Kestabilan Sistem LTI. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK3 (CPL-A, CPL-B) dengan bobot evaluasi sebesar 6 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.", "laser_steps": [{"time": 2, "target": ".title-badge-univ", "text": "Universitas Nusantara Manado"}, {"time": 7, "target": ".title-main", "text": "Topik: Transformasi-Z & Analisis Fungsi Si"}, {"time": 14, "target": ".title-meta-box", "text": "Capaian CPMK3 (CPL-A, CPL-B)"}, {"time": 22, "target": ".lecturer-signature", "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."}, {"time": 28, "target": ".title-cta-group", "text": "Mulai Perkuliahan"}]}, "2": {"title": "Filosofi Transformasi-Z: Generalisasi Fourier", "script": "Pada slide ini, kita membahas Filosofi Transformasi-Z: Generalisasi Fourier. Mari kita perhatikan kolom sebelah kiri mengenai Keterbatasan Transformasi Fourier (DTFT). DTFT hanya dapat diterapkan pada sinyal atau sistem yang stabil (memenuhi syarat sum |x[n]| < inf). Bagaimana jika kita harus menganalisis sistem yang tidak stabil, sistem dengan osilasi tak teredam, atau sistem transien yang bertumbuh seiring waktu? DTFT gagal dan divergen untuk kelas sistem tersebut! Solusi: Perluas variabel frekuensi kompleks e^(jw) menjadi variabel bilangan kompleks sembarang z = r e^(jw). Lahirlah Transformasi-Z! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Transformasi-Z sebagai 'Aljabar Sakti' DSP. Mengapa hal ini sangat fundamental? Transformasi-Z adalah padanan domain diskrit dari Transformasi Laplace pada sistem kontinu. Mengubah operasi konvolusi waktu dan persamaan beda diferensial LCCDE yang rumit menjadi operasi perkalian dan pembagian pecahan aljabar polinomial biasa! Memberikan gambaran visual geometris yang sangat intuitif mengenai kestabilan dan resonansi sistem melalui diagram Pole-Zero. ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Keterbatasan Transformasi Four"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Transformasi-Z sebagai 'Aljaba"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "3": {"title": "Definisi Formal Transformasi-Z & Bidang Kompleks Z", "script": "Pada slide ini, kita membahas Definisi Formal Transformasi-Z & Bidang Kompleks Z. Perhatikan persamaan matematika inti untuk Persamaan Transformasi-Z Dua Sisi (Bilateral) di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. x[n]: Sinyal domain waktu diskrit. z: Variabel bilangan kompleks kontinu pada bidang-Z (Z-plane). r = |z|: Jari-jari lingkaran (magnitude) pada bidang-Z. omega = angle z: Sudut fase frekuensi pada bidang-Z. Hubungan dengan DTFT: Jika kita mengevaluasi Transformasi-Z tepat pada lingkaran satuan (Unit Circle di mana r = |z| = 1, sehingga z = e^(jw)), Transformasi-Z berubah menjadi tepat DTFT! Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Substitusi z = r e^(jw) ke dalam rumus Transformasi-Z: X(r e^(jw)) = sum_{n=-inf}^{inf} x[n] (r e^(jw))^(-n) = sum_{n=-inf}^{inf} [ x[n] r^(-n) ] e^(-jw n). Perhatikan dengan seksama: Transformasi-Z adalah DTFT dari sinyal x[n] yang dikalikan dengan faktor pembobot eksponensial r^(-n)! Faktor r^(-n) ini dapat meredam sinyal yang bertumbuh sehingga deret jumlahan konvergen! ", "laser_steps": [{"time": 3, "target": ".formula-banner h4", "text": "Persamaan Transformasi-Z Dua S"}, {"time": 9, "target": ".formula-banner .katex-display", "text": "Formulasi Matematis"}, {"time": 18, "target": ".grid-2 .card.accent-blue", "text": "Makna Fisis Variabel"}, {"time": 28, "target": ".grid-2 .card.accent-green", "text": "Langkah Perhitungan"}]}, "4": {"title": "Region of Convergence (ROC) & Sifat-Sifat Mutlaknya", "script": "Pada slide ini, kita membahas Region of Convergence (ROC) & Sifat-Sifat Mutlaknya. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Definisi Region of Convergence (ROC). ROC adalah himpunan semua nilai z pada bidang kompleks di mana deret derau tak terhingga X(z) konvergen menuju nilai berhingga (|X(z)| < inf). X(z) TIDAK MEMILIKI ARTI tanpa menyertakan spesifikasi daerah ROC-nya! Dua sinyal waktu yang sangat berbeda (kausal vs antikausal) dapat memiliki ekspresi aljabar X(z) yang identik, dan hanya dibedakan oleh ROC-nya. Pilar ke-2 adalah Sifat Geometris ROC. 1. Berbentuk Cincin / Piringan konsentris yang berpusat di titik origin z = 0. 2. ROC TIDAK BOLEH MEMUAT POLE APAPUN (karena pada titik pole, nilai X(z) meledak ke tak terhingga). 3. Jika x[n] berdurasi berhingga, ROC adalah seluruh bidang-Z kecuali mungkin z = 0 atau z = inf. Pilar ke-3 adalah Kaitan ROC dengan Kausalitas. Sekuens Sisi Kanan (Kausal): ROC meluas ke arah luar melampaui pole terluar: |z| > |p_max|. Sekuens Sisi Kiri (Anti-Kausal): ROC meluas ke arah dalam menuju origin di dalam pole terdalam: |z| < |p_min|. Sekuens Dua Sisi (Bilateral): ROC berbentuk cincin di antara dua pole: |p1| < |z| < |p2|. ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "Definisi Region of Conver"}, {"time": 14, "target": ".grid-3 .card:nth-child(2)", "text": "Sifat Geometris ROC"}, {"time": 25, "target": ".grid-3 .card:nth-child(3)", "text": "Kaitan ROC dengan Kausali"}]}, "5": {"title": "Fungsi Transfer Sistem H(z) & Persamaan Beda", "script": "Pada slide ini, kita membahas Fungsi Transfer Sistem H(z) & Persamaan Beda. Perhatikan persamaan matematika inti untuk Hubungan Langsung Persamaan Beda LCCDE dengan H(z) di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. H(z): Fungsi Transfer (System Function) dari sistem LTI. Y(z): Transformasi-Z dari sinyal keluaran y[n]. X(z): Transformasi-Z dari sinyal masukan x[n]. b_k: Koefisien masukan (feedforward) yang membentuk polinomial pembilang. a_k: Koefisien keluaran (feedback) yang membentuk polinomial penyebut. Teorema Pergeseran: Z{ x[n - k] } = z^(-k) X(z). Tunda 1 sampel ekuivalen dengan perkalian z^(-1). Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Contoh: Diberikan persamaan beda y[n] - 0.9 y[n-1] = x[n] + 0.5 x[n-1]. Langkah 1: Terapkan Transformasi-Z pada kedua sisi persamaan: Y(z) - 0.9 z^(-1) Y(z) = X(z) + 0.5 z^(-1) X(z). Langkah 2: Faktorkan Y(z) dan X(z): Y(z) [1 - 0.9 z^(-1)] = X(z) [1 + 0.5 z^(-1)]. Langkah 3: Bagi Y(z) dengan X(z) untuk memperoleh H(z): H(z) = (1 + 0.5 z^(-1)) / (1 - 0.9 z^(-1)) = (z + 0.5) / (z - 0.9). ", "laser_steps": [{"time": 3, "target": ".formula-banner h4", "text": "Hubungan Langsung Persamaan Be"}, {"time": 9, "target": ".formula-banner .katex-display", "text": "Formulasi Matematis"}, {"time": 18, "target": ".grid-2 .card.accent-blue", "text": "Makna Fisis Variabel"}, {"time": 28, "target": ".grid-2 .card.accent-green", "text": "Langkah Perhitungan"}]}, "6": {"title": "Diagram Pole-Zero: Anatomi Arsitektur Sistem", "script": "Pada slide ini, kita membahas Diagram Pole-Zero: Anatomi Arsitektur Sistem. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Definisi Zero (Akar Pembilang). Nilai z di mana pembilang H(z) bernilai nol, sehingga H(z) = 0. Disimbolkan dengan lingkaran kecil (o) pada diagram bidang-Z. Zero 'menarik turun' nilai respons frekuensi menuju nol (meredam frekuensi). Pilar ke-2 adalah Definisi Pole (Akar Penyebut). Nilai z di mana penyebut H(z) bernilai nol, sehingga H(z) meledak ke tak terhingga (H(z) -> inf). Disimbolkan dengan tanda silang (x) pada diagram bidang-Z. Pole 'mendorong naik' respons frekuensi membentuk puncak resonansi (memperkuat frekuensi). Pilar ke-3 adalah Faktorisasi Bentuk Pole-Zero. H(z) = (b0 / a0) * [ product_{i=1}^M (1 - c_i z^-1) ] / [ product_{k=1}^N (1 - d_k z^-1) ]. c_i adalah lokasi zero, dan d_k adalah lokasi pole. Tata letak geometris pole dan zero menentukan seluruh perilaku sistem secara komprehensif! ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "Definisi Zero (Akar Pembi"}, {"time": 14, "target": ".grid-3 .card:nth-child(2)", "text": "Definisi Pole (Akar Penye"}, {"time": 25, "target": ".grid-3 .card:nth-child(3)", "text": "Faktorisasi Bentuk Pole-Z"}]}, "7": {"title": "Kriteria Mutlak Kestabilan Sistem LTI Berbasis Pole-Zero", "script": "Pada slide ini, kita membahas Kriteria Mutlak Kestabilan Sistem LTI Berbasis Pole-Zero. Mari kita perhatikan kolom sebelah kiri mengenai Syarat Mutlak Stabilitas BIBO. Teorema Stabilitas Dasar: Sistem LTI stabil BIBO jika dan hanya jika ROC dari H(z) MEMUAT LINGKARAN SATUAN (Unit Circle |z| = 1). Mengapa? Karena jika lingkaran satuan berada di dalam ROC, maka evaluasi z = e^(jw) konvergen, yang berarti respons frekuensi DTFT H(e^jw) ada dan berhingga! Jika lingkaran satuan berada di luar ROC, sistem tidak stabil BIBO. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kondisi Emas Sistem Kausal & Stabil. Mengapa hal ini sangat fundamental? UNTUK SISTEM LTI YANG BERSIFAT KAUSAL: Sistem stabil BIBO jika dan hanya jika SELURUH POLE TERLETAK TEPAT DI DALAM LINGKARAN SATUAN! |p_k| < 1  untuk semua k = 1, 2, ..., N. Jika ada minimal satu pole terletak di luar lingkaran satuan (|p| > 1), sistem kausal dipastikan TIDAK STABIL (output meledak divergen)! Jika ada pole tunggal tepat pada lingkaran satuan (|p| = 1), sistem bersifat marginally stable (berosilasi terus-menerus tanpa henti). ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Syarat Mutlak Stabilitas BIBO"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Kondisi Emas Sistem Kausal & S"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "8": {"title": "Interpretasi Geometris: Dari Pole-Zero ke Respons Frekuensi", "script": "Pada slide ini, kita membahas Interpretasi Geometris: Dari Pole-Zero ke Respons Frekuensi. Perhatikan persamaan matematika inti untuk Evaluasi Grafis Vektor Respons Frekuensi di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. e^(j omega): Titik frekuensi yang berjalan mengelilingi keliling lingkaran satuan dari omega = 0 hingga pi. |e^(jw) - c_i|: Panjang vektor jarak geometris dari titik frekuensi ke zero ke-i. |e^(jw) - d_k|: Panjang vektor jarak geometris dari titik frekuensi ke pole ke-k. G: Faktor penguatan skalar konstan. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Kaidah Geometris Intuitif Dosen: 1. Ketika titik frekuensi e^(jw) bergerak mendekati sebuah POLE, jarak ke pole mengecil -> Penyebut mengecil -> Respons magnitudo MELONJAK NAIK (terbentuk puncak resonansi / passband filter). 2. Ketika titik frekuensi bergerak mendekati sebuah ZERO, jarak ke zero mengecil -> Pembilang mengecil -> Respons magnitudo ANJLOK TURUN MENDEKATI NOL (terbentuk notch null / stopband filter). Hanya dengan melihat diagram lingkaran dan letak tanda silang (x) serta lingkaran (o), Anda dapat langsung menebak jenis filter tersebut (Low-pass, High-pass, Band-pass, atau Notch) tanpa menghitung satu rumus pun! ", "laser_steps": [{"time": 3, "target": ".formula-banner h4", "text": "Evaluasi Grafis Vektor Respons"}, {"time": 9, "target": ".formula-banner .katex-display", "text": "Formulasi Matematis"}, {"time": 18, "target": ".grid-2 .card.accent-blue", "text": "Makna Fisis Variabel"}, {"time": 28, "target": ".grid-2 .card.accent-green", "text": "Langkah Perhitungan"}]}, "9": {"title": "Implementasi Python: Diagram Pole-Zero dengan SciPy", "script": "Pada slide ini, kita membahas Implementasi Python: Diagram Pole-Zero dengan SciPy. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Visualisasi Z-Plane Menggunakan scipy.signal.tf2zpk. scipy.signal.tf2zpk(b, a) mengubah koefisien polinomial pembilang b dan penyebut a menjadi akar-akar Zero (z), Pole (p), dan Gain (k). Gambarkan lingkaran satuan beradius 1.0 menggunakan np.exp(1j * theta). Plot pole dengan marker silang 'x' merah dan zero dengan marker lingkaran 'o' biru. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.", "laser_steps": [{"time": 3, "target": ".grid-2 .card.accent-blue", "text": "Visualisasi Z-Plane Menggunaka"}, {"time": 12, "target": ".code-container .code-header", "text": "Kode Python DSP"}, {"time": 20, "target": ".code-container pre", "text": "Implementasi Vektorisasi"}]}, "10": {"title": "Praktikum Mandiri Lab 11: Eksplorasi Kestabilan Sistem", "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 11: Eksplorasi Kestabilan Sistem. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 11. Judul: Analisis Pergeseran Pole-Zero pada Bidang-Z dan Dampaknya Terhadap Kestabilan Sistem. Eksperimen 1: Uji sistem dengan pole tunggal real: H(z) = 1 / (1 - p z^-1). Variasikan nilai p dari 0.5, 0.9, 1.0, hingga 1.1. Simulasikan respons impuls h[n] hingga n = 40. Amati perbedaan tajam antara respons meluruh (p < 1), osilasi konstan (p = 1), dan ledakan divergen (p > 1). Eksperimen 2: Rancang filter Notch pembatal frekuensi 60 Hz pada sistem dengan Fs = 600 Hz dengan meletakkan sepasang zero tepat pada lingkaran satuan di sudut w0 = 2*pi*(60/600) = 0.2 pi. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Evaluasi. Mengapa hal ini sangat fundamental? Tantangan Praktik: Tambahkan sepasang pole di belakang zero notch pada jari-jari r = 0.95 dengan sudut yang sama. Amati bagaimana penambahan pole ini menyempitkan notch bandwidth sehingga sinyal selain 60 Hz tidak terdistorsi! Pertanyaan Evaluasi: Mengapa filter FIR selalu dijamin stabil? Di mana lokasi seluruh pole dari filter FIR pada bidang-Z? Output: Dokumentasikan notebook laporan dengan analisis diagram pole-zero dan respons frekuensi. ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Lembar Instruksi Praktikum 11"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Tantangan Analisis & Evaluasi"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "11": {"title": "Integrasi AI: Faktorisasi Polinomial Orde Tinggi", "script": "Pada slide ini, kita membahas Integrasi AI: Faktorisasi Polinomial Orde Tinggi. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Analisis Parsial. Prompt AI: 'Tuliskan kode Python menggunakan scipy.signal.residuez untuk melakukan Ekspansi Fraksi Parsial (Partial Fraction Expansion / PFE) dari transfer function H(z) = (2 + z^-1) / (1 - 0.7 z^-1 + 0.1 z^-2) dan tentukan respons impuls analitis h[n].' AI Symbolic Root Finder: 'Cari akar-akar pole dan zero dari polinomial penyebut orde 6 menggunakan numpy.roots.' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Validasi Mahasiswa. Mengapa hal ini sangat fundamental? Pemeriksaan Format Pangkat Z: Perhatikan bahwa beberapa pustaka Python dan AI menggunakan format pangkat positif z, sementara DSP klasik Oppenheim menggunakan format delay z^(-1). Jangan sampai tertukar! Verifikasi Sifat Konjugat: Pastikan bahwa setiap pole atau zero bilangan kompleks selalu hadir berpasangan dengan konjugatnya jika koefisien persamaan beda bernilai real. ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Pemanfaatan AI untuk Analisis "}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Kewajiban Validasi Mahasiswa"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "12": {"title": "Latihan Soal HOTS Pertemuan 11", "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 11. Mari kita perhatikan kolom sebelah kiri mengenai Soal 1: Penentuan ROC & Kausalitas. Diberikan fungsi transfer: H(z) = 1 / [ (1 - 0.5 z^-1)(1 - 2 z^-1) ]. a) Tentukan lokasi seluruh pole dari sistem tersebut! b) Ada 3 kemungkinan bentuk ROC yang berbeda. Sebutkan dan gambarkan sketsa ketiga ROC tersebut! c) Untuk masing-masing ROC, tentukan apakah sistem bersifat kausal dan apakah sistem stabil BIBO! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal 2: Inverse Z-Transform (PFE). Mengapa hal ini sangat fundamental? Sebuah sistem LTI kausal memiliki fungsi transfer: H(z) = [ 1 - z^-1 ] / [ 1 - 0.8 z^-1 + 0.15 z^-2 ] dengan ROC |z| > 0.5. a) Lakukan faktorisasi penyebut menjadi dua suku orde satu! b) Uraikan H(z) menggunakan Partial Fraction Expansion (PFE)! c) Tentukan persamaan analitis respons impuls h[n] untuk seluruh n! ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Soal 1: Penentuan ROC & Kausal"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Soal 2: Inverse Z-Transform (P"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "13": {"title": "Rangkuman Pertemuan 11 & Refleksi Pembelajaran", "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 11 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa Transformasi-Z melengkapi kekurangan Transformasi Fourier dalam menganalisis kestabilan sistem. Saya memahami bahwa letak pole relatif terhadap lingkaran satuan |z|=1 adalah garis pemisah mutlak antara sistem yang aman stabil atau sistem yang meledak divergen. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Setiap insinyur DSP dan kontrol modern memeriksa kestabilan filter digital mereka dengan melihat apakah semua pole berada di dalam lingkaran satuan sebelum kode diunggah ke prosesor perangkat keras. Diagram Pole-Zero adalah bahasa visual universal sistem LTI. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Melihat kaitan geometris yang begitu indah antara posisi titik silang pole pada bidang kompleks dengan tinggi rendahnya kurva grafik respons frekuensi memberikan pencerahan logika yang luar biasa. ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "Berkesadaran (Mindful)"}, {"time": 15, "target": ".grid-3 .card:nth-child(2)", "text": "Bermakna (Meaningful)"}, {"time": 27, "target": ".grid-3 .card:nth-child(3)", "text": "Menggembirakan (Joyful)"}]}, "14": {"title": "Tindak Lanjut & Referensi Perkuliahan", "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-11: Transformasi-Z: X(z) = sum x[n] z^(-n), z = r e^(jw). ROC memuat lingkaran satuan jika dan hanya jika sistem stabil BIBO. Sistem LTI kausal stabil mensyaratkan SELURUH POLE berada di dalam lingkaran satuan (|p| < 1). Letak pole dan zero secara geometris membentuk kontur respons frekuensi H(e^jw). Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kumpulkan Laporan Praktikum Lab 11 ke LMS tepat waktu. Baca Bab 7 Oppenheim mengenai Perancangan Filter Digital Finite Impulse Response (FIR). Siapkan ringkasan karakteristik fungsi window (Hamming, Hanning, Blackman, Kaiser). Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!", "laser_steps": [{"time": 3, "target": ".grid-2 .card.accent-blue", "text": "Rangkuman Inti Kuliah"}, {"time": 15, "target": ".grid-2 .card.accent-green", "text": "Tugas Mandiri OBE"}, {"time": 25, "target": ".grid-2 .card.accent-green h4", "text": "Referensi Akademik"}]}};
+    const lectureAudio = document.getElementById('lectureAudio');
+    const lecturePanel = document.getElementById('lecturePanel');
+    const lectureTranscript = document.getElementById('lectureTranscript');
+    const btnPlayLecture = document.getElementById('btnPlayLecture');
+    const btnPresenterLecture = document.getElementById('btnPresenterLecture');
+    const btnRecordVideo = document.getElementById('btnRecordVideo');
+    const autoAdvanceCheck = document.getElementById('autoAdvanceCheck');
+    const virtualLaser = document.getElementById('virtualLaser');
+    const laserLabel = document.getElementById('laserLabel');
+
+    let currentLaserTarget = null;
+    let isLecturePlaying = false;
+    let mouseTimer = null;
+
+    // Recording State (StudioRecorder Engine)
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecording = false;
+    let recordingStream = null;
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        s.classList.toggle('active', idx === currentSlide);
+      });
+      slideIndicator.textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+      progressFill.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+
+      document.querySelectorAll('.drawer-item').forEach((item, idx) => {
+        item.classList.toggle('active', idx === currentSlide);
+      });
+
+      virtualLaser.classList.remove('active');
+      laserLabel.classList.remove('active');
+      clearHighlight();
+
+      loadSlideLecture(currentSlide + 1, isLecturePlaying);
+
+      if (window.renderMathInElement) {
+        renderMathInElement(slides[currentSlide], {
+          delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: false}
+          ]
+        });
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentSlide = index;
+        updateSlide();
+        toggleDrawer(false);
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().then(() => {
+          showToast("Mode Layar Penuh Aktif (Tekan Esc / F untuk keluar)");
+        }).catch(err => console.warn(err));
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function toggleDrawer(forceState) {
+      const overlay = document.getElementById('drawerOverlay');
+      if (forceState !== undefined) {
+        overlay.style.display = forceState ? 'block' : 'none';
+      } else {
+        overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    function toggleLecturePanel() {
+      lecturePanel.classList.toggle('collapsed');
+    }
+
+    function moveLaserTo(targetSelector, labelText) {
+      clearHighlight();
+      if (!targetSelector) {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        return;
+      }
+
+      const activeSlide = slides[currentSlide];
+      const targetEl = activeSlide.querySelector(targetSelector) || document.querySelector(targetSelector);
+
+      if (targetEl) {
+        const rect = targetEl.getBoundingClientRect();
+        const laserX = rect.left + rect.width * 0.35;
+        const laserY = rect.top + rect.height * 0.45;
+
+        virtualLaser.style.left = `${laserX}px`;
+        virtualLaser.style.top = `${laserY}px`;
+        virtualLaser.classList.add('active');
+
+        laserLabel.style.left = `${laserX}px`;
+        laserLabel.style.top = `${laserY}px`;
+        laserLabel.textContent = labelText || "Poin Penjelasan";
+        laserLabel.classList.add('active');
+
+        targetEl.classList.add('lecture-focus-target');
+        currentLaserTarget = targetEl;
+      } else {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+      }
+    }
+
+    function clearHighlight() {
+      if (currentLaserTarget) {
+        currentLaserTarget.classList.remove('lecture-focus-target');
+        currentLaserTarget = null;
+      }
+    }
+
+    function loadSlideLecture(slideNum, autoStart = true) {
+      const data = LECTURE_DATA[slideNum];
+      if (!data) return;
+
+      lectureTranscript.innerHTML = data.script;
+      const audioFolder = "audio_pertemuan_11";
+      lectureAudio.src = `${audioFolder}/slide_${String(slideNum).padStart(2, '0')}.mp3`;
+      
+      if (autoStart && isLecturePlaying) {
+        lectureAudio.play().then(() => {
+          btnPlayLecture.textContent = "⏸ Jeda";
+          btnPresenterLecture.textContent = "⏸ Jeda Kuliah (P)";
+        }).catch(err => console.log(err));
+      } else {
+        btnPlayLecture.textContent = "▶ Lanjutkan";
+        btnPresenterLecture.textContent = "🎙️ Dengar Penjelasan (P)";
+      }
+    }
+
+    function togglePlayLecture() {
+      if (lectureAudio.paused) {
+        isLecturePlaying = true;
+        lectureAudio.play().then(() => {
+          btnPlayLecture.textContent = "⏸ Jeda";
+          btnPresenterLecture.textContent = "⏸ Jeda Kuliah (P)";
+          showToast("▶ Memutar Penjelasan Dosen & Kursor Laser Aktif");
+        }).catch(err => {
+          console.warn("Autoplay block:", err);
+        });
+      } else {
+        isLecturePlaying = false;
+        lectureAudio.pause();
+        btnPlayLecture.textContent = "▶ Lanjutkan";
+        btnPresenterLecture.textContent = "🎙️ Dengar Penjelasan (P)";
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        clearHighlight();
+        showToast("⏸ Penjelasan Dosen Dijeda");
+      }
+    }
+
+    function replaySlideLecture() {
+      lectureAudio.currentTime = 0;
+      isLecturePlaying = true;
+      lectureAudio.play();
+      btnPlayLecture.textContent = "⏸ Jeda";
+    }
+
+    lectureAudio.addEventListener('timeupdate', () => {
+      const currentTime = lectureAudio.currentTime;
+      const slideNum = currentSlide + 1;
+      const data = LECTURE_DATA[slideNum];
+      if (!data || !data.laser_steps) return;
+
+      let activeStep = null;
+      for (let i = data.laser_steps.length - 1; i >= 0; i--) {
+        if (currentTime >= data.laser_steps[i].time) {
+          activeStep = data.laser_steps[i];
+          break;
+        }
+      }
+
+      if (activeStep) {
+        moveLaserTo(activeStep.target, activeStep.text);
+      } else {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        clearHighlight();
+      }
+    });
+
+    lectureAudio.addEventListener('ended', () => {
+      virtualLaser.classList.remove('active');
+      laserLabel.classList.remove('active');
+      clearHighlight();
+
+      if (autoAdvanceCheck.checked && currentSlide < totalSlides - 1) {
+        showToast("✓ Slide selesai. Melanjutkan ke slide berikutnya...");
+        setTimeout(() => {
+          nextSlide();
+        }, 1400);
+      } else if (currentSlide >= totalSlides - 1) {
+        showToast("🎉 Seluruh materi perkuliahan selesai!");
+        if (isRecording) {
+          stopRecordingLecture();
+        }
+      }
+    });
+
+    // ==========================================
+    // STUDIO RECORDER ENGINE (AUTO-RECORD & AUTO-DOWNLOAD)
+    // ==========================================
+    async function toggleRecordLecture() {
+      if (isRecording) {
+        stopRecordingLecture();
+      } else {
+        await startRecordingLecture();
+      }
+    }
+
+    async function startRecordingLecture() {
+      try {
+        // Pastikan naskah teleprompter tertutup rapat agar rekaman 100% bersih
+        lecturePanel.classList.add('collapsed');
+
+        showToast("🎬 Pilih tab browser ini dan klik Share dengan Audio untuk mulai merekam!");
+        recordingStream = await navigator.mediaDevices.getDisplayMedia({
+          video: {
+            displaySurface: "browser",
+            frameRate: 60
+          },
+          audio: true,
+          preferCurrentTab: true
+        });
+
+        recordedChunks = [];
+        const mimeTypes = [
+          'video/webm;codecs=vp9,opus',
+          'video/webm;codecs=vp8,opus',
+          'video/webm',
+          'video/mp4'
+        ];
+        let selectedMime = mimeTypes.find(m => MediaRecorder.isTypeSupported(m)) || '';
+
+        mediaRecorder = new MediaRecorder(recordingStream, selectedMime ? { mimeType: selectedMime } : {});
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) {
+            recordedChunks.push(e.data);
+          }
+        };
+
+        mediaRecorder.onstop = () => {
+          downloadRecordedVideo();
+        };
+
+        // User stop stream manually
+        recordingStream.getVideoTracks()[0].onended = () => {
+          if (isRecording) stopRecordingLecture();
+        };
+
+        mediaRecorder.start(1000);
+        isRecording = true;
+
+        btnRecordVideo.classList.add('recording');
+        btnRecordVideo.innerHTML = "⏹ Berhenti Rekam";
+
+        // Rewind ke menit nol (Slide 1) dan mulai narasi
+        currentSlide = 0;
+        updateSlide();
+        autoAdvanceCheck.checked = true;
+        
+        setTimeout(() => {
+          isLecturePlaying = true;
+          lectureAudio.currentTime = 0;
+          lectureAudio.play().catch(e => console.log(e));
+          showToast("🔴 Merekam Aktif dari Menit 0! Video akan otomatis terunduh saat slide terakhir selesai.");
+        }, 1500);
+
+      } catch (err) {
+        console.error("Recording error:", err);
+        showToast("❌ Gagal memulai rekaman: " + err.message);
+      }
+    }
+
+    function stopRecordingLecture() {
+      if (!isRecording) return;
+      isRecording = false;
+
+      btnRecordVideo.classList.remove('recording');
+      btnRecordVideo.innerHTML = "🔴 Rekam Video (Auto)";
+
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+      }
+      if (recordingStream) {
+        recordingStream.getTracks().forEach(t => t.stop());
+      }
+      showToast("💾 Memproses berkas video... Mengunduh otomatis!");
+    }
+
+    function downloadRecordedVideo() {
+      const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      const safeTitle = "Transformasi-Z & Analisis Fungsi Sistem".replace(/[^a-zA-Z0-9]/g, '_');
+      a.download = `Pertemuan_11_${safeTitle}_Video_Kuliah.webm`;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast("✅ Video kuliah berhasil diunduh ke folder Downloads Anda!");
+      }, 500);
+    }
+
+    // Auto-hide presenter bar in fullscreen
+    function resetMouseTimer() {
+      presenterBar.classList.remove('autohide');
+      clearTimeout(mouseTimer);
+      if (document.fullscreenElement) {
+        mouseTimer = setTimeout(() => {
+          presenterBar.classList.add('autohide');
+        }, 3000);
+      }
+    }
+    document.addEventListener('mousemove', resetMouseTimer);
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F' || e.key === 'F5') {
+        e.preventDefault();
+        toggleFullScreen();
+      } else if (e.key === 'm' || e.key === 'M') {
+        toggleDrawer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        togglePlayLecture();
+      } else if (e.key === 't' || e.key === 'T') {
+        toggleLecturePanel();
+      } else if (e.key === 'Escape') {
+        toggleDrawer(false);
+      } else if (e.key === 'Home') {
+        currentSlide = 0;
+        updateSlide();
+      } else if (e.key === 'End') {
+        currentSlide = totalSlides - 1;
+        updateSlide();
+      }
+    });
+
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-container').querySelector('code');
+      navigator.clipboard.writeText(codeBlock.innerText).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Tersalin!';
+        btn.style.background = '#10B981';
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.style.background = '';
+        }, 2000);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      updateSlide();
+    });
+  </script>
+</body>
+</html>

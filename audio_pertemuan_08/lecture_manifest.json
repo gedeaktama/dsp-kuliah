@@ -1,0 +1,221 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-8. Hari ini kita akan mengkaji secara komprehensif topik utama: Evaluasi Tengah Semester (UTS): Asesmen Komprehensif Teori & Komputasi. Pengukuran Ketercapaian Outcome-Based Education (OBE) untuk CPMK 1, CPMK 2, dan CPMK 3 Melalui Ujian Analitis Mandiri dan Hands-on Live Coding Python. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK1, CPMK2, CPMK3 (CPL-A, CPL-B) dengan bobot evaluasi sebesar 15 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Evaluasi Tengah Semester (UTS): Ase"
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK1, CPMK2, CPMK3 (CPL-A, CPL-B)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Pemetaan Capaian Pembelajaran Evaluasi Tengah Semester",
+    "script": "Pada slide ini, kita membahas Pemetaan Capaian Pembelajaran Evaluasi Tengah Semester. Mari kita perhatikan kolom sebelah kiri mengenai Matriks CPMK yang Diuji pada UTS. CPMK 1 (CPL-A, Bobot 35% UTS): Karakteristik sinyal waktu diskrit, teorema sampling Nyquist-Shannon, perhitungan aliasing frequency folding, resolusi kuantisasi, dan SQNR. CPMK 2 (CPL-A & CPL-B, Bobot 40% UTS): Uji analitis sifat-sifat sistem diskrit (Linearitas, Time-Invariance, Kausalitas, Stabilitas BIBO), respons impuls h[n], persamaan beda LCCDE, dan operasi konvolusi/korelasi. CPMK 3 (CPL-A & CPL-B, Bobot 25% UTS): Respons frekuensi H(e^jw), evaluasi magnitude dan fase tunak sinusoidal, interpretasi kurva frekuensi SciPy. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Standar Mutu & Target Kelulusan OBE. Mengapa hal ini sangat fundamental? Target Mutu Program Studi: Sekurang-kurangnya 70% mahasiswa memperoleh nilai minimal 70 pada masing-masing CPMK 1, 2, dan 3. Sifat Ujian: Terbagi menjadi dua sesi berbobot setara: Sesi 1 Ujian Tertulis Analitis Mandiri (Closed Book, 60 Menit) dan Sesi 2 Ujian Komputasi Praktik Python (Open Docs, 60 Menit). Integritas Akademik Mutlak: Pelanggaran kecurangan menghasilkan pembatalan nilai UTS secara otomatis. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Matriks CPMK yang Diuji pada U"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Standar Mutu & Target Kelulusa"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Tata Tertib & Petunjuk Teknis Pelaksanaan Ujian",
+    "script": "Pada slide ini, kita membahas Tata Tertib & Petunjuk Teknis Pelaksanaan Ujian. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Sesi Teori Analitis (60 Menit). Dikerjakan pada lembar jawaban resmi berkop Universitas Nusantara Manado. Tampilkan penurunan rumus langkah demi langkah secara sistematis. Kalkulator scientific non-programmable diperbolehkan untuk perhitungan trigonometri dan logaritma. Dilarang menggunakan gawai komunikasi atau membuka koneksi internet. Pilar ke-2 adalah 2. Sesi Live Coding (60 Menit). Dikerjakan langsung di lingkungan Google Colab / Jupyter Notebook lokal. Setiap mahasiswa mendapatkan variasi parameter sinyal dan filter yang unik berdasarkan digit terakhir NIM. Seluruh kode wajib dapat dieksekusi tanpa error (runnable) dan menghasilkan grafik visualisasi yang diminta. Pilar ke-3 adalah 3. Kebijakan Etika AI Saat Ujian. DILARANG KERAS menyalin-tempel (copy-paste) prompt langsung ke LLM selama sesi ujian berlangsung. Dosen berhak melakukan uji autentisitas (live code defense) dan wawancara spontan untuk memvalidasi pemahaman mahasiswa. Ketidakmampuan menjelaskan kode sendiri berakibat pengurangan nilai drastis. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "1. Sesi Teori Analitis (6"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "2. Sesi Live Coding (60 M"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "3. Kebijakan Etika AI Saa"
+      }
+    ]
+  },
+  "4": {
+    "title": "Blueprint Soal Bagian I: Sinyal Diskrit, Sampling & Kuantisasi",
+    "script": "Pada slide ini, kita membahas Blueprint Soal Bagian I: Sinyal Diskrit, Sampling & Kuantisasi. Mari kita perhatikan kolom sebelah kiri mengenai Indikator Kompetensi CPMK 1. Mampu menghitung frekuensi Nyquist dan mendeteksi komponen aliasing dari sinyal analog komposit. Mampu menentukan persamaan sinyal diskrit x[n] hasil pencuplikan. Mampu menghitung resolusi kuantisasi Delta dan estimasi SQNR sistem ADC b-bit. Mampu melakukan dekomposisi sinyal genap-ganjil dan transformasi waktu x[k - n]. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Model Karakteristik Soal Ujian. Mengapa hal ini sangat fundamental? Tipe Soal 1: Diberikan sinyal analog multi-nada x(t) = A1 cos(2 pi F1 t) + A2 sin(2 pi F2 t). Mahasiswa diminta menentukan laju sampling minimum, lalu menentukan sinyal semu yang teramati jika dicuplik pada Fs yang melanggar batas Nyquist. Tipe Soal 2: Diberikan rentang tegangan sensor dan bit depth ADC. Mahasiswa menghitung daya derau kuantisasi dan perbaikan SQNR jika bit depth dinaikkan. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Indikator Kompetensi CPMK 1"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Model Karakteristik Soal Ujian"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "5": {
+    "title": "Blueprint Soal Bagian II: Sistem Diskrit, LTI & Konvolusi",
+    "script": "Pada slide ini, kita membahas Blueprint Soal Bagian II: Sistem Diskrit, LTI & Konvolusi. Mari kita perhatikan kolom sebelah kiri mengenai Indikator Kompetensi CPMK 2. Mampu membuktikan sifat linearitas dan time-invariance sebuah operator sistem secara formal analitis. Mampu menguji kausalitas dan stabilitas BIBO berbasis respons impuls h[n]. Mampu menyelesaikan perhitungan konvolusi linear antara dua sekuens berhingga menggunakan metode tabular. Mampu menurunkan persamaan beda LCCDE rekursif. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Model Karakteristik Soal Ujian. Mengapa hal ini sangat fundamental? Tipe Soal 3: Uji formal matematis terhadap sistem yang mengandung suku non-linear atau time-varying (misal y[n] = x[n] + 0.5 x[n-1] + c atau y[n] = x[3n]). Tipe Soal 4: Perhitungan konvolusi sekuens 4-sampel x[n] dengan sekuens 3-sampel h[n] menggunakan tabel perkalian silang dan verifikasi panjang total Ly. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Indikator Kompetensi CPMK 2"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Model Karakteristik Soal Ujian"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "6": {
+    "title": "Blueprint Soal Bagian III: Respons Frekuensi & Simulasi Komputasi",
+    "script": "Pada slide ini, kita membahas Blueprint Soal Bagian III: Respons Frekuensi & Simulasi Komputasi. Mari kita perhatikan kolom sebelah kiri mengenai Indikator Kompetensi CPMK 3. Mampu menurunkan rumus analitis H(e^(jw)) dari persamaan beda sistem orde satu atau orde dua. Mampu menghitung keluaran tunak sinusoidal steady-state (amplitudo dan pergeseran fase). Mampu menuliskan kode Python untuk mendesain filter moving average dan memplot kurva respons magnitudo dalam dB menggunakan scipy.signal.freqz. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Model Karakteristik Soal Ujian Praktik. Mengapa hal ini sangat fundamental? Tipe Soal 5 (Hands-on): Mahasiswa diberikan file array data sinyal audio pendek yang tercemar noise frekuensi tinggi. Tugas: Tulis script Python lengkap untuk menyaring sinyal menggunakan persamaan beda tertentu, plot perbandingan sinyal sebelum dan sesudah filtering, serta hitung perbaikan rasio sinyal terhadap derau (SNR improvement). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Indikator Kompetensi CPMK 3"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Model Karakteristik Soal Ujian"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "7": {
+    "title": "Rubrik Penilaian Holistik UTS Berbasis OBE",
+    "script": "Pada slide ini, kita membahas Rubrik Penilaian Holistik UTS Berbasis OBE. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Level 4 - Unggul (Skor 85 - 100). Penurunan matematis runtut, presisi, tanpa kesalahan aljabar. Konsep fisik dipahami mendalam dan satuan teknis tepat (Hz, rad/sampel, dB). Kode Python modular, efisien, terdokumentasi rapi, dan grafik memiliki label sumbu lengkap. Mampu menjelaskan logika solusi secara lisan dengan sangat percaya diri. Pilar ke-2 adalah Level 3 - Baik (Skor 70 - 84). Langkah matematis benar dengan sedikit kekeliruan aritmatika minor. Konsep dasar dipahami dengan baik. Kode program berfungsi normal dan menghasilkan output yang sesuai. Penjelasan konseptual cukup memadai. Pilar ke-3 adalah Level 1-2 - Perlu Remedial (Skor < 70). Penurunan rumus tidak lengkap, terjadi salah kaprah konsep (misal menyamakan konvolusi dengan perkalian biasa). Kode Python mengalami error sintaks atau runtime saat dieksekusi. Tidak mampu menjelaskan makna hasil grafik yang ditampilkan. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Level 4 - Unggul (Skor 85"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Level 3 - Baik (Skor 70 -"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Level 1-2 - Perlu Remedia"
+      }
+    ]
+  },
+  "8": {
+    "title": "Refleksi Mandiri Mahasiswa & Rencana Pascaujian",
+    "script": "Pada slide ini, kita membahas Refleksi Mandiri Mahasiswa & Rencana Pascaujian. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Mahasiswa menyadari sejauh mana kompetensi analitis dan komputasi DSP telah tertanam dalam dirinya. Mahasiswa mampu mengidentifikasi topik mana yang masih membutuhkan latihan ekstra (self-diagnosis). Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Evaluasi ini bukan sekadar ujian nilai, melainkan tolak ukur kesiapan mahasiswa melangkah ke materi transformasi frekuensi tingkat lanjut (DTFT, DFT, FFT, Transformasi-Z) dan proyek rekayasa riil pada paruh kedua semester. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Kepuasan melihat seluruh konsep dari Pertemuan 1 hingga 7 saling terhubung secara harmonis membentuk satu keutuhan ilmu DSP yang kokoh. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "9": {
+    "title": "Referensi Pembelajaran Menuju Paruh Kedua Semester",
+    "script": "Pada slide ini, kita membahas Referensi Pembelajaran Menuju Paruh Kedua Semester. Sebagai rangkuman perkuliahan Pertemuan ke-8: UTS menguji integrasi CPMK 1, CPMK 2, dan CPMK 3 secara seimbang. Paruh pertama semester berfokus pada fondasi waktu, sampling, dan sifat sistem LTI. Paruh kedua semester (Pertemuan 9-16) akan mengeksplorasi domain transformasi frekuensi murni (DTFT, DFT, FFT, Z-Transform) dan perancangan filter FIR/IIR industri. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Periksa umpan balik (feedback) hasil evaluasi UTS dari dosen di portal LMS. Bagi mahasiswa yang belum mencapai skor 70 pada salah satu CPMK, ikuti klinik asistensi remedial terstruktur. Mulai persiapkan ide topik Proyek Pembelajaran Berdampak (Klaster Audio, Getaran Mesin, IoT, atau Biosinyal). Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

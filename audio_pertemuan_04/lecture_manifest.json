@@ -1,0 +1,372 @@
+{
+  "1": {
+    "title": "Judul & Identitas Perkuliahan",
+    "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-4. Hari ini kita akan mengkaji secara komprehensif topik utama: Sistem Waktu Diskrit & Sifat-Sifat Sistem. Karakteristik Transformasi Input-Output, Pengujian Formal Linearitas (Prinsip Superposisi), Time-Invariance, Kausalitas, dan Stabilitas BIBO. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK2 (CPL-A, CPL-B) dengan bobot evaluasi sebesar 5 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".title-badge-univ",
+        "text": "Universitas Nusantara Manado"
+      },
+      {
+        "time": 7,
+        "target": ".title-main",
+        "text": "Topik: Sistem Waktu Diskrit & Sifat-Sifat "
+      },
+      {
+        "time": 14,
+        "target": ".title-meta-box",
+        "text": "Capaian CPMK2 (CPL-A, CPL-B)"
+      },
+      {
+        "time": 22,
+        "target": ".lecturer-signature",
+        "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."
+      },
+      {
+        "time": 28,
+        "target": ".title-cta-group",
+        "text": "Mulai Perkuliahan"
+      }
+    ]
+  },
+  "2": {
+    "title": "Konsep Sistem Waktu Diskrit: Operator Transformasi",
+    "script": "Pada slide ini, kita membahas Konsep Sistem Waktu Diskrit: Operator Transformasi. Mari kita perhatikan kolom sebelah kiri mengenai Definisi Formal Sistem Diskrit. Sistem waktu diskrit adalah sebuah operator matematik atau piranti komputasi T[ . ] yang memetakan sinyal masukan (input sequence) x[n] menjadi sinyal keluaran (output sequence) y[n]. Notasi Operator: y[n] = T{ x[n] }. Sistem dapat berupa rangkaian keras elektronik (ASIC, FPGA, DSP processor) atau algoritma baris kode perangkat lunak (Python, C++). Sekarang, mari kita tinjau kolom sebelah kanan mengenai Mengapa Pengujian Sifat Sistem Sangat Krusial?. Mengapa hal ini sangat fundamental? Sebelum mendesain filter, melakukan analisis spektrum, atau merancang kendali cerdas, kita wajib mengetahui watak dasar sistem yang dihadapi. Jika sistem terbukti Linear dan Time-Invariant (LTI), kita dapat memanfaatkan matematika konvolusi dan Transformasi Fourier/Z yang sangat kuat. Jika sistem terbukti non-linear atau time-varying, metode LTI standar tidak dapat diterapkan secara langsung dan memerlukan pendekatan khusus. ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Definisi Formal Sistem Diskrit"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Mengapa Pengujian Sifat Sistem"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "3": {
+    "title": "Sifat 1: Linearitas (Linearity & Superposition)",
+    "script": "Pada slide ini, kita membahas Sifat 1: Linearitas (Linearity & Superposition). Perhatikan persamaan matematika inti untuk Prinsip Superposisi (Homogenitas & Aditivitas) di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. T[ . ]: Operator transformasi sistem. x1[n], x2[n]: Dua sinyal masukan sembarang. y1[n], y2[n]: Respons output masing-masing terhadap masukan x1[n] dan x2[n]. a, b: Konstanta skalar pengali sembarang (dapat berupa bilangan real atau kompleks). Aditivitas: Respons terhadap jumlahan input sama dengan jumlahan respons individual. Homogenitas (Penskalaan): Penskalaan input menghasilkan penskalaan proporsional pada output. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Uji Cepat Non-Linearitas (Zero-Input Zero-Output Rule): Jika input x[n] = 0 menghasilkan output y[n] != 0, maka sistem tersebut DIPASTIKAN NON-LINEAR! Contoh: y[n] = 2 x[n] + 3. Jika x[n] = 0, y[n] = 3 != 0. Sistem ini non-linear (affine system). Contoh Linear: y[n] = n * x[n]. Uji: T{a x1[n] + b x2[n]} = n(a x1[n] + b x2[n]) = a(n x1[n]) + b(n x2[n]) = a y1[n] + b y2[n]. Terbukti linear murni! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Prinsip Superposisi (Homogenit"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "4": {
+    "title": "Contoh Uji Analitis: Sistem Linear vs Non-Linear",
+    "script": "Pada slide ini, kita membahas Contoh Uji Analitis: Sistem Linear vs Non-Linear. Mari kita perhatikan kolom sebelah kiri mengenai Kasus A: y[n] = (x[n])^2 (Sistem Kuadrat). Langkah 1: Bentuk kombinasi linier input: x3[n] = a x1[n] + b x2[n]. Langkah 2: Hitung respons y3[n] = T{x3[n]} = (a x1[n] + b x2[n])^2. Ekspansi: y3[n] = a^2 (x1[n])^2 + b^2 (x2[n])^2 + 2 a b x1[n] x2[n]. Langkah 3: Bandingkan dengan kombinasi output: a y1[n] + b y2[n] = a (x1[n])^2 + b (x2[n])^2. Kesimpulan: Karena y3[n] != a y1[n] + b y2[n] (muncul suku silang 2ab x1 x2), maka SISTEM TIDAK LINEAR (NON-LINEAR)! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kasus B: y[n] = x[n - 1] - 0.5 x[n - 2]. Mengapa hal ini sangat fundamental? Langkah 1: Input x3[n] = a x1[n] + b x2[n]. Langkah 2: y3[n] = (a x1[n-1] + b x2[n-1]) - 0.5 (a x1[n-2] + b x2[n-2]). Langkah 3: Kelompokkan konstanta a dan b: y3[n] = a [x1[n-1] - 0.5 x1[n-2]] + b [x2[n-1] - 0.5 x2[n-2]]. Perhatikan bahwa bagian dalam kurung siku adalah tepat y1[n] dan y2[n]! Kesimpulan: y3[n] = a y1[n] + b y2[n]. SISTEM TERBUKTI LINEAR! ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Kasus A: y[n] = (x[n])^2 (Sist"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kasus B: y[n] = x[n - 1] - 0.5"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "5": {
+    "title": "Sifat 2: Time-Invariance (Invarian Waktu)",
+    "script": "Pada slide ini, kita membahas Sifat 2: Time-Invariance (Invarian Waktu). Perhatikan persamaan matematika inti untuk Syarat Mutlak Sistem Invarian Waktu di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. k: Nilai pergeseran waktu bilangan bulat sembarang. y[n - k]: Respons output asli yang digeser sejauh k sampel. T{ x[n - k] }: Respons output baru ketika sistem diberi masukan yang telah digeser. Prinsip Fisik: Karakteristik dan parameter sistem tidak berubah seiring berjalannya waktu kalender. Eksperimen hari ini memberikan hasil yang sama persis dengan eksperimen besok. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Kaidah Deteksi Cepat Sistem Time-Varying: 1. Koefisien Eksplisit n: Jika persamaan memiliki koefisien pengali yang bergantung langsung pada variabel n (misal y[n] = n x[n] atau y[n] = cos(0.2 pi n) x[n]), sistem DIPASTIKAN TIME-VARYING! 2. Transformasi Sumbu Waktu pada Input: Jika input mengalami scaling waktu atau pembalikan (misal y[n] = x[2n] atau y[n] = x[-n]), sistem DIPASTIKAN TIME-VARYING! 3. Jika seluruh koefisien konstan dan indeks waktu hanya berupa pergeseran murni (misal y[n] = 3 x[n-1] + 2 x[n-4]), sistem TERBUKTI TIME-INVARIANT! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Syarat Mutlak Sistem Invarian "
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "6": {
+    "title": "Contoh Uji Analitis: Time-Invariant vs Time-Varying",
+    "script": "Pada slide ini, kita membahas Contoh Uji Analitis: Time-Invariant vs Time-Varying. Mari kita perhatikan kolom sebelah kiri mengenai Kasus A: y[n] = x[2n] (Kompresor Waktu). Langkah 1: Berikan input tergeser x1[n] = x[n - k]. Langkah 2: Respons baru y1[n] = T{x1[n]} = x1[2n] = x[2n - k]. (Hanya n yang diganti 2n). Langkah 3: Geser output asli y[n] sejauh k sampel: y[n - k] = x[2(n - k)] = x[2n - 2k]. Langkah 4: Bandingkan y1[n] dengan y[n - k]: x[2n - k] != x[2n - 2k]. Kesimpulan: y1[n] != y[n - k]. SISTEM ADALAH TIME-VARYING (TIDAK INVARIAN WAKTU)! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kasus B: y[n] = 3 x[n] + x[n - 3]. Mengapa hal ini sangat fundamental? Langkah 1: Input tergeser x1[n] = x[n - k]. Langkah 2: Respons baru y1[n] = 3 x1[n] + x1[n - 3] = 3 x[n - k] + x[n - k - 3]. Langkah 3: Geser output asli y[n] sejauh k sampel: y[n - k] = 3 x[n - k] + x[(n - k) - 3]. Langkah 4: Evaluasi kesamaan: y1[n] tepat sama dengan y[n - k] untuk seluruh nilai k. Kesimpulan: SISTEM ADALAH TIME-INVARIANT (INVARIAN WAKTU)! ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Kasus A: y[n] = x[2n] (Kompres"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kasus B: y[n] = 3 x[n] + x[n -"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "7": {
+    "title": "Sifat 3: Kausalitas (Causality)",
+    "script": "Pada slide ini, kita membahas Sifat 3: Kausalitas (Causality). Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Definisi Kausalitas Fisik. Sistem disebut Kausal jika output pada waktu n saat ini y[n] HANYA bergantung pada nilai input saat ini x[n] dan input masa lalu (x[n-1], x[n-2], ...). Sistem sama sekali tidak bergantung pada nilai input masa depan (x[n+1], x[n+2], ...). Prinsip 'Tidak dapat meramal masa depan'. Pilar ke-2 adalah Implementasi Real-Time. Seluruh sistem pemrosesan sinyal real-time (live audio, radar aktif, kendali motor) WAJIB bersifat kausal. Contoh Kausal: y[n] = 0.5 x[n] + 0.5 x[n-1] (Moving Average mundur). Contoh Non-Kausal: y[n] = (x[n+1] + x[n] + x[n-1]) / 3 (Membutuhkan sampel masa depan x[n+1]). Pilar ke-3 adalah Aplikasi Non-Kausal Offline. Apakah sistem non-kausal berguna? Ya, sangat berguna dalam pemrosesan data offline! Contoh: Pemrosesan rekaman audio yang sudah tersimpan di harddisk, restorasi foto digital, atau analisis data seismik historis. Karena seluruh data sudah ada di memori, indeks n+1 dapat diakses bebas. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Definisi Kausalitas Fisik"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Implementasi Real-Time"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Aplikasi Non-Kausal Offli"
+      }
+    ]
+  },
+  "8": {
+    "title": "Sifat 4: Stabilitas BIBO (Bounded-Input Bounded-Output)",
+    "script": "Pada slide ini, kita membahas Sifat 4: Stabilitas BIBO (Bounded-Input Bounded-Output). Perhatikan persamaan matematika inti untuk Kriteria Kestabilan BIBO Sistem Diskrit di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. Mx: Batas atas positif berhingga dari amplitudo sinyal masukan. My: Batas atas positif berhingga dari amplitudo sinyal keluaran yang dihasilkan. BIBO Stable: Jika setiap input yang terbatas (tidak pernah meledak ke tak terhingga) dijamin menghasilkan output yang juga selalu terbatas. Kondisi Unstable: Sistem yang output-nya dapat berosilasi tak hingga atau melonjak divergen ke tak terhingga meskipun input-nya sangat kecil. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Contoh Sistem Akumulator Tak Terbatas: y[n] = sum_{k=-inf}^{n} x[k]. Uji Stabilitas: Berikan input terbatas berupa unit step x[n] = u[n] (amplitudo |x[n]| <= 1, terbatas). Hitung output untuk n >= 0: y[n] = sum_{k=0}^{n} 1 = n + 1. Evaluasi Limit: Saat n -> inf, y[n] -> inf. Output menjadi tak terbatas (divergen)! Kesimpulan: Sistem Akumulator murni TIDAK STABIL BIBO! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".formula-banner h4",
+        "text": "Kriteria Kestabilan BIBO Siste"
+      },
+      {
+        "time": 9,
+        "target": ".formula-banner .katex-display",
+        "text": "Formulasi Matematis"
+      },
+      {
+        "time": 18,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Makna Fisis Variabel"
+      },
+      {
+        "time": 28,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Langkah Perhitungan"
+      }
+    ]
+  },
+  "9": {
+    "title": "Sifat 5: Memori Sistem (Memoryless vs Dynamic)",
+    "script": "Pada slide ini, kita membahas Sifat 5: Memori Sistem (Memoryless vs Dynamic). Mari kita perhatikan kolom sebelah kiri mengenai Sistem Tanpa Memori (Memoryless / Static). Output pada waktu n saat ini HANYA bergantung pada input pada waktu n saat ini saja. Sistem tidak memerlukan komponen register memori (unit delay element) untuk menyimpan data lama. Bentuk Umum: y[n] = f( x[n] ). Contoh: y[n] = 5 x[n], y[n] = (x[n])^3, y[n] = sign( x[n] ). Sekarang, mari kita tinjau kolom sebelah kanan mengenai Sistem Dengan Memori (Dynamic). Mengapa hal ini sangat fundamental? Output saat ini bergantung pada nilai input di masa lalu atau masa depan. Membutuhkan register flip-flop / buffer memori RAM untuk menyimpan sampel terdahulu. Memori Berhingga (Finite Memory): Bergantung pada M sampel masa lalu (misal filter FIR). Memori Tak Berhingga (Infinite Memory): Bergantung pada seluruh riwayat masa lalu melalui umpan balik output (misal filter IIR). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Sistem Tanpa Memori (Memoryles"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Sistem Dengan Memori (Dynamic)"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "10": {
+    "title": "Implementasi Python: Framework Pengujian Sifat Sistem",
+    "script": "Pada slide ini, kita membahas Implementasi Python: Framework Pengujian Sifat Sistem. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Pengujian Empiris Numerik Sifat Sistem. Meskipun pembuktian matematis bersifat formal, kita dapat membangun script pengujian empiris menggunakan sinyal acak (random signals) untuk mendeteksi pelanggaran sifat secara otomatis. Jika ditemukan minimal satu pasang sinyal acak yang melanggar rumus superposisi, sistem terbukti 100% non-linear. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Pengujian Empiris Numerik Sifa"
+      },
+      {
+        "time": 12,
+        "target": ".code-container .code-header",
+        "text": "Kode Python DSP"
+      },
+      {
+        "time": 20,
+        "target": ".code-container pre",
+        "text": "Implementasi Vektorisasi"
+      }
+    ]
+  },
+  "11": {
+    "title": "Praktikum Mandiri Lab 04: Pengujian Sifat Sistem Diskrit",
+    "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 04: Pengujian Sifat Sistem Diskrit. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 04. Judul: Uji Mandiri Sifat-Sifat Sistem Waktu Diskrit Menggunakan Python. Sistem 1: y[n] = x[n] - 2 x[n-1] + x[n-2] (Diferensiator Orde Dua). Sistem 2: y[n] = n * x[n] (Time-Varying Amplifier). Sistem 3: y[n] = np.log10(np.abs(x[n]) + 1e-4) (Kompresor Logaritmik). Sistem 4: y[n] = x[n + 1] - x[n] (Forward Difference Non-Kausal). Tugas: Tulis script otomatis untuk menguji Linearitas, Time-Invariance, dan Kausalitas dari ke-4 sistem di atas. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Rubrik Laporan & Analisis. Mengapa hal ini sangat fundamental? Tabel Evaluasi Wajib: Buat tabel matriks perbandingan sifat (Linear?, TI?, Kausal?, Stabil BIBO?, Memori?). Pembuktian Analitis: Sertakan penurunan rumus matematika manual untuk memvalidasi hasil eksekusi program Python. Interpretasi Kegagalan: Jelaskan secara konseptual mengapa Sistem 2 gagal dalam uji Time-Invariance saat diuji dengan fungsi np.roll(). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Lembar Instruksi Praktikum 04"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Rubrik Laporan & Analisis"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "12": {
+    "title": "Integrasi AI: Verifikasi Pembuktian Formal Matematika",
+    "script": "Pada slide ini, kita membahas Integrasi AI: Verifikasi Pembuktian Formal Matematika. Mari kita perhatikan kolom sebelah kiri mengenai Prompt AI untuk Proof Checking. Prompt Efektif: 'Periksa langkah pembuktian saya mengenai kestabilan BIBO sistem y[n] = e^(x[n]). Apakah asumsi bahwa |x[n]| <= M berhingga menjamin |y[n]| <= e^M selalu berhingga? Adakah celah logika?' SymPy Generation: Minta AI membuat kode berbasis pustaka Python SymPy untuk melakukan pengujian analitis diferensial persamaan beda. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Konfirmasi Mandiri. Mengapa hal ini sangat fundamental? Verifikasi Sifat Homogenitas vs Aditivitas: Waspadai kesalahan AI yang sering menyatakan sistem linear hanya karena memenuhi aditivitas, padahal gagal pada homogenitas bilangan kompleks. Pemeriksaan Kausalitas: Pastikan mahasiswa memahami secara mandiri alasan fisik mengapa sistem non-kausal tidak dapat dioperasikan pada siaran langsung (live streaming). ",
+    "laser_steps": [
+      {
+        "time": 2,
+        "target": ".grid-2 .card.accent-blue h3",
+        "text": "Prompt AI untuk Proof Checking"
+      },
+      {
+        "time": 12,
+        "target": ".grid-2 .card.accent-blue li:nth-child(1)",
+        "text": "Poin Konseptual"
+      },
+      {
+        "time": 22,
+        "target": ".grid-2 .card.accent-green h3",
+        "text": "Kewajiban Konfirmasi Mandiri"
+      },
+      {
+        "time": 32,
+        "target": ".grid-2 .card.accent-green li:nth-child(1)",
+        "text": "Aplikasi Industri"
+      }
+    ]
+  },
+  "13": {
+    "title": "Latihan Soal HOTS: Matriks Klasifikasi 5 Sistem",
+    "script": "Pada slide ini, kita membahas Latihan Soal HOTS: Matriks Klasifikasi 5 Sistem. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Sistem 1 & 2. Sistem A: y[n] = x[n] * u[n]. Uji linearitas, time-invariance, dan kausalitas! Sistem B: y[n] = cos(x[n]). Tentukan apakah sistem stabil BIBO dan memiliki memori! Pilar ke-2 adalah Sistem 3 & 4. Sistem C: y[n] = sum_{k=n-2}^{n+2} x[k]. Apakah sistem ini kausal? Mengapa? Sistem D: y[n] = x[-n]. Buktikan secara analitis bahwa sistem ini time-varying! Pilar ke-3 adalah Sistem 5 (Tantangan). Sistem E: y[n] = Re{ x[n] } di mana input x[n] adalah sekuens bilangan kompleks. Uji apakah sistem ini linear terhadap skalar kompleks a = j! ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Sistem 1 & 2"
+      },
+      {
+        "time": 14,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Sistem 3 & 4"
+      },
+      {
+        "time": 25,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Sistem 5 (Tantangan)"
+      }
+    ]
+  },
+  "14": {
+    "title": "Rangkuman Pertemuan 04 & Refleksi Pembelajaran",
+    "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 04 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa menguji sistem membutuhkan ketelitian matematis ganda: superposisi input vs superposisi output. Saya memahami bahwa asumsi kestabilan BIBO adalah batas keselamatan yang mencegah speaker terbakar atau sistem kendali meledak. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Klasifikasi sistem menjadi Linear Time-Invariant (LTI) adalah 'tiket emas' yang membuka gerbang teori konvolusi dan filter digital pada pertemuan selanjutnya. Industri teknologi bergantung pada kepastian bahwa sistem yang dipasang di lapangan bersifat time-invariant. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Membangun fungsi automated tester di Python yang mampu mengetes kebenaran matematika sistem memberikan rasa percaya diri komputasi yang tinggi. ",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-3 .card:nth-child(1)",
+        "text": "Berkesadaran (Mindful)"
+      },
+      {
+        "time": 15,
+        "target": ".grid-3 .card:nth-child(2)",
+        "text": "Bermakna (Meaningful)"
+      },
+      {
+        "time": 27,
+        "target": ".grid-3 .card:nth-child(3)",
+        "text": "Menggembirakan (Joyful)"
+      }
+    ]
+  },
+  "15": {
+    "title": "Tindak Lanjut & Referensi Perkuliahan",
+    "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-4: Linearitas diuji dengan prinsip superposisi T{a x1 + b x2} = a y1 + b y2. Time-invariance mensyaratkan keterlambatan input menghasilkan keterlambatan output identik. Kausalitas melarang ketergantungan pada input masa depan. Stabilitas BIBO menjamin output terbatas untuk setiap input terbatas. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Unggah Laporan Praktikum Lab 04 ke LMS sebelum pertemuan minggu depan. Baca Bab 2 Oppenheim bagian 'Linear Time-Invariant Systems and Convolution'. Persiapkan diri untuk memahami respons impuls h[n] pada Pertemuan 5. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!",
+    "laser_steps": [
+      {
+        "time": 3,
+        "target": ".grid-2 .card.accent-blue",
+        "text": "Rangkuman Inti Kuliah"
+      },
+      {
+        "time": 15,
+        "target": ".grid-2 .card.accent-green",
+        "text": "Tugas Mandiri OBE"
+      },
+      {
+        "time": 25,
+        "target": ".grid-2 .card.accent-green h4",
+        "text": "Referensi Akademik"
+      }
+    ]
+  }
+}

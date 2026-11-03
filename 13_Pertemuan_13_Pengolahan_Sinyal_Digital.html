@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perancangan Filter Digital IIR & Komparasi Komprehensif FIR vs IIR - Pengolahan Sinyal Digital UN Manado</title>
+  
+  <!-- Fonts: Inter, Fira Code & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for crisp mathematical formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <!-- Prism.js for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #050B14;
+      --bg-surface: #0A1322;
+      --bg-card: rgba(14, 26, 47, 0.78);
+      --border-card: #1E3252;
+      --primary: #00B4D8;
+      --primary-light: #90E0EF;
+      --accent-blue: #0077B6;
+      --accent-emerald: #10B981;
+      --accent-amber: #F59E0B;
+      --accent-red: #EF4444;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --code-bg: #050B14;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 180, 216, 0.35);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      user-select: none;
+    }
+
+    /* Presentation Viewport - 100% Fullscreen Canvas */
+    .presentation-viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 25%, #0E1A2E 0%, #050B14 100%);
+    }
+
+    /* Top Global Slim Progress Indicator */
+    .top-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 999;
+    }
+
+    .top-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent-emerald) 100%);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+
+    /* Base Slide Definition (Strict Display Control) */
+    .slide {
+      display: none !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      padding: 2.2rem 4rem 4.8rem 4rem;
+      box-sizing: border-box;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .slide.active {
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    /* Title Slide Specific Full Screen Centering */
+    .slide-title-view {
+      display: none !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      padding: 3rem 6rem 5.5rem 6rem;
+      box-sizing: border-box;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .slide-title-view.active {
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    .title-badge-univ {
+      color: var(--primary);
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+      background: rgba(0, 180, 216, 0.12);
+      border: 1px solid rgba(0, 180, 216, 0.35);
+      padding: 6px 18px;
+      border-radius: 30px;
+      display: inline-block;
+    }
+
+    .title-meeting-badge {
+      color: var(--accent-amber);
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .title-main {
+      font-size: clamp(2.4rem, 4.2vw, 4.2rem);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.18;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF 30%, #90E0EF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      max-width: 1200px;
+    }
+
+    .title-sub {
+      font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+      color: #94A3B8;
+      max-width: 1100px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .title-meta-box {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.2rem 2.2rem;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 2.2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: left;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .meta-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .lecturer-signature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #F1F5F9;
+      font-size: 1.12rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .title-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-cta-start {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%);
+      color: #050B14;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 12px 28px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0, 180, 216, 0.35);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-cta-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(0, 180, 216, 0.5);
+    }
+
+    .btn-cta-fullscreen {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 1.02rem;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Slide Header on Content Slides */
+    .slide-header {
+      margin-bottom: 1.3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .slide-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.35rem;
+    }
+
+    .badge-univ-sm {
+      background: rgba(0, 180, 216, 0.12);
+      border: 1px solid rgba(0, 180, 216, 0.35);
+      color: var(--primary);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .slide-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+    }
+
+    .badge-cpmk-sm {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--accent-emerald);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .slide-title {
+      font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .slide-header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .slide-counter-badge {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .slide-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Full-Screen Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 14px;
+      padding: 1.6rem 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      overflow-y: auto;
+      backdrop-filter: blur(12px);
+    }
+
+    .card.accent-blue { border-top: 4px solid var(--primary); }
+    .card.accent-green { border-top: 4px solid var(--accent-emerald); }
+    .card.accent-amber { border-top: 4px solid var(--accent-amber); }
+
+    .card-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .card-title.blue { color: var(--primary); }
+    .card-title.green { color: var(--accent-emerald); }
+    .card-title.amber { color: var(--accent-amber); }
+
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .card-list li {
+      font-size: clamp(0.95rem, 1.1vw, 1.08rem);
+      line-height: 1.55;
+      color: #E2E8F0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .card-list li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.3rem;
+      line-height: 1.2;
+    }
+
+    /* Formula Banner */
+    .formula-banner {
+      background: linear-gradient(135deg, rgba(0, 180, 216, 0.14) 0%, rgba(14, 26, 47, 0.95) 100%);
+      border: 1px solid rgba(0, 180, 216, 0.45);
+      border-radius: 14px;
+      padding: 1.1rem 2.2rem;
+      margin-bottom: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-shrink: 0;
+      box-shadow: 0 8px 24px rgba(0, 180, 216, 0.12);
+    }
+
+    .formula-banner h4 {
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .formula-banner .katex-display {
+      margin: 0.45rem 0;
+      color: #FFFFFF;
+      font-size: clamp(1.4rem, 2.2vw, 2.0rem);
+    }
+
+    /* Code Container Full Height */
+    .code-container {
+      background: var(--code-bg);
+      border: 1px solid #1E3252;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .code-header {
+      background: #0E1A2D;
+      padding: 9px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1E3252;
+      flex-shrink: 0;
+    }
+
+    .code-title {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      color: var(--primary-light);
+      font-weight: 600;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #E2E8F0;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    pre[class*="language-"] {
+      margin: 0;
+      padding: 1.2rem 1.5rem;
+      background: transparent !important;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      overflow-x: auto;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    /* Floating Presenter Control HUD */
+    .presenter-bar {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 19, 34, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 40px;
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .presenter-bar.autohide {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(20px);
+    }
+
+    .presenter-bar:hover {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: translateX(-50%) translateY(0) !important;
+    }
+
+    .bar-btn {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #CBD5E1;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .bar-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #050B14;
+    }
+
+    .bar-btn-record {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #EF4444;
+      color: #FCA5A5;
+      font-weight: 700;
+    }
+    .bar-btn-record:hover {
+      background: #EF4444;
+      color: #FFF;
+    }
+    .bar-btn-record.recording {
+      background: #EF4444;
+      color: #FFF;
+      animation: recordBlink 1s infinite alternate;
+    }
+    @keyframes recordBlink {
+      0% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+
+    .bar-btn-primary {
+      background: var(--primary);
+      border: 1px solid var(--primary);
+      color: #050B14;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .bar-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      margin: 0 4px;
+    }
+
+    .bar-indicator {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      padding: 4px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* Edge Click Zones */
+    .edge-nav-zone {
+      position: fixed;
+      top: 0;
+      bottom: 70px;
+      width: 5vw;
+      z-index: 50;
+      cursor: pointer;
+      opacity: 0;
+    }
+    .edge-nav-left { left: 0; }
+    .edge-nav-right { right: 0; }
+
+    /* Virtual Laser Pointer */
+    .virtual-laser {
+      position: fixed;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #FF0055;
+      box-shadow: 0 0 12px #FF0055, 0 0 24px #FF0055, 0 0 38px #FF5588;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: top 0.75s cubic-bezier(0.22, 1, 0.36, 1), left 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+      opacity: 0;
+    }
+    .virtual-laser.active {
+      opacity: 1;
+      animation: laserPulse 1.2s infinite alternate;
+    }
+    @keyframes laserPulse {
+      0% { transform: translate(-50%, -50%) scale(0.85); box-shadow: 0 0 8px #FF0055; }
+      100% { transform: translate(-50%, -50%) scale(1.35); box-shadow: 0 0 24px #FF0055, 0 0 40px #FF0055; }
+    }
+
+    .laser-label {
+      position: fixed;
+      background: rgba(10, 19, 34, 0.95);
+      border: 1px solid #FF0055;
+      color: #FFF;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(18px, -18px);
+      transition: top 0.75s cubic-bezier(0.22, 1, 0.36, 1), left 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+      opacity: 0;
+      white-space: nowrap;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    }
+    .laser-label.active {
+      opacity: 1;
+    }
+
+    .lecture-focus-target {
+      outline: 2px solid var(--primary) !important;
+      box-shadow: 0 0 35px rgba(0, 180, 216, 0.55) !important;
+      transition: all 0.35s ease;
+    }
+
+    /* Floating Lecture Teleprompter / Subtitles Panel - HIDDEN BY DEFAULT! */
+    .lecture-panel {
+      position: fixed;
+      bottom: 74px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1040px, 94vw);
+      background: rgba(8, 16, 29, 0.96);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 180, 216, 0.45);
+      border-radius: 18px;
+      padding: 12px 22px;
+      z-index: 950;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .lecture-panel.collapsed {
+      transform: translateX(-50%) translateY(calc(100% + 35px));
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .lecture-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 6px;
+    }
+
+    .lecturer-info-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lecturer-avatar {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent-emerald) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+    .lecturer-name-badge {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #F8FAFC;
+    }
+    .lecturer-voice-badge {
+      background: rgba(0, 180, 216, 0.15);
+      color: var(--primary-light);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 180, 216, 0.3);
+    }
+
+    .lecture-panel-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .audio-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #E2E8F0;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .audio-btn:hover {
+      background: var(--primary);
+      color: #050B14;
+    }
+    .audio-btn.active {
+      background: #10B981;
+      border-color: #10B981;
+      color: #050B14;
+    }
+
+    .auto-advance-label {
+      font-size: 0.78rem;
+      color: #94A3B8;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .lecture-transcript-text {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #E2E8F0;
+      max-height: 75px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    /* Slide Jump Menu / Drawer */
+    .drawer-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+    }
+
+    .drawer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 440px;
+      height: 100%;
+      background: #0B1526;
+      border-right: 1px solid var(--border-card);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      box-shadow: 10px 0 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-card);
+      padding-bottom: 1rem;
+    }
+
+    .drawer-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .drawer-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .drawer-list {
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer-item {
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #CBD5E1;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .drawer-item:hover, .drawer-item.active {
+      background: rgba(0, 180, 216, 0.15);
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(16, 185, 129, 0.95);
+      color: #050B14;
+      padding: 8px 22px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      z-index: 3000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+<!-- Gate Keamanan Akses Mahasiswa (PIN: UN2026) -->
+<style id="authGateStyle">
+  body > *:not(#authGateModal) { filter: blur(14px); pointer-events: none !important; user-select: none !important; }
+</style>
+<div id="authGateModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(5,11,20,0.96);backdrop-filter:blur(16px);z-index:9999999;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans','Inter',sans-serif;color:#F8FAFC;">
+  <div style="background:#0E1A2D;border:1px solid #1E3252;box-shadow:0 25px 50px -12px rgba(0,0,0,0.7),0 0 40px rgba(0,180,216,0.15);padding:2.5rem 2rem;border-radius:20px;max-width:440px;width:90%;text-align:center;">
+    <div style="width:64px;height:64px;background:rgba(0,180,216,0.12);border:1px solid rgba(0,180,216,0.3);border-radius:18px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </div>
+    <div style="display:inline-block;background:rgba(0,180,216,0.15);border:1px solid rgba(0,180,216,0.3);color:#00B4D8;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.75rem;">Universitas Nusantara Manado</div>
+    <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:0.5rem;color:#FFF;">Portal Perkuliahan Terkunci</h2>
+    <p style="font-size:0.88rem;color:#94A3B8;line-height:1.5;margin-bottom:1.5rem;">Materi perkuliahan ini dilindungi hak cipta khusus untuk mahasiswa kelas Pengolahan Sinyal Digital. Silakan masukkan PIN kelas.</p>
+    <form id="authGateForm" onsubmit="handleAuthSubmit(event)" style="display:flex;flex-direction:column;gap:12px;">
+      <input type="password" id="authGateInput" placeholder="Masukkan PIN Akses Kelas..." autofocus style="padding:12px 16px;border-radius:10px;background:#050B14;border:1px solid #2A4365;color:#FFF;font-size:1rem;text-align:center;letter-spacing:0.1em;outline:none;transition:border-color 0.2s;" />
+      <div id="authGateError" style="color:#EF4444;font-size:0.8rem;display:none;font-weight:500;">PIN salah! Silakan tanyakan PIN ke Dosen Pengampu (Pak Erik).</div>
+      <button type="submit" style="padding:12px;border-radius:10px;background:linear-gradient(135deg, #00B4D8 0%, #0077B6 100%);color:#FFF;border:none;font-weight:700;font-size:0.95rem;cursor:pointer;box-shadow:0 8px 20px rgba(0,180,216,0.3);">Buka Materi Kuliah 🔓</button>
+    </form>
+    <div style="margin-top:1.25rem;font-size:0.78rem;color:#64748B;">Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const TARGET_HASH = "c9c2169ba17de848a2d68b050b46f77f1c7e05256a6361ee338f4b9507b239be";
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+  function unlock() {
+    const style = document.getElementById("authGateStyle");
+    const modal = document.getElementById("authGateModal");
+    if (style) style.remove();
+    if (modal) modal.remove();
+  }
+  function checkAuth() {
+    const saved = localStorage.getItem("DSP_AUTH_TOKEN_UN");
+    if (saved === TARGET_HASH) {
+      unlock();
+      return true;
+    }
+    return false;
+  }
+  window.handleAuthSubmit = async function(e) {
+    e.preventDefault();
+    const input = document.getElementById("authGateInput");
+    const err = document.getElementById("authGateError");
+    if (!input) return;
+    const val = input.value.trim().toUpperCase();
+    const hash = await sha256(val);
+    if (hash === TARGET_HASH) {
+      localStorage.setItem("DSP_AUTH_TOKEN_UN", TARGET_HASH);
+      const modal = document.getElementById("authGateModal");
+      if (modal) {
+        modal.style.transition = "opacity 0.25s ease";
+        modal.style.opacity = "0";
+        setTimeout(() => {
+          unlock();
+        }, 250);
+      }
+    } else {
+      err.style.display = "block";
+      input.value = "";
+      input.focus();
+    }
+  };
+  checkAuth();
+})();
+</script>
+
+
+  <!-- Top Progress Bar -->
+  <div class="top-progress-bar">
+    <div class="top-progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Edge Navigation Zones -->
+  <div class="edge-nav-zone edge-nav-left" onclick="prevSlide()" title="Slide Sebelumnya (⬅ / PageUp)"></div>
+  <div class="edge-nav-zone edge-nav-right" onclick="nextSlide()" title="Slide Berikutnya (➔ / Space / PageDown)"></div>
+
+  <!-- Virtual Laser Pointer & Floating Label -->
+  <div class="virtual-laser" id="virtualLaser"></div>
+  <div class="laser-label" id="laserLabel">Penjelasan Dosen</div>
+
+  <!-- Audio Player for Lectures -->
+  <audio id="lectureAudio" preload="auto"></audio>
+
+  <!-- Presentation Viewport (Full Bleed Edge-to-Edge) -->
+  <main class="presentation-viewport" id="viewport">
+    
+    <div class="slide-title-view active">
+      <div class="title-badge-univ">Universitas Nusantara Manado • Fakultas Ilmu Komputer</div>
+      <div class="title-meeting-badge">PENGOLAHAN SINYAL DIGITAL — PERTEMUAN 13</div>
+      <h1 class="title-main">Perancangan Filter Digital IIR & Komparasi Komprehensif FIR vs IIR</h1>
+      <p class="title-sub">Metode Transformasi Bilinear (BLT), Prototipe Filter Analog (Butterworth, Chebyshev, Elliptic), Frequency Pre-Warping, Struktur Biquad SOS, dan Matriks Komparasi Industri FIR vs IIR</p>
+      
+      <div class="title-meta-box">
+        <div class="meta-item">
+          <span class="meta-label">Capaian Pembelajaran</span>
+          <span class="meta-value">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Bobot Asesmen RPS</span>
+          <span class="meta-value">7%</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Pendekatan Pedagogis</span>
+          <span class="meta-value">Outcome-Based Education (OBE) & Deep Learning</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Integrasi AI</span>
+          <span class="meta-value">Prompting, Debugging & Verifikasi Matematis</span>
+        </div>
+      </div>
+
+      <div class="lecturer-signature">
+        <span>👨‍🏫 Dosen Pengampu: <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong> (NIDN: 0902109201)</span>
+      </div>
+
+      <div class="title-cta-group">
+        <button class="btn-cta-start" onclick="nextSlide()">▶ Mulai Perkuliahan (Spasi / ➔)</button>
+        <button class="btn-cta-fullscreen" onclick="toggleFullScreen()">⛶ Layar Penuh (F5 / F)</button>
+      </div>
+    </div>
+    
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">KONSEP & FILOSOFI</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Filosofi Desain Filter IIR: Mengadopsi Warisan Filter Analog</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 2 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Mengapa Tidak Merancang IIR Langsung dari Nol?</h3>
+                <ul class="card-list"><li>Dunia teknik elektro analog telah mengembangkan teori perancangan filter kontinu selama lebih dari satu abad (Butterworth, Chebyshev, Cauer/Elliptic).</li><li>Fungsi transfer analog Ha(s) dalam domain Laplace s memiliki rumus analitis bentuk tertutup yang sangat matang, optimal, dan teruji.</li><li>Strategi Cerdas IIR: Alih-alih merancang dari nol di bidang-Z, kita merancang filter prototipe analog Ha(s) terlebih dahulu, lalu MEMETAKANNYA secara matematis ke bidang-Z menggunakan Transformasi Bilinear!</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Daya Tarik Utama Filter IIR</h3>
+                <ul class="card-list"><li>Efisiensi Komputasi Ekstrem: Untuk memenuhi spesifikasi ketajaman cutoff yang sama, filter IIR hanya membutuhkan orde 4 hingga 8, sedangkan filter FIR membutuhkan orde 100 hingga 300!</li><li>Kebutuhan Memori Sangat Kecil: Hanya menyimpan sedikit koefisien dan register delay.</li><li>Sangat ideal untuk sistem mikrokontroler berdaya rendah, alat bantu dengar (hearing aids), dan pemrosesan audio streaming real-time pada perangkat IoT.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">PROTOTIPE ANALOG</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Empat Prototipe Filter Analog Standar</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 3 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+                <div class="card accent-blue">
+                  <h3 class="card-title blue">📌 1. Filter Butterworth (Maximally Flat)</h3>
+                  <ul class="card-list"><li>Respons magnitudo paling rata mulus tanpa riak sama sekali di passband dan stopband.</li><li>Meluruh secara monoton seiring naiknya frekuensi.</li><li>Kelemahan: Pita transisi paling lebar dibanding prototipe lain pada orde yang sama.</li></ul>
+                </div>
+                
+                <div class="card accent-green">
+                  <h3 class="card-title green">📌 2. Filter Chebyshev (Tipe I & Tipe II)</h3>
+                  <ul class="card-list"><li>Chebyshev I: Memiliki riak equiripple seragam pada passband, namun monoton mulus pada stopband. Transisi jauh lebih tajam dibanding Butterworth.</li><li>Chebyshev II (Inverse Chebyshev): Monoton pada passband, equiripple pada stopband. Sangat populer karena passband bebas riak.</li></ul>
+                </div>
+                
+                <div class="card accent-amber">
+                  <h3 class="card-title amber">📌 3. Filter Elliptic (Cauer)</h3>
+                  <ul class="card-list"><li>Memiliki riak equiripple pada passband DAN stopband.</li><li>Memberikan pita transisi PALING TAJAM di antara seluruh kelas filter di dunia pada orde yang sama!</li><li>Kelemahan: Karakteristik fase paling non-linier dan distorsi delay tertinggi.</li></ul>
+                </div>
+                </div>
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">LANDASAN MATEMATIS</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Metode Transformasi Bilinear (Bilinear Transformation / BLT)</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 4 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="formula-banner">
+              <h4>Pemetaan Konformal Bidang-s Analog Menuju Bidang-Z Diskrit</h4>
+              <div class="katex-eq">$$s = \frac{2}{T_s} \left( \frac{1 - z^{-1}}{1 + z^{-1}} \right) = \frac{2}{T_s} \left( \frac{z - 1}{z + 1} \right) \qquad H(z) = H_a(s)\Big|_{s = \frac{2}{T_s} \frac{1 - z^{-1}}{1 + z^{-1}}}$$</div>
+            </div>
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📐 Keterangan Variabel & Makna Fisik</h3>
+                <ul class="card-list"><li>s = sigma + j Omega: Variabel bidang Laplace kontinu analog.</li><li>z = r e^(jw): Variabel bidang-Z diskrit.</li><li>Ts: Periode sampling nominal (sering dinormalisasi menjadi Ts = 2 sehingga faktor pengali = 1).</li><li>Kaidah Pemetaan Sumbu: Sumbu imajiner analog j Omega dipetakan tepat ke keliling lingkaran satuan |z| = 1 pada bidang-Z.</li><li>Jaminan Kestabilan: Setengah bidang kiri s (LHP di mana sigma < 0) dipetakan tepat ke DALAM lingkaran satuan (|z| < 1). Filter analog yang stabil dijamin 100% menghasilkan filter digital IIR yang juga stabil!</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🔢 Contoh Perhitungan Bertahap</h3>
+                <ul class="card-list"><li>Keunggulan Mutlak BLT Dibanding Impulse Invariance:</li><li>Metode Impulse Invariance klasik mengalami aliasing spektral yang parah jika sampling rate tidak cukup tinggi.</li><li>Metode Transformasi Bilinear TIDAK PERNAH MENGALAMI ALIASING! Karena rentang frekuensi analog tak hingga Omega in (-inf, +inf) dipadatkan secara non-linier ke dalam rentang satu putaran lingkaran satuan omega in (-pi, +pi)!</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">KOREKSI DISTORSI</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Efek Frequency Warping & Formula Pre-Warping Wajib</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 5 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="formula-banner">
+              <h4>Relasi Pemadatan Frekuensi Non-Linier</h4>
+              <div class="katex-eq">$$\omega = 2 \arctan\left( \frac{\Omega T_s}{2} \right) \quad \iff \quad \Omega_{\text{prewarp}} = \frac{2}{T_s} \tan\left( \frac{\omega_d}{2} \right)$$</div>
+            </div>
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📐 Keterangan Variabel & Makna Fisik</h3>
+                <ul class="card-list"><li>omega: Frekuensi sudut digital diskrit dalam radian per sampel (skala 0 sampai pi).</li><li>Omega: Frekuensi sudut analog dalam radian per detik.</li><li>Omega_prewarp: Frekuensi target analog hasil koreksi pre-warping.</li><li>omega_d = 2 pi F_cutoff / Fs: Frekuensi digital spesifikasi yang dituju.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🔢 Contoh Perhitungan Bertahap</h3>
+                <ul class="card-list"><li>Mekanisme Distorsi Warping:</li><li>Pada frekuensi rendah (w mendekati 0), relasi hampir linier (tan(w/2) approx w/2).</li><li>Namun semakin mendekati frekuensi Nyquist (w -> pi), sumbu frekuensi analog tertekan (terkompresi secara ekstrem) menuju tak terhingga!</li><li>Prosedur Wajib Pre-Warping:</li><li>Sebelum mendesain filter analog, hitung frekuensi cutoff analog ekuivalen Omega_prewarp menggunakan rumus tangen di atas.</li><li>Rancang filter Ha(s) pada frekuensi Omega_prewarp tersebut.</li><li>Ketika disubstitusikan dengan BLT, frekuensi cutoff digital akan bergeser kembali tepat ke titik spesifikasi wd yang diinginkan!</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">IMPLEMENTASI HARDWARE</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Masalah Finite Word-Length & Solusi Struktur Biquad (SOS)</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 6 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            <div class="grid-3">
+                <div class="card accent-blue">
+                  <h3 class="card-title blue">📌 Bahaya Orde Tinggi Direct Form</h3>
+                  <ul class="card-list"><li>Jika filter IIR orde tinggi (misal orde 8 atau 12) diimplementasikan dalam struktur Direct Form polinomial tunggal, koefisien polinomial menjadi sangat sensitif terhadap pembulatan floating point / fixed point.</li><li>Kuantisasi register memori mikroprosesor dapat menggeser posisi pole mendekati atau menembus lingkaran satuan.</li><li>Dampaknya: Filter yang di atas kertas stabil dapat menjadi tidak stabil dan meledak berosilasi saat dijalankan di chip hardware!</li></ul>
+                </div>
+                
+                <div class="card accent-green">
+                  <h3 class="card-title green">📌 Solusi Emas: Second-Order Sections (SOS)</h3>
+                  <ul class="card-list"><li>Faktorkan fungsi transfer H(z) menjadi kaskade blok-blok biquad orde dua:</li><li>H(z) = G * product_{k=1}^K [ (b0_k + b1_k z^-1 + b2_k z^-2) / (1 + a1_k z^-1 + a2_k z^-2) ].</li><li>Setiap blok hanya mengelola sepasang pole dan zero konjugat terdekat.</li><li>Sangat stabil dan tahan terhadap noise kuantisasi representasi bit.</li></ul>
+                </div>
+                
+                <div class="card accent-amber">
+                  <h3 class="card-title amber">📌 Standar Pemrograman SciPy</h3>
+                  <ul class="card-list"><li>Jangan gunakan format (b, a) untuk filter IIR di Python!</li><li>Selalu gunakan parameter output='sos' pada fungsi desain (scipy.signal.butter, cheby1, ellip) dan jalankan pemfilteran dengan scipy.signal.sosfilt().</li></ul>
+                </div>
+                </div>
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">KOMPARASI INDUSTRI</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Matriks Komparasi Komprehensif: FIR vs IIR</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 7 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Karakteristik Filter FIR</h3>
+                <ul class="card-list"><li>Stabilitas: Selalu stabil 100% secara alami (semua pole di origin z=0).</li><li>Respons Fase: Mampu mencapai Fase Linier Murni (Group Delay konstan sempurna, tanpa distorsi bentuk gelombang).</li><li>Kebutuhan Orde: Tinggi (Orde 50 s.d. 500 tap untuk transisi tajam).</li><li>Beban Komputasi: Relatif besar (membutuhkan banyak operasi MAC).</li><li>Sensitivitas Kuantisasi: Sangat rendah (tahan terhadap pembulatan bit).</li><li>Implementasi: Ideal untuk FFT Convolution, Audio Studio, Biomedis EKG.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Karakteristik Filter IIR</h3>
+                <ul class="card-list"><li>Stabilitas: Bersyarat (membutuhkan verifikasi ketat |p| < 1).</li><li>Respons Fase: Non-linier (terjadi distorsi keterlambatan fase, terutama di dekat pita cutoff).</li><li>Kebutuhan Orde: Sangat Rendah (Cukup orde 4 s.d. 8).</li><li>Beban Komputasi: Sangat Ringan dan Cepat (hemat memori dan baterai).</li><li>Sensitivitas Kuantisasi: Tinggi (wajib menggunakan struktur Biquad SOS).</li><li>Implementasi: Ideal untuk Telekomunikasi RF, Hearing Aids, Sensor IoT Edge.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">KOMPUTASI & KODE</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Implementasi Python: Desain Filter IIR dengan SciPy SOS</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 8 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📖 Perancangan Filter IIR Berbasis SOS</h3>
+                <ul class="card-list"><li>scipy.signal.butter(N, Wn, btype='low', fs=Fs, output='sos') merancang filter Butterworth dalam format Second-Order Sections.</li><li>scipy.signal.sosfreqz(sos, worN=1024, fs=Fs) menghitung respons frekuensi yang stabil secara numerik.</li><li>Fungsi sosfilt(sos, x) mengeksekusi pemfilteran tanpa risiko instabilitas akumulasi floating point.</li></ul>
+              </div>
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="code-title">Python Implementation (NumPy / SciPy)</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Salin Kode</button>
+                </div>
+                <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import butter, cheby1, sosfreqz
+
+Fs = 4000.0        # Frekuensi sampling = 4000 Hz
+Fc = 500.0         # Cutoff = 500 Hz
+order = 6          # Orde filter = 6 (IIR hemat koefisien)
+
+# 1. Rancang Butterworth dan Chebyshev I (format SOS)
+sos_butter = butter(order, Fc, btype='low', fs=Fs, output='sos')
+sos_cheby  = cheby1(order, rp=1.0, Wn=Fc, btype='low', fs=Fs, output='sos')
+
+# 2. Hitung Respons Frekuensi
+w, h_b = sosfreqz(sos_butter, worN=1024, fs=Fs)
+_, h_c = sosfreqz(sos_cheby, worN=1024, fs=Fs)
+
+plt.figure(figsize=(9, 4))
+plt.plot(w, 20*np.log10(np.abs(h_b) + 1e-6), 'b-', label='Butterworth (Maximally Flat)')
+plt.plot(w, 20*np.log10(np.abs(h_c) + 1e-6), 'r--', label='Chebyshev I (Riak 1 dB, Transisi Lebih Tajam)')
+plt.title('Komparasi Respons Frekuensi IIR Orde 6 (Butterworth vs Chebyshev I)')
+plt.xlabel('Frekuensi (Hz)'); plt.ylabel('Magnitude (dB)'); plt.ylim([-80, 5])
+plt.grid(True, alpha=0.5); plt.legend()
+plt.show()</code></pre>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">PRAKTIKUM & HANDS-ON</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Praktikum Mandiri Lab 13: Komparasi FIR vs IIR pada Sinyal EKG</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 9 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Lembar Instruksi Praktikum 13</h3>
+                <ul class="card-list"><li>Judul: Analisis Perbandingan Filter FIR vs IIR pada Pembersihan Sinyal Biomedis EKG.</li><li>Dataset: Sinyal EKG publik terkontaminasi dengung listrik 50 Hz dan fluktuasi baseline (baseline wander 0.5 Hz).</li><li>Langkah 1: Rancang filter Band-Pass IIR Butterworth (0.8 - 45 Hz) orde 4 dalam format SOS.</li><li>Langkah 2: Rancang filter Band-Pass FIR dengan window Hamming yang memenuhi spesifikasi atenuasi setara (didapatkan jumlah tap ~121).</li><li>Langkah 3: Filter sinyal EKG dengan kedua filter tersebut.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Tantangan Analisis & Evaluasi</h3>
+                <ul class="card-list"><li>Tantangan Analisis: Amati morfologi puncak gelombang QRS dan segmen ST pada sinyal EKG keluaran filter IIR vs FIR. Apakah filter IIR menyebabkan pergeseran bentuk gelombang akibat fase non-linier?</li><li>Komparasi Waktu Eksekusi: Ukur waktu komputasi pemfilteran menggunakan modul %timeit di Jupyter Notebook. Berapa kali lipat filter IIR lebih cepat dibanding FIR?</li><li>Output: Unggah notebook laporan mandiri dengan visualisasi sinyal EKG sebelum-sesudah.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">INTEGRASI AI</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Integrasi AI: Analisis Kestabilan & Distorsi Fase</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 10 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Pemanfaatan AI untuk Analisis Kritis</h3>
+                <ul class="card-list"><li>Prompt AI: 'Diberikan matriks koefisien SOS filter IIR orde 8, buatkan script Python untuk memplot diagram pole-zero setiap biquad section dan periksa apakah ada pole yang berjarak kurang dari 0.01 ke lingkaran satuan.'</li><li>AI Zero-Phase Filtering: 'Jelaskan cara kerja fungsi scipy.signal.filtfilt (forward-backward filtering) untuk menghilangkan distorsi fase IIR pada pemrosesan offline.'</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Kewajiban Validasi Mahasiswa</h3>
+                <ul class="card-list"><li>Batasan filtfilt(): Mahasiswa wajib memahami bahwa filtfilt() bersifat NON-KAUSAL dan TIDAK DAPAT digunakan pada sistem siaran langsung atau real-time audio.</li><li>Verifikasi Pre-Warping: Pastikan bahwa frekuensi cutoff yang dimasukkan ke fungsi desain analog telah memperhitungkan koreksi tangen pre-warping secara tepat.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">EVALUASI PEMBELAJARAN</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Latihan Soal HOTS Pertemuan 13</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 11 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📘 Soal 1: Transformasi Bilinear Manual</h3>
+                <ul class="card-list"><li>Sebuah filter analog low-pass orde-1 memiliki fungsi transfer:</li><li>Ha(s) = 1 / (s + 2).</li><li>Terapkan Transformasi Bilinear dengan periode sampling Ts = 1 detik (substitusi s = 2 (1 - z^-1) / (1 + z^-1)):</li><li>a) Turunkan ekspresi fungsi transfer digital H(z)!</li><li>b) Tentukan lokasi pole dan zero dari H(z) pada bidang-Z!</li><li>c) Tuliskan persamaan beda LCCDE yang mengimplementasikan filter tersebut!</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🚀 Soal 2: Perhitungan Pre-Warping</h3>
+                <ul class="card-list"><li>Kita ingin merancang filter digital IIR low-pass dengan frekuensi cutoff Fc = 1 kHz pada frekuensi sampling Fs = 10 kHz menggunakan Transformasi Bilinear.</li><li>a) Hitung frekuensi sudut digital cutoff wd dalam radian per sampel!</li><li>b) Hitung nilai frekuensi analog pre-warped Omega_prewarp dalam radian per detik!</li><li>c) Apa yang akan terjadi jika kita mendesain filter analog langsung pada Omega = 2 pi Fc tanpa pre-warping?</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">REFLEKSI & RANGKUMAN</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Rangkuman Pertemuan 13 & Refleksi Pembelajaran</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 12 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-3">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">💡 Berkesadaran (Mindful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Memahami tujuan belajar, proses berpikir, dan evaluasi pemahaman.</p>
+                <ul class="card-list"><li>Saya menyadari bahwa filter IIR dan FIR bukan rival yang saling meniadakan, melainkan dua instrumen rekayasa dengan kekuatan dan kompromi yang saling melengkapi.</li><li>Saya memahami bahwa Transformasi Bilinear adalah jembatan matematis tanpa-aliasing dari domain kontinu Laplace menuju domain diskrit Z.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🌍 Bermakna (Meaningful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Kaitan konkret dengan industri teknologi, telekomunikasi & AI.</p>
+                <ul class="card-list"><li>Keputusan memilih FIR atau IIR di industri menentukan konsumsi baterai perangkat pintar dan integritas bentuk data.</li><li>Penerapan struktur Biquad SOS adalah standar industri yang wajib dikuasai insinyur komputasi modern.</li></ul>
+              </div>
+              <div class="card accent-amber">
+                <h3 class="card-title amber">✨ Menggembirakan (Joyful)</h3>
+                <p style="font-size:0.88rem; color:#94A3B8; margin-bottom:0.8rem; font-style:italic;">Eksplorasi interaktif, visualisasi sinyal, dan tantangan kode.</p>
+                <ul class="card-list"><li>Melihat bagaimana filter IIR orde 6 yang sangat ringan mampu menyamai ketajaman filter FIR orde 100 membuat kita mengagumi keanggunan efisiensi matematika rekursif.</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <div class="slide-header-meta">
+                <span class="badge-univ-sm">UN Manado</span>
+                <span class="slide-tag">REFERENSI & TUGAS</span>
+                <span class="badge-cpmk-sm">CPMK4, CPMK5 (CPL-B, CPL-C)</span>
+              </div>
+              <h2 class="slide-title">Tindak Lanjut & Referensi Perkuliahan</h2>
+            </div>
+            <div class="slide-header-right">
+              <span class="slide-counter-badge">Slide 13 / 13</span>
+            </div>
+          </div>
+          <div class="slide-body">
+            
+            <div class="grid-2">
+              <div class="card accent-blue">
+                <h3 class="card-title blue">📋 Rangkuman Inti Pertemuan 13</h3>
+                <ul class="card-list"><li>Filter IIR dirancang dengan memetakan prototipe analog (Butterworth, Chebyshev) via BLT.</li><li>Formula pre-warping mengoreksi kompresi frekuensi non-linier.</li><li>Format Biquad Second-Order Sections (SOS) mencegah instabilitas numerik kuantisasi bit.</li><li>FIR unggul dalam linear phase; IIR unggul dalam efisiensi komputasi.</li></ul>
+              </div>
+              <div class="card accent-green">
+                <h3 class="card-title green">🎯 Tugas Mandiri & Ketercapaian OBE</h3>
+                <ul class="card-list"><li>Kumpulkan Laporan Praktikum Lab 13 ke LMS tepat waktu.</li><li>Persiapkan diri untuk Pertemuan 14: Membangun Arsitektur Pipeline Pengolahan Sinyal Digital End-to-End.</li><li>Mulai matangkan rancangan modul-modul program proyek akhir.</li></ul>
+                <h4 style="font-size:1.05rem; color:#F1F5F9; margin-top:1.2rem; margin-bottom:0.6rem;">Referensi Akademik Terverifikasi:</h4>
+                <ul class="card-list"><li style='font-size:0.92rem; color:#CBD5E1;'>📖 Oppenheim, A. V., & Schafer, R. W. (2010). Discrete-Time Signal Processing (3rd ed.). Pearson, Bab 7.2 s.d. 7.4 (IIR Filter Design).</li><li style='font-size:0.92rem; color:#CBD5E1;'>📖 McClellan, J. H., Schafer, R. W., & Yoder, M. A. (2016). DSP First (2nd ed.). Pearson, Bab 10.</li><li style='font-size:0.92rem; color:#CBD5E1;'>📖 SciPy Signal Processing Documentation: IIR Design and SOS Filtering. https://docs.scipy.org/doc/scipy/reference/signal.html</li></ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+  </main>
+
+  <!-- Floating Presenter HUD -->
+  <div class="presenter-bar" id="presenterBar">
+    <button class="bar-btn" onclick="prevSlide()" title="Slide Sebelumnya (⬅)">◀ Prev</button>
+    <span class="bar-indicator" id="slideIndicator" onclick="toggleDrawer()" title="Klik untuk daftar slide (M)">Slide 1 / 13</span>
+    <button class="bar-btn-primary" onclick="nextSlide()" title="Slide Berikutnya (➔ / Spasi)">Next ▶</button>
+    <div class="bar-divider"></div>
+    <button class="bar-btn" id="btnPresenterLecture" onclick="togglePlayLecture()" style="border-color:#10B981; color:#6EE7B7;" title="Putar Suara & Penjelasan Dosen (P)">🎙️ Dengar Penjelasan (P)</button>
+    <button class="bar-btn bar-btn-record" id="btnRecordVideo" onclick="toggleRecordLecture()" title="Rekam Layar + Suara Otomatis dari Menit 0 dan Auto-Download saat Selesai">🔴 Rekam Video (Auto)</button>
+    <button class="bar-btn" id="btnTogglePanel" onclick="toggleLecturePanel()" title="Tampilkan/Sembunyikan Naskah Dosen (T)">📜 Naskah</button>
+    <button class="bar-btn" onclick="toggleFullScreen()" title="Mode Layar Penuh (F5 / F)">⛶ Layar Penuh</button>
+    <button class="bar-btn" onclick="toggleDrawer()" title="Daftar Slide (M)">☰ Menu</button>
+    <a href="13_Pertemuan_13_Pengolahan_Sinyal_Digital.pptx" class="bar-btn" download title="Download file PowerPoint">📥 PPTX</a>
+    <a href="https://canva.link/0p27fg52m1k06l3" target="_blank" class="bar-btn" style="border-color:#7D2AE8; color:#D8B4FE;" title="Buka di Canva">🎨 Canva</a>
+    <a href="index.html" class="bar-btn" title="Kembali ke Hub Perkuliahan">🏠 Hub</a>
+  </div>
+
+  <!-- Floating Lecture Teleprompter Panel - COLLAPSED / HIDDEN BY DEFAULT! -->
+  <div class="lecture-panel collapsed" id="lecturePanel">
+    <div class="lecture-panel-header">
+      <div class="lecturer-info-bar">
+        <div class="lecturer-avatar">👨‍🏫</div>
+        <span class="lecturer-name-badge">Penjelasan Kuliah: <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong></span>
+        <span class="lecturer-voice-badge">Suara AI Ardi Neural</span>
+      </div>
+      <div class="lecture-panel-controls">
+        <button class="audio-btn active" id="btnPlayLecture" onclick="togglePlayLecture()">⏸ Jeda</button>
+        <button class="audio-btn" onclick="replaySlideLecture()">🔄 Ulangi</button>
+        <label class="auto-advance-label">
+          <input type="checkbox" id="autoAdvanceCheck" checked> Auto-Lanjut Slide
+        </label>
+        <button class="audio-btn" onclick="toggleLecturePanel()" title="Sembunyikan Panel (T)">✕ Tutup</button>
+      </div>
+    </div>
+    <div class="lecture-transcript-text" id="lectureTranscript">
+      Memuat naskah penjelasan dosen...
+    </div>
+  </div>
+
+  <!-- Slide Jump Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()">
+    <div class="drawer" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <h3 class="drawer-title">Daftar Slide Pertemuan 13</h3>
+        <button class="drawer-close" onclick="toggleDrawer()">✕</button>
+      </div>
+      <div class="drawer-list" id="drawerList">
+        <div class="drawer-item active" onclick="goToSlide(0)">1. Judul & Identitas Perkuliahan</div>
+<div class="drawer-item" onclick="goToSlide(1)">2. Filosofi Desain Filter IIR: Mengadopsi Warisan Filter Analog</div>
+<div class="drawer-item" onclick="goToSlide(2)">3. Empat Prototipe Filter Analog Standar</div>
+<div class="drawer-item" onclick="goToSlide(3)">4. Metode Transformasi Bilinear (Bilinear Transformation / BLT)</div>
+<div class="drawer-item" onclick="goToSlide(4)">5. Efek Frequency Warping & Formula Pre-Warping Wajib</div>
+<div class="drawer-item" onclick="goToSlide(5)">6. Masalah Finite Word-Length & Solusi Struktur Biquad (SOS)</div>
+<div class="drawer-item" onclick="goToSlide(6)">7. Matriks Komparasi Komprehensif: FIR vs IIR</div>
+<div class="drawer-item" onclick="goToSlide(7)">8. Implementasi Python: Desain Filter IIR dengan SciPy SOS</div>
+<div class="drawer-item" onclick="goToSlide(8)">9. Praktikum Mandiri Lab 13: Komparasi FIR vs IIR pada Sinyal EKG</div>
+<div class="drawer-item" onclick="goToSlide(9)">10. Integrasi AI: Analisis Kestabilan & Distorsi Fase</div>
+<div class="drawer-item" onclick="goToSlide(10)">11. Latihan Soal HOTS Pertemuan 13</div>
+<div class="drawer-item" onclick="goToSlide(11)">12. Rangkuman Pertemuan 13 & Refleksi Pembelajaran</div>
+<div class="drawer-item" onclick="goToSlide(12)">13. Tindak Lanjut & Referensi Perkuliahan</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide, .slide-title-view');
+    const totalSlides = slides.length;
+    const slideIndicator = document.getElementById('slideIndicator');
+    const progressFill = document.getElementById('progressFill');
+    const presenterBar = document.getElementById('presenterBar');
+    const toast = document.getElementById('toast');
+
+    // Lecture & Audio Elements
+    const LECTURE_DATA = {"1": {"title": "Judul & Identitas Perkuliahan", "script": "Selamat datang rekan-rekan mahasiswa pada perkuliahan Pengolahan Sinyal Digital Universitas Nusantara Manado, pertemuan ke-13. Hari ini kita akan mengkaji secara komprehensif topik utama: Perancangan Filter Digital IIR & Komparasi Komprehensif FIR vs IIR. Metode Transformasi Bilinear (BLT), Prototipe Filter Analog (Butterworth, Chebyshev, Elliptic), Frequency Pre-Warping, Struktur Biquad SOS, dan Matriks Komparasi Industri FIR vs IIR. Pertemuan ini dirancang untuk mencapai capaian pembelajaran CPMK4, CPMK5 (CPL-B, CPL-C) dengan bobot evaluasi sebesar 7 persen dalam RPS kita. Pendekatan pembelajaran kita berbasis Outcome-Based Education dan Deep Learning, di mana Anda akan diajak memahami konsep secara berkesadaran, bermakna bagi industri, dan menggembirakan melalui praktik komputasi. Mari kita mulai perkuliahan ini dengan konsentrasi penuh dan antusiasme tinggi.", "laser_steps": [{"time": 2, "target": ".title-badge-univ", "text": "Universitas Nusantara Manado"}, {"time": 7, "target": ".title-main", "text": "Topik: Perancangan Filter Digital IIR & Ko"}, {"time": 14, "target": ".title-meta-box", "text": "Capaian CPMK4, CPMK5 (CPL-B, CPL-C)"}, {"time": 22, "target": ".lecturer-signature", "text": "Dosen Pengampu: Gede Erik Aktama, M.Pd."}, {"time": 28, "target": ".title-cta-group", "text": "Mulai Perkuliahan"}]}, "2": {"title": "Filosofi Desain Filter IIR: Mengadopsi Warisan Filter Analog", "script": "Pada slide ini, kita membahas Filosofi Desain Filter IIR: Mengadopsi Warisan Filter Analog. Mari kita perhatikan kolom sebelah kiri mengenai Mengapa Tidak Merancang IIR Langsung dari Nol?. Dunia teknik elektro analog telah mengembangkan teori perancangan filter kontinu selama lebih dari satu abad (Butterworth, Chebyshev, Cauer/Elliptic). Fungsi transfer analog Ha(s) dalam domain Laplace s memiliki rumus analitis bentuk tertutup yang sangat matang, optimal, dan teruji. Strategi Cerdas IIR: Alih-alih merancang dari nol di bidang-Z, kita merancang filter prototipe analog Ha(s) terlebih dahulu, lalu MEMETAKANNYA secara matematis ke bidang-Z menggunakan Transformasi Bilinear! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Daya Tarik Utama Filter IIR. Mengapa hal ini sangat fundamental? Efisiensi Komputasi Ekstrem: Untuk memenuhi spesifikasi ketajaman cutoff yang sama, filter IIR hanya membutuhkan orde 4 hingga 8, sedangkan filter FIR membutuhkan orde 100 hingga 300! Kebutuhan Memori Sangat Kecil: Hanya menyimpan sedikit koefisien dan register delay. Sangat ideal untuk sistem mikrokontroler berdaya rendah, alat bantu dengar (hearing aids), dan pemrosesan audio streaming real-time pada perangkat IoT. ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Mengapa Tidak Merancang IIR La"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Daya Tarik Utama Filter IIR"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "3": {"title": "Empat Prototipe Filter Analog Standar", "script": "Pada slide ini, kita membahas Empat Prototipe Filter Analog Standar. Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah 1. Filter Butterworth (Maximally Flat). Respons magnitudo paling rata mulus tanpa riak sama sekali di passband dan stopband. Meluruh secara monoton seiring naiknya frekuensi. Kelemahan: Pita transisi paling lebar dibanding prototipe lain pada orde yang sama. Pilar ke-2 adalah 2. Filter Chebyshev (Tipe I & Tipe II). Chebyshev I: Memiliki riak equiripple seragam pada passband, namun monoton mulus pada stopband. Transisi jauh lebih tajam dibanding Butterworth. Chebyshev II (Inverse Chebyshev): Monoton pada passband, equiripple pada stopband. Sangat populer karena passband bebas riak. Pilar ke-3 adalah 3. Filter Elliptic (Cauer). Memiliki riak equiripple pada passband DAN stopband. Memberikan pita transisi PALING TAJAM di antara seluruh kelas filter di dunia pada orde yang sama! Kelemahan: Karakteristik fase paling non-linier dan distorsi delay tertinggi. ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "1. Filter Butterworth (Ma"}, {"time": 14, "target": ".grid-3 .card:nth-child(2)", "text": "2. Filter Chebyshev (Tipe"}, {"time": 25, "target": ".grid-3 .card:nth-child(3)", "text": "3. Filter Elliptic (Cauer"}]}, "4": {"title": "Metode Transformasi Bilinear (Bilinear Transformation / BLT)", "script": "Pada slide ini, kita membahas Metode Transformasi Bilinear (Bilinear Transformation / BLT). Perhatikan persamaan matematika inti untuk Pemetaan Konformal Bidang-s Analog Menuju Bidang-Z Diskrit di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. s = sigma + j Omega: Variabel bidang Laplace kontinu analog. z = r e^(jw): Variabel bidang-Z diskrit. Ts: Periode sampling nominal (sering dinormalisasi menjadi Ts = 2 sehingga faktor pengali = 1). Kaidah Pemetaan Sumbu: Sumbu imajiner analog j Omega dipetakan tepat ke keliling lingkaran satuan |z| = 1 pada bidang-Z. Jaminan Kestabilan: Setengah bidang kiri s (LHP di mana sigma < 0) dipetakan tepat ke DALAM lingkaran satuan (|z| < 1). Filter analog yang stabil dijamin 100% menghasilkan filter digital IIR yang juga stabil! Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Keunggulan Mutlak BLT Dibanding Impulse Invariance: Metode Impulse Invariance klasik mengalami aliasing spektral yang parah jika sampling rate tidak cukup tinggi. Metode Transformasi Bilinear TIDAK PERNAH MENGALAMI ALIASING! Karena rentang frekuensi analog tak hingga Omega in (-inf, +inf) dipadatkan secara non-linier ke dalam rentang satu putaran lingkaran satuan omega in (-pi, +pi)! ", "laser_steps": [{"time": 3, "target": ".formula-banner h4", "text": "Pemetaan Konformal Bidang-s An"}, {"time": 9, "target": ".formula-banner .katex-display", "text": "Formulasi Matematis"}, {"time": 18, "target": ".grid-2 .card.accent-blue", "text": "Makna Fisis Variabel"}, {"time": 28, "target": ".grid-2 .card.accent-green", "text": "Langkah Perhitungan"}]}, "5": {"title": "Efek Frequency Warping & Formula Pre-Warping Wajib", "script": "Pada slide ini, kita membahas Efek Frequency Warping & Formula Pre-Warping Wajib. Perhatikan persamaan matematika inti untuk Relasi Pemadatan Frekuensi Non-Linier di layar. Persamaan ini menyatakan hubungan analitis yang sangat krusial. Jangan melihat rumus ini sebagai beban hafalan, melainkan pahami makna fisik setiap variabelnya. omega: Frekuensi sudut digital diskrit dalam radian per sampel (skala 0 sampai pi). Omega: Frekuensi sudut analog dalam radian per detik. Omega_prewarp: Frekuensi target analog hasil koreksi pre-warping. omega_d = 2 pi F_cutoff / Fs: Frekuensi digital spesifikasi yang dituju. Mari kita telaah langkah perhitungan bertahapnya agar Anda tidak keliru saat kalkulasi: Mekanisme Distorsi Warping: Pada frekuensi rendah (w mendekati 0), relasi hampir linier (tan(w/2) approx w/2). Namun semakin mendekati frekuensi Nyquist (w -> pi), sumbu frekuensi analog tertekan (terkompresi secara ekstrem) menuju tak terhingga! Prosedur Wajib Pre-Warping: Sebelum mendesain filter analog, hitung frekuensi cutoff analog ekuivalen Omega_prewarp menggunakan rumus tangen di atas. Rancang filter Ha(s) pada frekuensi Omega_prewarp tersebut. Ketika disubstitusikan dengan BLT, frekuensi cutoff digital akan bergeser kembali tepat ke titik spesifikasi wd yang diinginkan! ", "laser_steps": [{"time": 3, "target": ".formula-banner h4", "text": "Relasi Pemadatan Frekuensi Non"}, {"time": 9, "target": ".formula-banner .katex-display", "text": "Formulasi Matematis"}, {"time": 18, "target": ".grid-2 .card.accent-blue", "text": "Makna Fisis Variabel"}, {"time": 28, "target": ".grid-2 .card.accent-green", "text": "Langkah Perhitungan"}]}, "6": {"title": "Masalah Finite Word-Length & Solusi Struktur Biquad (SOS)", "script": "Pada slide ini, kita membahas Masalah Finite Word-Length & Solusi Struktur Biquad (SOS). Slide ini memetakan konsep ke dalam tiga pilar terstruktur: Pilar ke-1 adalah Bahaya Orde Tinggi Direct Form. Jika filter IIR orde tinggi (misal orde 8 atau 12) diimplementasikan dalam struktur Direct Form polinomial tunggal, koefisien polinomial menjadi sangat sensitif terhadap pembulatan floating point / fixed point. Kuantisasi register memori mikroprosesor dapat menggeser posisi pole mendekati atau menembus lingkaran satuan. Dampaknya: Filter yang di atas kertas stabil dapat menjadi tidak stabil dan meledak berosilasi saat dijalankan di chip hardware! Pilar ke-2 adalah Solusi Emas: Second-Order Sections (SOS). Faktorkan fungsi transfer H(z) menjadi kaskade blok-blok biquad orde dua: H(z) = G * product_{k=1}^K [ (b0_k + b1_k z^-1 + b2_k z^-2) / (1 + a1_k z^-1 + a2_k z^-2) ]. Setiap blok hanya mengelola sepasang pole dan zero konjugat terdekat. Sangat stabil dan tahan terhadap noise kuantisasi representasi bit. Pilar ke-3 adalah Standar Pemrograman SciPy. Jangan gunakan format (b, a) untuk filter IIR di Python! Selalu gunakan parameter output='sos' pada fungsi desain (scipy.signal.butter, cheby1, ellip) dan jalankan pemfilteran dengan scipy.signal.sosfilt(). ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "Bahaya Orde Tinggi Direct"}, {"time": 14, "target": ".grid-3 .card:nth-child(2)", "text": "Solusi Emas: Second-Order"}, {"time": 25, "target": ".grid-3 .card:nth-child(3)", "text": "Standar Pemrograman SciPy"}]}, "7": {"title": "Matriks Komparasi Komprehensif: FIR vs IIR", "script": "Pada slide ini, kita membahas Matriks Komparasi Komprehensif: FIR vs IIR. Mari kita perhatikan kolom sebelah kiri mengenai Karakteristik Filter FIR. Stabilitas: Selalu stabil 100% secara alami (semua pole di origin z=0). Respons Fase: Mampu mencapai Fase Linier Murni (Group Delay konstan sempurna, tanpa distorsi bentuk gelombang). Kebutuhan Orde: Tinggi (Orde 50 s.d. 500 tap untuk transisi tajam). Beban Komputasi: Relatif besar (membutuhkan banyak operasi MAC). Sensitivitas Kuantisasi: Sangat rendah (tahan terhadap pembulatan bit). Implementasi: Ideal untuk FFT Convolution, Audio Studio, Biomedis EKG. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Karakteristik Filter IIR. Mengapa hal ini sangat fundamental? Stabilitas: Bersyarat (membutuhkan verifikasi ketat |p| < 1). Respons Fase: Non-linier (terjadi distorsi keterlambatan fase, terutama di dekat pita cutoff). Kebutuhan Orde: Sangat Rendah (Cukup orde 4 s.d. 8). Beban Komputasi: Sangat Ringan dan Cepat (hemat memori dan baterai). Sensitivitas Kuantisasi: Tinggi (wajib menggunakan struktur Biquad SOS). Implementasi: Ideal untuk Telekomunikasi RF, Hearing Aids, Sensor IoT Edge. ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Karakteristik Filter FIR"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Karakteristik Filter IIR"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "8": {"title": "Implementasi Python: Desain Filter IIR dengan SciPy SOS", "script": "Pada slide ini, kita membahas Implementasi Python: Desain Filter IIR dengan SciPy SOS. Sekarang kita beralih ke implementasi komputasi Python. Di sebelah kiri adalah landasan algoritma mengenai Perancangan Filter IIR Berbasis SOS. scipy.signal.butter(N, Wn, btype='low', fs=Fs, output='sos') merancang filter Butterworth dalam format Second-Order Sections. scipy.signal.sosfreqz(sos, worN=1024, fs=Fs) menghitung respons frekuensi yang stabil secara numerik. Fungsi sosfilt(sos, x) mengeksekusi pemfilteran tanpa risiko instabilitas akumulasi floating point. Perhatikan blok kode di sebelah kanan. Kita menggunakan pustaka NumPy dan SciPy untuk mengeksekusi operasi ini secara vektorisasi. Baris-baris kode ini membuktikan secara empiris bahwa formulasi matematis yang kita pelajari benar-benar berjalan efisien di mesin komputer. Perhatikan struktur sintaks dan fungsi-fungsi intinya.", "laser_steps": [{"time": 3, "target": ".grid-2 .card.accent-blue", "text": "Perancangan Filter IIR Berbasi"}, {"time": 12, "target": ".code-container .code-header", "text": "Kode Python DSP"}, {"time": 20, "target": ".code-container pre", "text": "Implementasi Vektorisasi"}]}, "9": {"title": "Praktikum Mandiri Lab 13: Komparasi FIR vs IIR pada Sinyal EKG", "script": "Pada slide ini, kita membahas Praktikum Mandiri Lab 13: Komparasi FIR vs IIR pada Sinyal EKG. Mari kita perhatikan kolom sebelah kiri mengenai Lembar Instruksi Praktikum 13. Judul: Analisis Perbandingan Filter FIR vs IIR pada Pembersihan Sinyal Biomedis EKG. Dataset: Sinyal EKG publik terkontaminasi dengung listrik 50 Hz dan fluktuasi baseline (baseline wander 0.5 Hz). Langkah 1: Rancang filter Band-Pass IIR Butterworth (0.8 - 45 Hz) orde 4 dalam format SOS. Langkah 2: Rancang filter Band-Pass FIR dengan window Hamming yang memenuhi spesifikasi atenuasi setara (didapatkan jumlah tap ~121). Langkah 3: Filter sinyal EKG dengan kedua filter tersebut. Sekarang, mari kita tinjau kolom sebelah kanan mengenai Tantangan Analisis & Evaluasi. Mengapa hal ini sangat fundamental? Tantangan Analisis: Amati morfologi puncak gelombang QRS dan segmen ST pada sinyal EKG keluaran filter IIR vs FIR. Apakah filter IIR menyebabkan pergeseran bentuk gelombang akibat fase non-linier? Komparasi Waktu Eksekusi: Ukur waktu komputasi pemfilteran menggunakan modul %timeit di Jupyter Notebook. Berapa kali lipat filter IIR lebih cepat dibanding FIR? Output: Unggah notebook laporan mandiri dengan visualisasi sinyal EKG sebelum-sesudah. ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Lembar Instruksi Praktikum 13"}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Tantangan Analisis & Evaluasi"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "10": {"title": "Integrasi AI: Analisis Kestabilan & Distorsi Fase", "script": "Pada slide ini, kita membahas Integrasi AI: Analisis Kestabilan & Distorsi Fase. Mari kita perhatikan kolom sebelah kiri mengenai Pemanfaatan AI untuk Analisis Kritis. Prompt AI: 'Diberikan matriks koefisien SOS filter IIR orde 8, buatkan script Python untuk memplot diagram pole-zero setiap biquad section dan periksa apakah ada pole yang berjarak kurang dari 0.01 ke lingkaran satuan.' AI Zero-Phase Filtering: 'Jelaskan cara kerja fungsi scipy.signal.filtfilt (forward-backward filtering) untuk menghilangkan distorsi fase IIR pada pemrosesan offline.' Sekarang, mari kita tinjau kolom sebelah kanan mengenai Kewajiban Validasi Mahasiswa. Mengapa hal ini sangat fundamental? Batasan filtfilt(): Mahasiswa wajib memahami bahwa filtfilt() bersifat NON-KAUSAL dan TIDAK DAPAT digunakan pada sistem siaran langsung atau real-time audio. Verifikasi Pre-Warping: Pastikan bahwa frekuensi cutoff yang dimasukkan ke fungsi desain analog telah memperhitungkan koreksi tangen pre-warping secara tepat. ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Pemanfaatan AI untuk Analisis "}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Kewajiban Validasi Mahasiswa"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "11": {"title": "Latihan Soal HOTS Pertemuan 13", "script": "Pada slide ini, kita membahas Latihan Soal HOTS Pertemuan 13. Mari kita perhatikan kolom sebelah kiri mengenai Soal 1: Transformasi Bilinear Manual. Sebuah filter analog low-pass orde-1 memiliki fungsi transfer: Ha(s) = 1 / (s + 2). Terapkan Transformasi Bilinear dengan periode sampling Ts = 1 detik (substitusi s = 2 (1 - z^-1) / (1 + z^-1)): a) Turunkan ekspresi fungsi transfer digital H(z)! b) Tentukan lokasi pole dan zero dari H(z) pada bidang-Z! c) Tuliskan persamaan beda LCCDE yang mengimplementasikan filter tersebut! Sekarang, mari kita tinjau kolom sebelah kanan mengenai Soal 2: Perhitungan Pre-Warping. Mengapa hal ini sangat fundamental? Kita ingin merancang filter digital IIR low-pass dengan frekuensi cutoff Fc = 1 kHz pada frekuensi sampling Fs = 10 kHz menggunakan Transformasi Bilinear. a) Hitung frekuensi sudut digital cutoff wd dalam radian per sampel! b) Hitung nilai frekuensi analog pre-warped Omega_prewarp dalam radian per detik! c) Apa yang akan terjadi jika kita mendesain filter analog langsung pada Omega = 2 pi Fc tanpa pre-warping? ", "laser_steps": [{"time": 2, "target": ".grid-2 .card.accent-blue h3", "text": "Soal 1: Transformasi Bilinear "}, {"time": 12, "target": ".grid-2 .card.accent-blue li:nth-child(1)", "text": "Poin Konseptual"}, {"time": 22, "target": ".grid-2 .card.accent-green h3", "text": "Soal 2: Perhitungan Pre-Warpin"}, {"time": 32, "target": ".grid-2 .card.accent-green li:nth-child(1)", "text": "Aplikasi Industri"}]}, "12": {"title": "Rangkuman Pertemuan 13 & Refleksi Pembelajaran", "script": "Pada slide ini, kita membahas Rangkuman Pertemuan 13 & Refleksi Pembelajaran. Mari kita refleksikan materi hari ini menggunakan tiga dimensi pembelajaran mendalam: Dimensi pertama adalah Berkesadaran atau Mindful: Mahasiswa menyadari tujuan belajar dan proses berpikir ilmiah di balik sinyal diskrit. Saya menyadari bahwa filter IIR dan FIR bukan rival yang saling meniadakan, melainkan dua instrumen rekayasa dengan kekuatan dan kompromi yang saling melengkapi. Saya memahami bahwa Transformasi Bilinear adalah jembatan matematis tanpa-aliasing dari domain kontinu Laplace menuju domain diskrit Z. Dimensi kedua adalah Bermakna atau Meaningful: Materi ini langsung relevan dengan industri kecerdasan artifisial, sistem radar, audio digital, dan telekomunikasi. Keputusan memilih FIR atau IIR di industri menentukan konsumsi baterai perangkat pintar dan integritas bentuk data. Penerapan struktur Biquad SOS adalah standar industri yang wajib dikuasai insinyur komputasi modern. Dimensi ketiga adalah Menggembirakan atau Joyful: Anda dapat bereksperimen, memanipulasi parameter sinyal di kode program, dan melihat hasilnya secara nyata. Melihat bagaimana filter IIR orde 6 yang sangat ringan mampu menyamai ketajaman filter FIR orde 100 membuat kita mengagumi keanggunan efisiensi matematika rekursif. ", "laser_steps": [{"time": 3, "target": ".grid-3 .card:nth-child(1)", "text": "Berkesadaran (Mindful)"}, {"time": 15, "target": ".grid-3 .card:nth-child(2)", "text": "Bermakna (Meaningful)"}, {"time": 27, "target": ".grid-3 .card:nth-child(3)", "text": "Menggembirakan (Joyful)"}]}, "13": {"title": "Tindak Lanjut & Referensi Perkuliahan", "script": "Pada slide ini, kita membahas Tindak Lanjut & Referensi Perkuliahan. Sebagai rangkuman perkuliahan Pertemuan ke-13: Filter IIR dirancang dengan memetakan prototipe analog (Butterworth, Chebyshev) via BLT. Formula pre-warping mengoreksi kompresi frekuensi non-linier. Format Biquad Second-Order Sections (SOS) mencegah instabilitas numerik kuantisasi bit. FIR unggul dalam linear phase; IIR unggul dalam efisiensi komputasi. Untuk tugas mandiri dan pencapaian kompetensi OBE, silakan buka folder praktikum dan jalankan modul kode praktikum yang telah disediakan. Buat laporan eksperimen sesuai rubrik asesmen RPS. Kumpulkan Laporan Praktikum Lab 13 ke LMS tepat waktu. Persiapkan diri untuk Pertemuan 14: Membangun Arsitektur Pipeline Pengolahan Sinyal Digital End-to-End. Mulai matangkan rancangan modul-modul program proyek akhir. Materi ini disusun mengacu pada pustaka akademik terverifikasi dari Oppenheim, Schafer, dan Smith. Terima kasih atas perhatian rekan-rekan mahasiswa. Sampai jumpa di perkuliahan minggu depan!", "laser_steps": [{"time": 3, "target": ".grid-2 .card.accent-blue", "text": "Rangkuman Inti Kuliah"}, {"time": 15, "target": ".grid-2 .card.accent-green", "text": "Tugas Mandiri OBE"}, {"time": 25, "target": ".grid-2 .card.accent-green h4", "text": "Referensi Akademik"}]}};
+    const lectureAudio = document.getElementById('lectureAudio');
+    const lecturePanel = document.getElementById('lecturePanel');
+    const lectureTranscript = document.getElementById('lectureTranscript');
+    const btnPlayLecture = document.getElementById('btnPlayLecture');
+    const btnPresenterLecture = document.getElementById('btnPresenterLecture');
+    const btnRecordVideo = document.getElementById('btnRecordVideo');
+    const autoAdvanceCheck = document.getElementById('autoAdvanceCheck');
+    const virtualLaser = document.getElementById('virtualLaser');
+    const laserLabel = document.getElementById('laserLabel');
+
+    let currentLaserTarget = null;
+    let isLecturePlaying = false;
+    let mouseTimer = null;
+
+    // Recording State (StudioRecorder Engine)
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecording = false;
+    let recordingStream = null;
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        s.classList.toggle('active', idx === currentSlide);
+      });
+      slideIndicator.textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+      progressFill.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+
+      document.querySelectorAll('.drawer-item').forEach((item, idx) => {
+        item.classList.toggle('active', idx === currentSlide);
+      });
+
+      virtualLaser.classList.remove('active');
+      laserLabel.classList.remove('active');
+      clearHighlight();
+
+      loadSlideLecture(currentSlide + 1, isLecturePlaying);
+
+      if (window.renderMathInElement) {
+        renderMathInElement(slides[currentSlide], {
+          delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: false}
+          ]
+        });
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentSlide = index;
+        updateSlide();
+        toggleDrawer(false);
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().then(() => {
+          showToast("Mode Layar Penuh Aktif (Tekan Esc / F untuk keluar)");
+        }).catch(err => console.warn(err));
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function toggleDrawer(forceState) {
+      const overlay = document.getElementById('drawerOverlay');
+      if (forceState !== undefined) {
+        overlay.style.display = forceState ? 'block' : 'none';
+      } else {
+        overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    function toggleLecturePanel() {
+      lecturePanel.classList.toggle('collapsed');
+    }
+
+    function moveLaserTo(targetSelector, labelText) {
+      clearHighlight();
+      if (!targetSelector) {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        return;
+      }
+
+      const activeSlide = slides[currentSlide];
+      const targetEl = activeSlide.querySelector(targetSelector) || document.querySelector(targetSelector);
+
+      if (targetEl) {
+        const rect = targetEl.getBoundingClientRect();
+        const laserX = rect.left + rect.width * 0.35;
+        const laserY = rect.top + rect.height * 0.45;
+
+        virtualLaser.style.left = `${laserX}px`;
+        virtualLaser.style.top = `${laserY}px`;
+        virtualLaser.classList.add('active');
+
+        laserLabel.style.left = `${laserX}px`;
+        laserLabel.style.top = `${laserY}px`;
+        laserLabel.textContent = labelText || "Poin Penjelasan";
+        laserLabel.classList.add('active');
+
+        targetEl.classList.add('lecture-focus-target');
+        currentLaserTarget = targetEl;
+      } else {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+      }
+    }
+
+    function clearHighlight() {
+      if (currentLaserTarget) {
+        currentLaserTarget.classList.remove('lecture-focus-target');
+        currentLaserTarget = null;
+      }
+    }
+
+    function loadSlideLecture(slideNum, autoStart = true) {
+      const data = LECTURE_DATA[slideNum];
+      if (!data) return;
+
+      lectureTranscript.innerHTML = data.script;
+      const audioFolder = "audio_pertemuan_13";
+      lectureAudio.src = `${audioFolder}/slide_${String(slideNum).padStart(2, '0')}.mp3`;
+      
+      if (autoStart && isLecturePlaying) {
+        lectureAudio.play().then(() => {
+          btnPlayLecture.textContent = "⏸ Jeda";
+          btnPresenterLecture.textContent = "⏸ Jeda Kuliah (P)";
+        }).catch(err => console.log(err));
+      } else {
+        btnPlayLecture.textContent = "▶ Lanjutkan";
+        btnPresenterLecture.textContent = "🎙️ Dengar Penjelasan (P)";
+      }
+    }
+
+    function togglePlayLecture() {
+      if (lectureAudio.paused) {
+        isLecturePlaying = true;
+        lectureAudio.play().then(() => {
+          btnPlayLecture.textContent = "⏸ Jeda";
+          btnPresenterLecture.textContent = "⏸ Jeda Kuliah (P)";
+          showToast("▶ Memutar Penjelasan Dosen & Kursor Laser Aktif");
+        }).catch(err => {
+          console.warn("Autoplay block:", err);
+        });
+      } else {
+        isLecturePlaying = false;
+        lectureAudio.pause();
+        btnPlayLecture.textContent = "▶ Lanjutkan";
+        btnPresenterLecture.textContent = "🎙️ Dengar Penjelasan (P)";
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        clearHighlight();
+        showToast("⏸ Penjelasan Dosen Dijeda");
+      }
+    }
+
+    function replaySlideLecture() {
+      lectureAudio.currentTime = 0;
+      isLecturePlaying = true;
+      lectureAudio.play();
+      btnPlayLecture.textContent = "⏸ Jeda";
+    }
+
+    lectureAudio.addEventListener('timeupdate', () => {
+      const currentTime = lectureAudio.currentTime;
+      const slideNum = currentSlide + 1;
+      const data = LECTURE_DATA[slideNum];
+      if (!data || !data.laser_steps) return;
+
+      let activeStep = null;
+      for (let i = data.laser_steps.length - 1; i >= 0; i--) {
+        if (currentTime >= data.laser_steps[i].time) {
+          activeStep = data.laser_steps[i];
+          break;
+        }
+      }
+
+      if (activeStep) {
+        moveLaserTo(activeStep.target, activeStep.text);
+      } else {
+        virtualLaser.classList.remove('active');
+        laserLabel.classList.remove('active');
+        clearHighlight();
+      }
+    });
+
+    lectureAudio.addEventListener('ended', () => {
+      virtualLaser.classList.remove('active');
+      laserLabel.classList.remove('active');
+      clearHighlight();
+
+      if (autoAdvanceCheck.checked && currentSlide < totalSlides - 1) {
+        showToast("✓ Slide selesai. Melanjutkan ke slide berikutnya...");
+        setTimeout(() => {
+          nextSlide();
+        }, 1400);
+      } else if (currentSlide >= totalSlides - 1) {
+        showToast("🎉 Seluruh materi perkuliahan selesai!");
+        if (isRecording) {
+          stopRecordingLecture();
+        }
+      }
+    });
+
+    // ==========================================
+    // STUDIO RECORDER ENGINE (AUTO-RECORD & AUTO-DOWNLOAD)
+    // ==========================================
+    async function toggleRecordLecture() {
+      if (isRecording) {
+        stopRecordingLecture();
+      } else {
+        await startRecordingLecture();
+      }
+    }
+
+    async function startRecordingLecture() {
+      try {
+        // Pastikan naskah teleprompter tertutup rapat agar rekaman 100% bersih
+        lecturePanel.classList.add('collapsed');
+
+        showToast("🎬 Pilih tab browser ini dan klik Share dengan Audio untuk mulai merekam!");
+        recordingStream = await navigator.mediaDevices.getDisplayMedia({
+          video: {
+            displaySurface: "browser",
+            frameRate: 60
+          },
+          audio: true,
+          preferCurrentTab: true
+        });
+
+        recordedChunks = [];
+        const mimeTypes = [
+          'video/webm;codecs=vp9,opus',
+          'video/webm;codecs=vp8,opus',
+          'video/webm',
+          'video/mp4'
+        ];
+        let selectedMime = mimeTypes.find(m => MediaRecorder.isTypeSupported(m)) || '';
+
+        mediaRecorder = new MediaRecorder(recordingStream, selectedMime ? { mimeType: selectedMime } : {});
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) {
+            recordedChunks.push(e.data);
+          }
+        };
+
+        mediaRecorder.onstop = () => {
+          downloadRecordedVideo();
+        };
+
+        // User stop stream manually
+        recordingStream.getVideoTracks()[0].onended = () => {
+          if (isRecording) stopRecordingLecture();
+        };
+
+        mediaRecorder.start(1000);
+        isRecording = true;
+
+        btnRecordVideo.classList.add('recording');
+        btnRecordVideo.innerHTML = "⏹ Berhenti Rekam";
+
+        // Rewind ke menit nol (Slide 1) dan mulai narasi
+        currentSlide = 0;
+        updateSlide();
+        autoAdvanceCheck.checked = true;
+        
+        setTimeout(() => {
+          isLecturePlaying = true;
+          lectureAudio.currentTime = 0;
+          lectureAudio.play().catch(e => console.log(e));
+          showToast("🔴 Merekam Aktif dari Menit 0! Video akan otomatis terunduh saat slide terakhir selesai.");
+        }, 1500);
+
+      } catch (err) {
+        console.error("Recording error:", err);
+        showToast("❌ Gagal memulai rekaman: " + err.message);
+      }
+    }
+
+    function stopRecordingLecture() {
+      if (!isRecording) return;
+      isRecording = false;
+
+      btnRecordVideo.classList.remove('recording');
+      btnRecordVideo.innerHTML = "🔴 Rekam Video (Auto)";
+
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+      }
+      if (recordingStream) {
+        recordingStream.getTracks().forEach(t => t.stop());
+      }
+      showToast("💾 Memproses berkas video... Mengunduh otomatis!");
+    }
+
+    function downloadRecordedVideo() {
+      const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      const safeTitle = "Perancangan Filter Digital IIR & Komparasi Komprehensif FIR vs IIR".replace(/[^a-zA-Z0-9]/g, '_');
+      a.download = `Pertemuan_13_${safeTitle}_Video_Kuliah.webm`;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast("✅ Video kuliah berhasil diunduh ke folder Downloads Anda!");
+      }, 500);
+    }
+
+    // Auto-hide presenter bar in fullscreen
+    function resetMouseTimer() {
+      presenterBar.classList.remove('autohide');
+      clearTimeout(mouseTimer);
+      if (document.fullscreenElement) {
+        mouseTimer = setTimeout(() => {
+          presenterBar.classList.add('autohide');
+        }, 3000);
+      }
+    }
+    document.addEventListener('mousemove', resetMouseTimer);
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F' || e.key === 'F5') {
+        e.preventDefault();
+        toggleFullScreen();
+      } else if (e.key === 'm' || e.key === 'M') {
+        toggleDrawer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        togglePlayLecture();
+      } else if (e.key === 't' || e.key === 'T') {
+        toggleLecturePanel();
+      } else if (e.key === 'Escape') {
+        toggleDrawer(false);
+      } else if (e.key === 'Home') {
+        currentSlide = 0;
+        updateSlide();
+      } else if (e.key === 'End') {
+        currentSlide = totalSlides - 1;
+        updateSlide();
+      }
+    });
+
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-container').querySelector('code');
+      navigator.clipboard.writeText(codeBlock.innerText).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Tersalin!';
+        btn.style.background = '#10B981';
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.style.background = '';
+        }, 2000);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      updateSlide();
+    });
+  </script>
+</body>
+</html>
