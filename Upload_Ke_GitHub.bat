@@ -11,16 +11,17 @@ echo Catatan:
 echo Jika muncul pop-up jendela otorisasi GitHub di layar:
 echo Silakan klik "Sign in with your browser" untuk mengizinkan.
 echo.
+git add .
+git commit -m "Pembaruan berkas materi perkuliahan dan kode praktikum DSP" 2>nul
 git push -u origin main --force
 echo.
 if %errorlevel% equ 0 (
     echo ========================================================
     echo   [BERHASIL] Seluruh materi berhasil diunggah ke GitHub!
     echo ========================================================
-    echo Sekarang kembali ke browser Anda di halaman GitHub Pages tadi:
+    echo Sekarang kembali ke browser Anda di halaman GitHub Pages:
     echo 1. Refresh halaman (F5)
-    echo 2. Klik tombol SAVE di sebelah main
-    echo 3. Selesai! Website langsung aktif.
+    echo 2. Selesai! Website langsung aktif dan terupdate.
 ) else (
     echo ========================================================
     echo   [PERHATIAN] Terjadi kendala saat upload.
