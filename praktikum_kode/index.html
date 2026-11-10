@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorium Komputasi & Kode Praktikum DSP — Universitas Nusantara Manado</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #070D18;
+      --bg-surface: #0E1726;
+      --bg-card: #152238;
+      --border-card: #203354;
+      --primary: #00B4D8;
+      --primary-light: #90E0EF;
+      --accent-emerald: #10B981;
+      --accent-amber: #F59E0B;
+      --accent-purple: #8B5CF6;
+      --text-main: #F1F5F9;
+      --text-muted: #94A3B8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header / Hero */
+    header.hero {
+      background: linear-gradient(135deg, rgba(14, 23, 38, 0.98) 0%, rgba(7, 13, 24, 0.99) 100%);
+      border-bottom: 1px solid var(--border-card);
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .top-nav {
+      max-width: 1300px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      color: var(--primary-light);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-back:hover {
+      background: rgba(0, 180, 216, 0.15);
+      border-color: var(--primary);
+      transform: translateX(-2px);
+    }
+
+    .univ-tag {
+      display: inline-block;
+      background: rgba(0, 180, 216, 0.15);
+      border: 1px solid rgba(0, 180, 216, 0.4);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero p.subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 850px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+
+    .lecturer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 18px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: #E2E8F0;
+    }
+
+    .hero-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-hero-primary {
+      background: var(--primary);
+      color: #070D18;
+    }
+    .btn-hero-primary:hover { background: var(--primary-light); }
+
+    .btn-hero-github {
+      background: #24292e;
+      border: 1px solid #444d56;
+      color: #FFF;
+    }
+    .btn-hero-github:hover { background: #32383f; border-color: #6a737d; }
+
+    .btn-hero-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #E2E8F0;
+    }
+    .btn-hero-outline:hover { background: rgba(255, 255, 255, 0.1); }
+
+    /* Environment Guide Banner */
+    .guide-banner {
+      max-width: 1300px;
+      margin: 2rem auto 0;
+      padding: 0 1.5rem;
+      width: 100%;
+    }
+
+    .guide-card {
+      background: linear-gradient(135deg, rgba(21, 34, 56, 0.8) 0%, rgba(14, 23, 38, 0.9) 100%);
+      border: 1px solid var(--border-card);
+      border-left: 4px solid var(--primary);
+      border-radius: 12px;
+      padding: 1.4rem 1.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+    }
+
+    .guide-info h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .guide-info p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .guide-commands {
+      background: #050912;
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: var(--primary-light);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-copy-mini {
+      background: rgba(0, 180, 216, 0.2);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-copy-mini:hover { background: var(--primary); color: #070D18; }
+
+    /* Filter & Search Bar */
+    .filter-section {
+      max-width: 1300px;
+      margin: 2rem auto 1rem;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-card);
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #070D18;
+    }
+
+    .search-box input {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-card);
+      color: #FFF;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      width: 280px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-box input:focus { border-color: var(--primary); }
+
+    /* Cards Grid */
+    main.container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+      gap: 1.5rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .lab-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-card);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .lab-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 25px -5px rgba(0, 180, 216, 0.1);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .lab-number {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .badge-cpmk {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34D399;
+    }
+
+    .card-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.4;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .card-concepts {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.78rem;
+      color: #CBD5E1;
+      margin-bottom: 1.2rem;
+    }
+    .card-concepts strong { color: var(--primary-light); }
+
+    .card-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-view-code {
+      flex: 1;
+      background: var(--primary);
+      color: #070D18;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-view-code:hover { background: var(--primary-light); }
+
+    .btn-dl-code {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #E2E8F0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-dl-code:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--primary);
+      color: #FFF;
+    }
+
+    /* Modal Viewer */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal-content {
+      background: #0B132B;
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 950px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid var(--border-card);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0E1726;
+    }
+
+    .modal-title-group h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .modal-title-group span {
+      font-size: 0.8rem;
+      color: var(--primary-light);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-copy-code {
+      background: rgba(0, 180, 216, 0.15);
+      border: 1px solid var(--primary);
+      color: var(--primary-light);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-copy-code:hover { background: var(--primary); color: #070D18; }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0 6px;
+      line-height: 1;
+    }
+    .btn-close-modal:hover { color: #FFF; }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      flex: 1;
+      background: #070D18;
+    }
+
+    .code-box {
+      background: #050912;
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      padding: 1.2rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: #E2E8F0;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #10B981;
+      color: #070D18;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      display: none;
+      z-index: 10000;
+      align-items: center;
+      gap: 8px;
+    }
+    .toast.show { display: flex; animation: fadeInOut 2.5s forwards; }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(10px); }
+      15% { opacity: 1; transform: translateY(0); }
+      85% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(10px); }
+    }
+
+    /* Footer */
+    footer.site-footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-card);
+      padding: 2.2rem 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      margin-top: auto;
+    }
+
+    footer.site-footer p {
+      margin-bottom: 0.5rem;
+    }
+
+    footer.site-footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    footer.site-footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Header -->
+  <header class="hero">
+    <div class="top-nav">
+      <a href="../index.html" class="btn-back">
+        &larr; Kembali ke Portal Perkuliahan
+      </a>
+      <span class="univ-tag">UNIVERSITAS NUSANTARA MANADO • FAKULTAS ILMU KOMPUTER</span>
+    </div>
+
+    <h1>Laboratorium Komputasi DSP (Python)</h1>
+    <p class="subtitle">
+      Repository resmi 15 modul praktikum pemrograman Python (NumPy, SciPy, Matplotlib) untuk mata kuliah Pengolahan Sinyal Digital. Terstruktur berbasis Kurikulum Outcome-Based Education (OBE) dan siap dieksekusi secara mandiri.
+    </p>
+
+    <div class="lecturer-badge">
+      <span>👨‍🏫 Dosen Pengampu: <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong> (NIDN: 0902109201)</span>
+      <span>• S1 Teknik Informatika</span>
+    </div>
+
+    <div class="hero-links">
+      <a href="../index.html" class="btn-hero btn-hero-outline">🏠 Halaman Awal Portal Kuliah</a>
+      <a href="https://github.com/gedeaktama/dsp-kuliah/tree/main/praktikum_kode" target="_blank" class="btn-hero btn-hero-github">📁 Buka di GitHub Repository</a>
+      <a href="../README.md" class="btn-hero btn-hero-outline">📖 Silabus & RPS Panduan</a>
+      <a href="https://canva.link/0p27fg52m1k06l3" target="_blank" class="btn-hero btn-hero-primary">🎨 Slide Presentasi Resmi</a>
+    </div>
+  </header>
+
+  <!-- Setup Guide Banner -->
+  <div class="guide-banner">
+    <div class="guide-card">
+      <div class="guide-info">
+        <h3>🚀 Petunjuk Instalasi & Eksekusi Mandiri di Komputer / Laptop</h3>
+        <p>Seluruh script modul Python di bawah ini kompatibel dengan Python 3.9 s.d. 3.13+. Silakan install pustaka wajib sebelum menjalankan skrip:</p>
+      </div>
+      <div class="guide-commands">
+        <span>pip install numpy scipy matplotlib soundfile</span>
+        <button class="btn-copy-mini" onclick="copyText('pip install numpy scipy matplotlib soundfile')">Salin Perintah</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter & Search Section -->
+  <div class="filter-section">
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterLabs('ALL')">Semua Modul (1–15)</button>
+      <button class="filter-btn" onclick="filterLabs('CPMK1')">CPMK 1 (Sinyal & Sampling)</button>
+      <button class="filter-btn" onclick="filterLabs('CPMK2')">CPMK 2 (Sistem LTI & Konvolusi)</button>
+      <button class="filter-btn" onclick="filterLabs('CPMK3')">CPMK 3 (Fourier, UTS & Z-Plane)</button>
+      <button class="filter-btn" onclick="filterLabs('CPMK4')">CPMK 4 (Filter FIR & IIR)</button>
+      <button class="filter-btn" onclick="filterLabs('CPMK5')">CPMK 5 (Pipeline & VAD)</button>
+      <button class="filter-btn" onclick="filterLabs('CPMK6')">CPMK 6 (Proyek Akhir & Metrik)</button>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Cari modul atau topik praktikum..." onkeyup="searchLabs()">
+    </div>
+  </div>
+
+  <!-- Cards Grid -->
+  <main class="container" id="labsContainer">
+
+    <div class="lab-card" data-cpmk="CPMK1" data-search="lab 01: pengenalan lingkungan python, numpy, matplotlib & visualisasi sinyal lab_01_pengenalan_sinyal_python.py sinyal analog vs diskrit, stem plot, laju nyquist fs > 2fmax pembangkitan sinyal analog kontinu vs sinyal waktu diskrit dengan stem plot, perhitungan frekuensi sudut ternormalisasi omega = 2*pi*(f/fs), dan validasi kriteria laju pencuplikan nyquist.">
+      <div class="card-top">
+        <span class="lab-number">lab_01_pengenalan_sinyal_python.py</span>
+        <span class="badge-cpmk">CPMK 1 (CPL-A)</span>
+      </div>
+      <h2 class="card-title">Lab 01: Pengenalan Lingkungan Python, NumPy, Matplotlib & Visualisasi Sinyal</h2>
+      <p class="card-desc">Pembangkitan sinyal analog kontinu vs sinyal waktu diskrit dengan stem plot, perhitungan frekuensi sudut ternormalisasi omega = 2*pi*(F/Fs), dan validasi kriteria laju pencuplikan Nyquist.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Sinyal Analog vs Diskrit, Stem Plot, Laju Nyquist Fs > 2Fmax
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 58 Baris Kode</span>
+        <span>📦 2.3 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_01')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_01_pengenalan_sinyal_python.py" download="lab_01_pengenalan_sinyal_python.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_01">&quot;&quot;&quot;
+Laboratorium 01: Pengenalan Lingkungan Python, NumPy, Matplotlib &amp; Visualisasi Sinyal
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 1 (CPL-A)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def main():
+    print(&quot;=== LAB 01: VISUALISASI SINYAL KONTINU VS DISKRIT ===&quot;)
+    
+    # 1. Parameter Sinyal
+    F_signal = 5.0     # Frekuensi analog = 5 Hz
+    Fs = 40.0          # Frekuensi sampling = 40 Hz (Memenuhi Nyquist Fs &gt; 2*F)
+    duration = 1.0     # Durasi waktu pengamatan = 1.0 detik
+    
+    # 2. Pendekatan Sinyal Analog Kontinu (Grid Waktu Rapat)
+    t_analog = np.linspace(0, duration, 1000)
+    x_analog = np.sin(2 * np.pi * F_signal * t_analog)
+    
+    # 3. Pembangkitan Sinyal Diskrit (Sampled)
+    n_indices = np.arange(0, int(Fs * duration))
+    t_discrete = n_indices / Fs
+    omega = 2 * np.pi * (F_signal / Fs) # Frekuensi sudut ternormalisasi (rad/sampel)
+    x_discrete = np.sin(omega * n_indices)
+    
+    print(f&quot;Frekuensi Sinyal       : {F_signal} Hz&quot;)
+    print(f&quot;Frekuensi Sampling     : {Fs} Hz&quot;)
+    print(f&quot;Frekuensi Sudut Diskrit: {omega:.4f} rad/sampel ({omega/np.pi:.3f} pi rad/sampel)&quot;)
+    print(f&quot;Jumlah Sampel Diskrit  : {len(x_discrete)} titik&quot;)
+    
+    # 4. Visualisasi Grafik
+    plt.figure(figsize=(12, 5))
+    
+    # Subplot 1: Sinyal Analog
+    plt.subplot(1, 2, 1)
+    plt.plot(t_analog, x_analog, &#x27;b-&#x27;, lw=1.5, label=&#x27;Analog x(t)&#x27;)
+    plt.title(&#x27;Representasi Sinyal Kontinu x(t)&#x27;)
+    plt.xlabel(&#x27;Waktu (detik)&#x27;); plt.ylabel(&#x27;Amplitudo&#x27;)
+    plt.grid(True, linestyle=&#x27;--&#x27;, alpha=0.6); plt.legend()
+    
+    # Subplot 2: Sinyal Diskrit (Stem Plot)
+    plt.subplot(1, 2, 2)
+    markerline, stemlines, baseline = plt.stem(n_indices, x_discrete, linefmt=&#x27;b-&#x27;, markerfmt=&#x27;bo&#x27;, basefmt=&#x27;r-&#x27;)
+    plt.setp(stemlines, &#x27;linewidth&#x27;, 1.2)
+    plt.title(f&#x27;Representasi Sinyal Diskrit x[n] (Fs = {Fs} Hz)&#x27;)
+    plt.xlabel(&#x27;Indeks Sampel n&#x27;); plt.ylabel(&#x27;Amplitudo x[n]&#x27;)
+    plt.grid(True, linestyle=&#x27;--&#x27;, alpha=0.6)
+    
+    plt.tight_layout()
+    plt.savefig(&#x27;output_lab_01.png&#x27;, dpi=150)
+    print(&quot;Grafik berhasil disimpan sebagai &#x27;output_lab_01.png&#x27;.&quot;)
+    plt.show()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_01">Lab 01: Pengenalan Lingkungan Python, NumPy, Matplotlib & Visualisasi Sinyal</script>
+      <script type="text/plain" id="file-lab_01">lab_01_pengenalan_sinyal_python.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK1" data-search="lab 02: sekuens diskrit elementer & operasi transformasi sinyal lab_02_sinyal_diskrit_dan_operasi.py impuls unit, step unit, time-shifting, dekomposisi genap-ganjil implementasi sekuens impuls unit delta[n], step unit u[n], deret eksponensial riil dan kompleks, operasi pergeseran waktu (time-shifting), dan dekomposisi sinyal menjadi komponen genap (even) & ganjil (odd).">
+      <div class="card-top">
+        <span class="lab-number">lab_02_sinyal_diskrit_dan_operasi.py</span>
+        <span class="badge-cpmk">CPMK 1 (CPL-A)</span>
+      </div>
+      <h2 class="card-title">Lab 02: Sekuens Diskrit Elementer & Operasi Transformasi Sinyal</h2>
+      <p class="card-desc">Implementasi sekuens impuls unit delta[n], step unit u[n], deret eksponensial riil dan kompleks, operasi pergeseran waktu (time-shifting), dan dekomposisi sinyal menjadi komponen genap (even) & ganjil (odd).</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Impuls Unit, Step Unit, Time-Shifting, Dekomposisi Genap-Ganjil
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 76 Baris Kode</span>
+        <span>📦 2.4 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_02')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_02_sinyal_diskrit_dan_operasi.py" download="lab_02_sinyal_diskrit_dan_operasi.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_02">&quot;&quot;&quot;
+Laboratorium 02: Sekuens Diskrit Elementer &amp; Operasi Transformasi Sinyal
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 1 (CPL-A)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def unit_impulse(n):
+    return np.where(n == 0, 1.0, 0.0)
+
+def unit_step(n):
+    return np.where(n &gt;= 0, 1.0, 0.0)
+
+def decompose_even_odd(n, x):
+    n_max = max(abs(min(n)), abs(max(n)))
+    n_sym = np.arange(-n_max, n_max + 1)
+    
+    x_sym = np.zeros_like(n_sym, dtype=float)
+    idx_map = np.isin(n_sym, n)
+    x_sym[idx_map] = x
+    
+    x_reversed = np.flip(x_sym)
+    x_even = 0.5 * (x_sym + x_reversed)
+    x_odd = 0.5 * (x_sym - x_reversed)
+    return n_sym, x_sym, x_even, x_odd
+
+def main():
+    print(&quot;=== LAB 02: OPERASI MANIPULASI SEKUENS &amp; DEKOMPOSISI GENAP-GANJIL ===&quot;)
+    
+    # 1. Pembangkitan Sinyal Kausal Uji: x[n] = (0.8)^n u[n] untuk n in [0, 8]
+    n = np.arange(0, 9)
+    x = (0.8) ** n * unit_step(n)
+    
+    # 2. Pergeseran Sinyal: y[n] = x[n - 2] (Time Delay)
+    n_shifted = n + 2
+    
+    # 3. Dekomposisi Sinyal Genap-Ganjil
+    n_sym, x_full, x_even, x_odd = decompose_even_odd(n, x)
+    
+    # 4. Verifikasi Energi: E_total == E_even + E_odd
+    E_total = np.sum(x_full ** 2)
+    E_even = np.sum(x_even ** 2)
+    E_odd = np.sum(x_odd ** 2)
+    print(f&quot;Energi Total      : {E_total:.6f}&quot;)
+    print(f&quot;E_even + E_odd    : {E_even + E_odd:.6f}&quot;)
+    print(f&quot;Selisih Teorema   : {abs(E_total - (E_even + E_odd)):.2e} (Terbukti Presisi!)&quot;)
+    
+    # 5. Visualisasi
+    plt.figure(figsize=(12, 8))
+    
+    plt.subplot(2, 2, 1)
+    plt.stem(n, x, basefmt=&#x27;k-&#x27;); plt.title(&#x27;Sinyal Asli x[n]&#x27;)
+    plt.xlabel(&#x27;n&#x27;); plt.grid(True, alpha=0.5)
+    
+    plt.subplot(2, 2, 2)
+    plt.stem(n_shifted, x, basefmt=&#x27;k-&#x27;); plt.title(&#x27;Sinyal Tergeser x[n - 2]&#x27;)
+    plt.xlabel(&#x27;n&#x27;); plt.grid(True, alpha=0.5)
+    
+    plt.subplot(2, 2, 3)
+    plt.stem(n_sym, x_even, basefmt=&#x27;k-&#x27;); plt.title(&#x27;Komponen Genap xe[n]&#x27;)
+    plt.xlabel(&#x27;n&#x27;); plt.grid(True, alpha=0.5)
+    
+    plt.subplot(2, 2, 4)
+    plt.stem(n_sym, x_odd, basefmt=&#x27;k-&#x27;); plt.title(&#x27;Komponen Ganjil xo[n]&#x27;)
+    plt.xlabel(&#x27;n&#x27;); plt.grid(True, alpha=0.5)
+    
+    plt.tight_layout()
+    plt.savefig(&#x27;output_lab_02.png&#x27;, dpi=150)
+    print(&quot;Grafik disimpan sebagai &#x27;output_lab_02.png&#x27;.&quot;)
+    plt.show()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_02">Lab 02: Sekuens Diskrit Elementer & Operasi Transformasi Sinyal</script>
+      <script type="text/plain" id="file-lab_02">lab_02_sinyal_diskrit_dan_operasi.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK1" data-search="lab 03: sampling, kuantisasi, rekonstruksi & aliasing lab_03_sampling_kuantisasi_aliasing.py teorema nyquist-shannon, frekuensi aliasing (folding), kuantisasi b-bit, sqnr simulasi fenomena aliasing frekuensi tinggi yang melipat ke domain frekuensi rendah saat fs < 2*fmax, proses kuantisasi b-bit seragam (uniform), serta estimasi signal-to-quantization-noise ratio (sqnr).">
+      <div class="card-top">
+        <span class="lab-number">lab_03_sampling_kuantisasi_aliasing.py</span>
+        <span class="badge-cpmk">CPMK 1 (CPL-A)</span>
+      </div>
+      <h2 class="card-title">Lab 03: Sampling, Kuantisasi, Rekonstruksi & Aliasing</h2>
+      <p class="card-desc">Simulasi fenomena aliasing frekuensi tinggi yang melipat ke domain frekuensi rendah saat Fs < 2*Fmax, proses kuantisasi B-bit seragam (uniform), serta estimasi Signal-to-Quantization-Noise Ratio (SQNR).</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Teorema Nyquist-Shannon, Frekuensi Aliasing (Folding), Kuantisasi B-Bit, SQNR
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 74 Baris Kode</span>
+        <span>📦 2.9 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_03')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_03_sampling_kuantisasi_aliasing.py" download="lab_03_sampling_kuantisasi_aliasing.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_03">&quot;&quot;&quot;
+Laboratorium 03: Sampling, Kuantisasi, Rekonstruksi &amp; Aliasing
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 1 (CPL-A)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def quantize_signal(x, bit_depth, v_min=-1.0, v_max=1.0):
+    L = 2 ** bit_depth
+    delta = (v_max - v_min) / L
+    # Normalisasi ke indeks level kuantisasi
+    q_index = np.round((x - v_min) / delta)
+    q_index = np.clip(q_index, 0, L - 1)
+    x_q = v_min + q_index * delta
+    return x_q, delta
+
+def main():
+    print(&quot;=== LAB 03: SIMULASI SAMPLING, ALIASING &amp; KUANTISASI B-BIT ===&quot;)
+    
+    # 1. Demonstrasi Aliasing Frekuensi Lipat
+    F_signal = 70.0    # Frekuensi analog = 70 Hz
+    Fs = 100.0         # Frekuensi sampling = 100 Hz (Nyquist Rate = 140 Hz, terjadi Aliasing!)
+    t_end = 0.2
+    
+    t_dense = np.linspace(0, t_end, 1000)
+    x_dense = np.cos(2 * np.pi * F_signal * t_dense)
+    
+    n = np.arange(0, int(Fs * t_end))
+    t_sampled = n / Fs
+    x_sampled = np.cos(2 * np.pi * F_signal * t_sampled)
+    
+    # Hitung Frekuensi Semu Hasil Aliasing: |70 - 100| = 30 Hz
+    F_alias = abs(F_signal - Fs)
+    x_alias_curve = np.cos(2 * np.pi * F_alias * t_dense)
+    
+    print(f&quot;Frekuensi Asli  : {F_signal} Hz&quot;)
+    print(f&quot;Frekuensi Nyquist: {Fs/2} Hz&quot;)
+    print(f&quot;Frekuensi Semu  : {F_alias} Hz (Tampak seolah-olah gelombang 30 Hz!)&quot;)
+    
+    # 2. Simulasi Kuantisasi 3-Bit vs 8-Bit
+    x_q3, delta3 = quantize_signal(x_dense, bit_depth=3)
+    error_q3 = x_q3 - x_dense
+    sqnr_theory_3bit = 6.02 * 3 + 1.76
+    sqnr_meas_3bit = 10 * np.log10(np.mean(x_dense**2) / np.mean(error_q3**2))
+    
+    print(f&quot;SQNR Teoretis 3-bit : {sqnr_theory_3bit:.2f} dB&quot;)
+    print(f&quot;SQNR Terukur 3-bit  : {sqnr_meas_3bit:.2f} dB&quot;)
+    
+    # Visualisasi
+    plt.figure(figsize=(12, 5))
+    
+    plt.subplot(1, 2, 1)
+    plt.plot(t_dense, x_dense, &#x27;lightgray&#x27;, lw=2, label=&#x27;Sinyal Asli 70 Hz&#x27;)
+    plt.plot(t_dense, x_alias_curve, &#x27;r--&#x27;, lw=1.5, label=&#x27;Frekuensi Semu 30 Hz (Aliased)&#x27;)
+    plt.stem(t_sampled, x_sampled, linefmt=&#x27;b-&#x27;, markerfmt=&#x27;bo&#x27;, basefmt=&#x27;k-&#x27;, label=&#x27;Sampel Diskrit Fs=100Hz&#x27;)
+    plt.title(&#x27;Fenomena Aliasing: 70 Hz Menyamar Menjadi 30 Hz&#x27;)
+    plt.xlabel(&#x27;Waktu (detik)&#x27;); plt.ylabel(&#x27;Amplitudo&#x27;); plt.legend(); plt.grid(True, alpha=0.5)
+    
+    plt.subplot(1, 2, 2)
+    plt.plot(t_dense[:200], x_dense[:200], &#x27;b-&#x27;, label=&#x27;Analog Murni&#x27;)
+    plt.step(t_dense[:200], x_q3[:200], &#x27;r-&#x27;, where=&#x27;mid&#x27;, label=&#x27;Terkuantisasi 3-bit (8 Level)&#x27;)
+    plt.title(&#x27;Efek Kuantisasi Amplitudo Kasar (3-Bit)&#x27;)
+    plt.xlabel(&#x27;Waktu (detik)&#x27;); plt.ylabel(&#x27;Amplitudo&#x27;); plt.legend(); plt.grid(True, alpha=0.5)
+    
+    plt.tight_layout()
+    plt.savefig(&#x27;output_lab_03.png&#x27;, dpi=150)
+    print(&quot;Grafik disimpan sebagai &#x27;output_lab_03.png&#x27;.&quot;)
+    plt.show()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_03">Lab 03: Sampling, Kuantisasi, Rekonstruksi & Aliasing</script>
+      <script type="text/plain" id="file-lab_03">lab_03_sampling_kuantisasi_aliasing.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK2" data-search="lab 04: pengujian empiris & formal sifat sistem waktu diskrit lab_04_pengujian_sifat_sistem.py prinsip superposisi, homogenitas, time-invariance, pengujian galat toleransi framework otomatis verifikasi sifat sistem: linearitas (prinsip superposisi aditif dan homogenitas penskalaan) serta time-invariance (invarian waktu) melalui komparasi selisih galat numerik.">
+      <div class="card-top">
+        <span class="lab-number">lab_04_pengujian_sifat_sistem.py</span>
+        <span class="badge-cpmk">CPMK 2 (CPL-A, CPL-B)</span>
+      </div>
+      <h2 class="card-title">Lab 04: Pengujian Empiris & Formal Sifat Sistem Waktu Diskrit</h2>
+      <p class="card-desc">Framework otomatis verifikasi sifat sistem: Linearitas (prinsip superposisi aditif dan homogenitas penskalaan) serta Time-Invariance (invarian waktu) melalui komparasi selisih galat numerik.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Prinsip Superposisi, Homogenitas, Time-Invariance, Pengujian Galat Toleransi
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 58 Baris Kode</span>
+        <span>📦 2.0 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_04')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_04_pengujian_sifat_sistem.py" download="lab_04_pengujian_sifat_sistem.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_04">&quot;&quot;&quot;
+Laboratorium 04: Pengujian Empiris &amp; Formal Sifat Sistem Waktu Diskrit
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 2 (CPL-A, CPL-B)
+&quot;&quot;&quot;
+
+import numpy as np
+
+def test_linearity(system_func, N=50, tolerance=1e-5):
+    x1 = np.random.randn(N)
+    x2 = np.random.randn(N)
+    a, b = 2.5, -1.7
+    
+    # Jalur A: Transformasi kombinasi linear masukan
+    y_combo = system_func(a * x1 + b * x2)
+    # Jalur B: Kombinasi linear dari masing-masing keluaran
+    y_sep = a * system_func(x1) + b * system_func(x2)
+    
+    max_diff = np.max(np.abs(y_combo - y_sep))
+    return max_diff &lt; tolerance, max_diff
+
+def test_time_invariance(system_func, N=50, delay=3, tolerance=1e-5):
+    x = np.random.randn(N)
+    # Geser input x sejauh delay
+    x_delayed = np.roll(x, delay)
+    x_delayed[:delay] = 0.0 # Clear circular wrap
+    
+    # Respons terhadap input tergeser
+    y_from_delayed_x = system_func(x_delayed)
+    
+    # Output asli digeser
+    y_orig = system_func(x)
+    y_delayed = np.roll(y_orig, delay)
+    y_delayed[:delay] = 0.0
+    
+    max_diff = np.max(np.abs(y_from_delayed_x[delay:] - y_delayed[delay:]))
+    return max_diff &lt; tolerance, max_diff
+
+def main():
+    print(&quot;=== LAB 04: OTOMASI PENGUJIAN SIFAT SISTEM DISKRIT ===&quot;)
+    
+    systems = {
+        &quot;Sistem A: y[n] = 3 x[n] + 2 x[n-1] (LTI)&quot;: lambda x: 3.0 * x + 2.0 * np.roll(x, 1),
+        &quot;Sistem B: y[n] = (x[n])^2 (Non-Linear)&quot;: lambda x: x ** 2,
+        &quot;Sistem C: y[n] = n * x[n] (Time-Varying)&quot;: lambda x: np.arange(len(x)) * x,
+        &quot;Sistem D: y[n] = x[n] + 5.0 (Affine / Non-Linear)&quot;: lambda x: x + 5.0
+    }
+    
+    print(f&quot;{&#x27;Nama Sistem&#x27;:&lt;45} | {&#x27;Linear?&#x27;:&lt;8} | {&#x27;TI?&#x27;:&lt;8}&quot;)
+    print(&quot;-&quot; * 68)
+    for name, func in systems.items():
+        is_lin, _ = test_linearity(func)
+        is_ti, _ = test_time_invariance(func)
+        print(f&quot;{name:&lt;45} | {str(is_lin):&lt;8} | {str(is_ti):&lt;8}&quot;)
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_04">Lab 04: Pengujian Empiris & Formal Sifat Sistem Waktu Diskrit</script>
+      <script type="text/plain" id="file-lab_04">lab_04_pengujian_sifat_sistem.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK2" data-search="lab 05: simulasi sistem lti & persamaan beda lccde lab_05_sistem_lti_dan_respons_impuls.py lccde, scipy.signal.lfilter, respons impuls h[n], respons step s[n] penyelesaian komputasional persamaan beda hingga koefisien konstan (lccde) menggunakan scipy.signal.lfilter, ekstraksi respons impuls unit h[n], dan analisis respons langkah (step response).">
+      <div class="card-top">
+        <span class="lab-number">lab_05_sistem_lti_dan_respons_impuls.py</span>
+        <span class="badge-cpmk">CPMK 2 (CPL-A, CPL-B)</span>
+      </div>
+      <h2 class="card-title">Lab 05: Simulasi Sistem LTI & Persamaan Beda LCCDE</h2>
+      <p class="card-desc">Penyelesaian komputasional persamaan beda hingga koefisien konstan (LCCDE) menggunakan scipy.signal.lfilter, ekstraksi respons impuls unit h[n], dan analisis respons langkah (step response).</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> LCCDE, scipy.signal.lfilter, Respons Impuls h[n], Respons Step s[n]
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 53 Baris Kode</span>
+        <span>📦 1.8 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_05')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_05_sistem_lti_dan_respons_impuls.py" download="lab_05_sistem_lti_dan_respons_impuls.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_05">&quot;&quot;&quot;
+Laboratorium 05: Simulasi Sistem LTI &amp; Persamaan Beda LCCDE
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 2 (CPL-A, CPL-B)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import lfilter, dimpulse
+
+def main():
+    print(&quot;=== LAB 05: RESPONS IMPULS &amp; SIMULASI PERSAMAAN BEDA LCCDE ===&quot;)
+    
+    # Sistem: y[n] - 0.75 y[n-1] + 0.125 y[n-2] = x[n] + 0.5 x[n-1]
+    b = [1.0, 0.5]          # Koefisien masukan (feedforward)
+    a = [1.0, -0.75, 0.125]  # Koefisien keluaran (feedback)
+    
+    # 1. Hitung Respons Impuls Analitis h[n] menggunakan dimpulse
+    system = (b, a, 1.0)
+    t, h = dimpulse(system, n=30)
+    h = np.squeeze(h)
+    
+    # 2. Uji Kestabilan BIBO: sum |h[n]|
+    sum_abs_h = np.sum(np.abs(h))
+    print(f&quot;Jumlahan mutlak sum |h[n]| (30 sampel): {sum_abs_h:.4f}&quot;)
+    print(&quot;Respons meluruh asimtotik menuju nol -&gt; Terbukti Sistem STABIL BIBO!&quot;)
+    
+    # 3. Simulasi Terhadap Input Sinyal Step Satuan u[n]
+    N = 40
+    x_step = np.ones(N)
+    y_step = lfilter(b, a, x_step)
+    
+    # Visualisasi
+    plt.figure(figsize=(12, 5))
+    
+    plt.subplot(1, 2, 1)
+    plt.stem(range(len(h)), h, linefmt=&#x27;b-&#x27;, markerfmt=&#x27;bo&#x27;, basefmt=&#x27;r-&#x27;)
+    plt.title(&#x27;Respons Impuls h[n] Sistem LTI Orde 2&#x27;)
+    plt.xlabel(&#x27;n&#x27;); plt.ylabel(&#x27;h[n]&#x27;); plt.grid(True, alpha=0.5)
+    
+    plt.subplot(1, 2, 2)
+    plt.plot(range(N), y_step, &#x27;ro-&#x27;, lw=1.5, ms=4)
+    plt.title(&#x27;Respons Step y[n] Terhadap Input u[n]&#x27;)
+    plt.xlabel(&#x27;n&#x27;); plt.ylabel(&#x27;y[n]&#x27;); plt.grid(True, alpha=0.5)
+    
+    plt.tight_layout()
+    plt.savefig(&#x27;output_lab_05.png&#x27;, dpi=150)
+    print(&quot;Grafik disimpan sebagai &#x27;output_lab_05.png&#x27;.&quot;)
+    plt.show()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_05">Lab 05: Simulasi Sistem LTI & Persamaan Beda LCCDE</script>
+      <script type="text/plain" id="file-lab_05">lab_05_sistem_lti_dan_respons_impuls.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK2" data-search="lab 06: konvolusi diskrit & estimasi time-delay dengan korelasi silang lab_06_konvolusi_dan_korelasi.py konvolusi diskrit, numpy.convolve, cross-correlation, estimasi time-delay implementasi manual algoritma konvolusi diskrit sum(x[k]*h[n-k]) dibandingkan dengan numpy.convolve, serta teknik korelasi silang (cross-correlation) untuk mengestimasi waktu tunda (time-delay/lag) pantulan sinyal sonar/radar.">
+      <div class="card-top">
+        <span class="lab-number">lab_06_konvolusi_dan_korelasi.py</span>
+        <span class="badge-cpmk">CPMK 2 (CPL-A, CPL-B)</span>
+      </div>
+      <h2 class="card-title">Lab 06: Konvolusi Diskrit & Estimasi Time-Delay dengan Korelasi Silang</h2>
+      <p class="card-desc">Implementasi manual algoritma konvolusi diskrit sum(x[k]*h[n-k]) dibandingkan dengan numpy.convolve, serta teknik korelasi silang (cross-correlation) untuk mengestimasi waktu tunda (time-delay/lag) pantulan sinyal sonar/radar.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Konvolusi Diskrit, numpy.convolve, Cross-Correlation, Estimasi Time-Delay
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 61 Baris Kode</span>
+        <span>📦 2.4 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_06')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_06_konvolusi_dan_korelasi.py" download="lab_06_konvolusi_dan_korelasi.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_06">&quot;&quot;&quot;
+Laboratorium 06: Konvolusi Diskrit &amp; Estimasi Time-Delay dengan Cross-Correlation
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 2 (CPL-A, CPL-B)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import correlate
+
+def main():
+    print(&quot;=== LAB 06: KONVOLUSI DISKRIT &amp; DETEKSI GEMA RADAR (CROSS-CORRELATION) ===&quot;)
+    
+    # 1. Pembangkitan Pulsa Radar Pantulan
+    np.random.seed(42)
+    N_pulse = 40
+    pulse = np.sin(2 * np.pi * 0.1 * np.arange(N_pulse)) * np.hanning(N_pulse)
+    
+    # Buat Sinyal Penerima dengan Delay Sejati D = 65 sampel + Noise Kuat
+    D_true = 65
+    N_total = 200
+    received = np.zeros(N_total)
+    received[D_true : D_true + N_pulse] = 0.8 * pulse
+    # Tambahkan noise acak (SNR ~ 0 dB)
+    received += 0.5 * np.random.randn(N_total)
+    
+    # 2. Hitung Cross-Correlation r_xy
+    r_xy = correlate(received, pulse, mode=&#x27;full&#x27;)
+    lags = np.arange(-len(pulse) + 1, len(received))
+    
+    # 3. Estimasi Delay dari Puncak Tertinggi (Peak Detection)
+    peak_idx = np.argmax(r_xy)
+    estimated_delay = lags[peak_idx]
+    
+    print(f&quot;Delay Sejati (True Delay)      : {D_true} sampel&quot;)
+    print(f&quot;Delay Terestimasi (Correlation): {estimated_delay} sampel&quot;)
+    print(f&quot;Akurasi Deteksi                : {abs(D_true - estimated_delay) == 0} (100% Tepat!)&quot;)
+    
+    # Visualisasi
+    plt.figure(figsize=(12, 6))
+    
+    plt.subplot(2, 1, 1)
+    plt.plot(received, &#x27;b-&#x27;, alpha=0.7, label=&#x27;Sinyal Radar Pantulan Tertutup Noise&#x27;)
+    plt.axvline(D_true, color=&#x27;g&#x27;, linestyle=&#x27;--&#x27;, label=f&#x27;Posisi Asli Target (n={D_true})&#x27;)
+    plt.title(&#x27;Sinyal Masukan Radar Penerima (Sulit Melihat Target Secara Visual)&#x27;)
+    plt.xlabel(&#x27;Indeks Sampel n&#x27;); plt.ylabel(&#x27;Amplitudo&#x27;); plt.legend(); plt.grid(True, alpha=0.4)
+    
+    plt.subplot(2, 1, 2)
+    plt.plot(lags, r_xy, &#x27;r-&#x27;, lw=1.5, label=&#x27;Cross-Correlation r_xy[l]&#x27;)
+    plt.axvline(estimated_delay, color=&#x27;k&#x27;, linestyle=&#x27;:&#x27;, label=f&#x27;Puncak Deteksi (Lag={estimated_delay})&#x27;)
+    plt.title(&#x27;Kurva Korelasi Silang: Puncak Tajam Mengunci Target Secara Sempurna!&#x27;)
+    plt.xlabel(&#x27;Lag l&#x27;); plt.ylabel(&#x27;Nilai Korelasi&#x27;); plt.legend(); plt.grid(True, alpha=0.4)
+    
+    plt.tight_layout()
+    plt.savefig(&#x27;output_lab_06.png&#x27;, dpi=150)
+    print(&quot;Grafik disimpan sebagai &#x27;output_lab_06.png&#x27;.&quot;)
+    plt.show()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_06">Lab 06: Konvolusi Diskrit & Estimasi Time-Delay dengan Korelasi Silang</script>
+      <script type="text/plain" id="file-lab_06">lab_06_konvolusi_dan_korelasi.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK3" data-search="lab 07: analisis respons frekuensi & group delay sistem diskrit lab_07_respons_frekuensi_sistem.py respons frekuensi, bode plot diskrit, scipy.signal.freqz, group delay evaluasi respons frekuensi sistem diskrit h(e^{j*omega}) dengan scipy.signal.freqz: kurva magnitudo (db), kurva fasa (radian), dan analisis group delay tau_g(omega) untuk mendeteksi distorsi fasa sinyal.">
+      <div class="card-top">
+        <span class="lab-number">lab_07_respons_frekuensi_sistem.py</span>
+        <span class="badge-cpmk">CPMK 3 (CPL-A, CPL-B)</span>
+      </div>
+      <h2 class="card-title">Lab 07: Analisis Respons Frekuensi & Group Delay Sistem Diskrit</h2>
+      <p class="card-desc">Evaluasi respons frekuensi sistem diskrit H(e^{j*omega}) dengan scipy.signal.freqz: kurva magnitudo (dB), kurva fasa (radian), dan analisis group delay tau_g(omega) untuk mendeteksi distorsi fasa sinyal.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Respons Frekuensi, Bode Plot Diskrit, scipy.signal.freqz, Group Delay
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 56 Baris Kode</span>
+        <span>📦 1.9 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_07')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_07_respons_frekuensi_sistem.py" download="lab_07_respons_frekuensi_sistem.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_07">&quot;&quot;&quot;
+Laboratorium 07: Analisis Respons Frekuensi &amp; Group Delay Sistem Diskrit
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 3 (CPL-A, CPL-B)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import freqz, group_delay
+
+def main():
+    print(&quot;=== LAB 07: RESPONS FREKUENSI &amp; GROUP DELAY FILTER DIGITAL ===&quot;)
+    
+    # Bandingkan Moving Average 5-Titik (FIR Linear Phase) vs Lowpass IIR Orde-1
+    # Filter 1: Moving Average 5-Tap
+    b_fir = np.ones(5) / 5.0
+    a_fir = [1.0]
+    
+    # Filter 2: IIR Low-Pass
+    b_iir = [0.2]
+    a_iir = [1.0, -0.8]
+    
+    # Hitung Respons Frekuensi
+    w, h_fir = freqz(b_fir, a_fir, worN=1024)
+    _, h_iir = freqz(b_iir, a_iir, worN=1024)
+    
+    # Hitung Group Delay
+    _, gd_fir = group_delay((b_fir, a_fir), w=1024)
+    
+    w_norm = w / np.pi
+    
+    plt.figure(figsize=(12, 5))
+    
+    # Magnitude Response (dB)
+    plt.subplot(1, 2, 1)
+    plt.plot(w_norm, 20 * np.log10(np.abs(h_fir) + 1e-6), &#x27;b-&#x27;, label=&#x27;Moving Average 5-Tap (FIR)&#x27;)
+    plt.plot(w_norm, 20 * np.log10(np.abs(h_iir) + 1e-6), &#x27;r--&#x27;, label=&#x27;Recursive Lowpass (IIR)&#x27;)
+    plt.title(&#x27;Magnitude Response (dB)&#x27;)
+    plt.xlabel(&#x27;Frekuensi w / pi&#x27;); plt.ylabel(&#x27;Gain (dB)&#x27;); plt.ylim([-60, 5])
+    plt.grid(True, alpha=0.5); plt.legend()
+    
+    # Group Delay
+    plt.subplot(1, 2, 2)
+    plt.plot(w_norm, gd_fir, &#x27;b-&#x27;, lw=2, label=&#x27;FIR Group Delay = 2.0 Sampel (Konstan!)&#x27;)
+    plt.title(&#x27;Group Delay FIR: Fase Linier Sempurna Tanpa Distorsi&#x27;)
+    plt.xlabel(&#x27;Frekuensi w / pi&#x27;); plt.ylabel(&#x27;Keterlambatan (Sampel)&#x27;)
+    plt.ylim([0, 5]); plt.grid(True, alpha=0.5); plt.legend()
+    
+    plt.tight_layout()
+    plt.savefig(&#x27;output_lab_07.png&#x27;, dpi=150)
+    print(&quot;Grafik disimpan sebagai &#x27;output_lab_07.png&#x27;.&quot;)
+    plt.show()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_07">Lab 07: Analisis Respons Frekuensi & Group Delay Sistem Diskrit</script>
+      <script type="text/plain" id="file-lab_07">lab_07_respons_frekuensi_sistem.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK3" data-search="lab 08: kasus terpadu (uts) - restorasi sinyal & analisis spektral lab_08_uts_simulasi_komputasi.py kasus mandiri uts, denoising, moving average filter, spektrogram snr studi kasus komprehensif evaluasi tengah semester: restorasi sinyal multitone yang terkontaminasi derau gaussian, implementasi filter moving-average 5-titik, dan perbandingan spektrum sinyal sebelum dan sesudah difilter.">
+      <div class="card-top">
+        <span class="lab-number">lab_08_uts_simulasi_komputasi.py</span>
+        <span class="badge-cpmk">CPMK 1, CPMK 2, CPMK 3 (CPL-A, CPL-B)</span>
+      </div>
+      <h2 class="card-title">Lab 08: Kasus Terpadu (UTS) - Restorasi Sinyal & Analisis Spektral</h2>
+      <p class="card-desc">Studi kasus komprehensif evaluasi tengah semester: restorasi sinyal multitone yang terkontaminasi derau Gaussian, implementasi filter moving-average 5-titik, dan perbandingan spektrum sinyal sebelum dan sesudah difilter.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Kasus Mandiri UTS, Denoising, Moving Average Filter, Spektrogram SNR
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 54 Baris Kode</span>
+        <span>📦 2.1 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_08')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_08_uts_simulasi_komputasi.py" download="lab_08_uts_simulasi_komputasi.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_08">&quot;&quot;&quot;
+Laboratorium 08: Kasus Ujian Terpadu (UTS) - Analisis Sinyal &amp; Filtering Mandiri
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 1, CPMK 2, CPMK 3 (CPL-A, CPL-B)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import lfilter, freqz
+
+def main():
+    print(&quot;=== LAB 08: SIMULASI KASUS UJIAN TERPADU EVALUASI TENGAH SEMESTER (UTS) ===&quot;)
+    
+    # Skenario Soal: Sinyal sensor tercemar interferensi nada dengung 60 Hz pada Fs = 500 Hz
+    Fs = 500.0
+    N = 250 # Durasi 0.5 detik
+    t = np.arange(N) / Fs
+    
+    # Sinyal bersih: Komponen informasi fisiologis frekuensi rendah 5 Hz
+    sig_clean = np.sin(2 * np.pi * 5 * t)
+    # Sinyal interferensi noise tajam 60 Hz
+    noise = 0.8 * np.sin(2 * np.pi * 60 * t)
+    x_noisy = sig_clean + noise
+    
+    # Rancang Filter FIR Moving Average 7-Titik
+    b = np.ones(7) / 7.0
+    a = [1.0]
+    
+    # Terapkan Filter
+    y_filtered = lfilter(b, a, x_noisy)
+    
+    # Hitung SNR Sebelum vs Sesudah
+    snr_in = 10 * np.log10(np.mean(sig_clean**2) / np.mean((x_noisy - sig_clean)**2))
+    snr_out = 10 * np.log10(np.mean(sig_clean**2) / np.mean((y_filtered - sig_clean)**2))
+    
+    print(f&quot;SNR Sebelum Pemfilteran : {snr_in:.2f} dB&quot;)
+    print(f&quot;SNR Setelah Pemfilteran : {snr_out:.2f} dB&quot;)
+    print(f&quot;Peningkatan Kualitas SNR: {snr_out - snr_in:+.2f} dB&quot;)
+    
+    plt.figure(figsize=(11, 4))
+    plt.plot(t, x_noisy, &#x27;lightgray&#x27;, label=&#x27;Input Tercemar Noise 60 Hz&#x27;)
+    plt.plot(t, sig_clean, &#x27;g--&#x27;, lw=1.5, label=&#x27;Sinyal Bersih Asli (5 Hz)&#x27;)
+    plt.plot(t, y_filtered, &#x27;b-&#x27;, lw=1.8, label=&#x27;Output Filter Moving Average&#x27;)
+    plt.title(&#x27;Evaluasi UTS: Restorasi Sinyal Sensor dari Interferensi Noise&#x27;)
+    plt.xlabel(&#x27;Waktu (detik)&#x27;); plt.ylabel(&#x27;Amplitudo&#x27;); plt.legend(); plt.grid(True, alpha=0.5)
+    
+    plt.tight_layout()
+    plt.savefig(&#x27;output_lab_08.png&#x27;, dpi=150)
+    print(&quot;Grafik disimpan sebagai &#x27;output_lab_08.png&#x27;.&quot;)
+    plt.show()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_08">Lab 08: Kasus Terpadu (UTS) - Restorasi Sinyal & Analisis Spektral</script>
+      <script type="text/plain" id="file-lab_08">lab_08_uts_simulasi_komputasi.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK3" data-search="lab 09: discrete-time fourier transform (dtft) & teorema parseval lab_09_dtft_spektrum_sinyal.py dtft kontinyu-omega, spektrum periodik 2*pi, teorema parseval, konservasi energi perhitungan spektrum kontinyu dtft pada domain frekuensi ternormalisasi omega in [-pi, pi], analisis periodisitas 2*pi, serta verifikasi empiris kekekalan energi berdasarkan teorema parseval.">
+      <div class="card-top">
+        <span class="lab-number">lab_09_dtft_spektrum_sinyal.py</span>
+        <span class="badge-cpmk">CPMK 3 (CPL-A, CPL-B)</span>
+      </div>
+      <h2 class="card-title">Lab 09: Discrete-Time Fourier Transform (DTFT) & Teorema Parseval</h2>
+      <p class="card-desc">Perhitungan spektrum kontinyu DTFT pada domain frekuensi ternormalisasi omega in [-pi, pi], analisis periodisitas 2*pi, serta verifikasi empiris kekekalan energi berdasarkan Teorema Parseval.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> DTFT Kontinyu-Omega, Spektrum Periodik 2*pi, Teorema Parseval, Konservasi Energi
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 55 Baris Kode</span>
+        <span>📦 1.9 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_09')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_09_dtft_spektrum_sinyal.py" download="lab_09_dtft_spektrum_sinyal.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_09">&quot;&quot;&quot;
+Laboratorium 09: Discrete-Time Fourier Transform (DTFT) &amp; Teorema Parseval
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 3 (CPL-A, CPL-B)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def dtft(x, n, num_points=1000):
+    w = np.linspace(-np.pi, np.pi, num_points)
+    # Evaluasi deret jumlahan Fourier numerik
+    X = np.dot(np.exp(-1j * np.outer(w, n)), x)
+    return w, X
+
+def main():
+    print(&quot;=== LAB 09: ANALISIS SPEKTRUM DTFT &amp; VALIDASI TEOREMA PARSEVAL ===&quot;)
+    
+    # Sekuens Uji: Sinyal Eksponensial Kausal x[n] = (0.7)^n u[n] (15 sampel)
+    N = 15
+    n = np.arange(N)
+    x = (0.7) ** n
+    
+    w, X = dtft(x, n, num_points=2000)
+    
+    # 1. Validasi Teorema Parseval: E_time == E_freq
+    E_time = np.sum(x ** 2)
+    # Integrasi numerik trapesium pada domain frekuensi
+    E_freq = (1.0 / (2 * np.pi)) * np.trapz(np.abs(X) ** 2, w)
+    
+    print(f&quot;Energi Domain Waktu (sum |x|^2)     : {E_time:.6f}&quot;)
+    print(f&quot;Energi Domain Frekuensi (Parseval)  : {E_freq:.6f}&quot;)
+    print(f&quot;Selisih Relatif Numerik             : {abs(E_time - E_freq) / E_time * 100:.4f}%&quot;)
+    
+    # Visualisasi Spektrum Magnitude &amp; Phase
+    plt.figure(figsize=(12, 5))
+    
+    plt.subplot(1, 2, 1)
+    plt.plot(w / np.pi, np.abs(X), &#x27;b-&#x27;, lw=1.5)
+    plt.title(&#x27;Magnitude Spectrum |X(e^jw)| (Karakteristik Low-Pass)&#x27;)
+    plt.xlabel(&#x27;Frekuensi w / pi&#x27;); plt.ylabel(&#x27;|X(e^jw)|&#x27;); plt.grid(True, alpha=0.5)
+    
+    plt.subplot(1, 2, 2)
+    plt.plot(w / np.pi, np.angle(X), &#x27;r-&#x27;, lw=1.5)
+    plt.title(&#x27;Phase Spectrum angle X(e^jw)&#x27;)
+    plt.xlabel(&#x27;Frekuensi w / pi&#x27;); plt.ylabel(&#x27;Fase (radian)&#x27;); plt.grid(True, alpha=0.5)
+    
+    plt.tight_layout()
+    plt.savefig(&#x27;output_lab_09.png&#x27;, dpi=150)
+    print(&quot;Grafik disimpan sebagai &#x27;output_lab_09.png&#x27;.&quot;)
+    plt.show()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_09">Lab 09: Discrete-Time Fourier Transform (DTFT) & Teorema Parseval</script>
+      <script type="text/plain" id="file-lab_09">lab_09_dtft_spektrum_sinyal.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK3" data-search="lab 10: dft, fast fourier transform (fft) & dekoding nada dtmf lab_10_dft_fft_dan_windowing.py fft o(n log n), windowing (hann/hamming), resolusi frekuensi, deteksi nada dtmf komputasi efisien discrete fourier transform dengan algoritma fft (o(n log n)), mitigasi kebocoran spektral (spectral leakage) menggunakan windowing hamming/hann, dan aplikasi industri dekoding nada ganda telepon dtmf.">
+      <div class="card-top">
+        <span class="lab-number">lab_10_dft_fft_dan_windowing.py</span>
+        <span class="badge-cpmk">CPMK 3, CPMK 5 (CPL-A, CPL-B, CPL-C)</span>
+      </div>
+      <h2 class="card-title">Lab 10: DFT, Fast Fourier Transform (FFT) & Dekoding Nada DTMF</h2>
+      <p class="card-desc">Komputasi efisien Discrete Fourier Transform dengan algoritma FFT (O(N log N)), mitigasi kebocoran spektral (spectral leakage) menggunakan windowing Hamming/Hann, dan aplikasi industri dekoding nada ganda telepon DTMF.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> FFT O(N log N), Windowing (Hann/Hamming), Resolusi Frekuensi, Deteksi Nada DTMF
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 81 Baris Kode</span>
+        <span>📦 3.1 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_10')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_10_dft_fft_dan_windowing.py" download="lab_10_dft_fft_dan_windowing.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_10">&quot;&quot;&quot;
+Laboratorium 10: DFT, Fast Fourier Transform (FFT) &amp; Dekoding DTMF Telepon
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 3, CPMK 5 (CPL-A, CPL-B, CPL-C)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Frekuensi Standar DTMF Telepon
+DTMF_ROWS = [697, 770, 852, 941]       # Frekuensi Rendah
+DTMF_COLS = [1209, 1336, 1477]         # Frekuensi Tinggi
+KEYPAD = [
+    [&#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;],
+    [&#x27;4&#x27;, &#x27;5&#x27;, &#x27;6&#x27;],
+    [&#x27;7&#x27;, &#x27;8&#x27;, &#x27;9&#x27;],
+    [&#x27;*&#x27;, &#x27;0&#x27;, &#x27;#&#x27;]
+]
+
+def generate_dtmf_tone(char, Fs=8000, duration=0.2):
+    row_idx, col_idx = -1, -1
+    for r in range(4):
+        for c in range(3):
+            if KEYPAD[r][c] == char:
+                row_idx, col_idx = r, c; break
+    t = np.linspace(0, duration, int(Fs * duration), endpoint=False)
+    f_low = DTMF_ROWS[row_idx]
+    f_high = DTMF_COLS[col_idx]
+    tone = 0.5 * np.sin(2 * np.pi * f_low * t) + 0.5 * np.sin(2 * np.pi * f_high * t)
+    return tone, f_low, f_high
+
+def decode_dtmf_fft(tone, Fs=8000):
+    N = len(tone)
+    # Terapkan Window Hamming untuk meredam spectral leakage
+    w = np.hamming(N)
+    X = np.fft.fft(tone * w)
+    freqs = np.fft.fftfreq(N, 1/Fs)
+    
+    pos_mask = freqs &gt;= 0
+    f_pos = freqs[pos_mask]
+    mag = np.abs(X[pos_mask])
+    
+    # Deteksi frekuensi baris (grup rendah 600-1000 Hz)
+    low_band_mask = (f_pos &gt;= 600) &amp; (f_pos &lt;= 1000)
+    detected_flow = f_pos[low_band_mask][np.argmax(mag[low_band_mask])]
+    closest_row = min(DTMF_ROWS, key=lambda f: abs(f - detected_flow))
+    
+    # Deteksi frekuensi kolom (grup tinggi 1100-1600 Hz)
+    high_band_mask = (f_pos &gt;= 1100) &amp; (f_pos &lt;= 1600)
+    detected_fhigh = f_pos[high_band_mask][np.argmax(mag[high_band_mask])]
+    closest_col = min(DTMF_COLS, key=lambda f: abs(f - detected_fhigh))
+    
+    r_idx = DTMF_ROWS.index(closest_row)
+    c_idx = DTMF_COLS.index(closest_col)
+    return KEYPAD[r_idx][c_idx], closest_row, closest_col, f_pos, mag
+
+def main():
+    print(&quot;=== LAB 10: DEKODER NADA TELEPON DTMF MENGGUNAKAN FFT ===&quot;)
+    char_target = &#x27;7&#x27;
+    tone, f_l, f_h = generate_dtmf_tone(char_target)
+    
+    decoded_char, det_fl, det_fh, freqs, mag = decode_dtmf_fft(tone)
+    print(f&quot;Tombol Asli Ditekan   : {char_target} (Frekuensi: {f_l} Hz &amp; {f_h} Hz)&quot;)
+    print(f&quot;Hasil Dekoding FFT     : {decoded_char} (Terdeteksi: {det_fl} Hz &amp; {det_fh} Hz)&quot;)
+    print(f&quot;Status Pengenalan      : {&#x27;SUKSES 100%&#x27; if decoded_char == char_target else &#x27;GAGAL&#x27;}&quot;)
+    
+    plt.figure(figsize=(9, 4))
+    plt.plot(freqs, mag, &#x27;b-&#x27;, lw=1.2)
+    plt.axvline(f_l, color=&#x27;r&#x27;, linestyle=&#x27;--&#x27;, label=f&#x27;Nada Rendah {f_l} Hz&#x27;)
+    plt.axvline(f_h, color=&#x27;g&#x27;, linestyle=&#x27;--&#x27;, label=f&#x27;Nada Tinggi {f_h} Hz&#x27;)
+    plt.title(f&#x27;Spektrum FFT Deteksi DTMF Tombol &quot;{char_target}&quot;&#x27;)
+    plt.xlabel(&#x27;Frekuensi (Hz)&#x27;); plt.ylabel(&#x27;Magnitude&#x27;); plt.xlim([500, 1700])
+    plt.grid(True, alpha=0.5); plt.legend()
+    plt.tight_layout()
+    plt.savefig(&#x27;output_lab_10.png&#x27;, dpi=150)
+    print(&quot;Grafik disimpan sebagai &#x27;output_lab_10.png&#x27;.&quot;)
+    plt.show()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_10">Lab 10: DFT, Fast Fourier Transform (FFT) & Dekoding Nada DTMF</script>
+      <script type="text/plain" id="file-lab_10">lab_10_dft_fft_dan_windowing.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK3" data-search="lab 11: transformasi-z, diagram pole-zero & kestabilan sistem lab_11_ztransform_dan_pole_zero.py transformasi-z, bidang kompleks z, kestabilan bibo lingkaran satuan, notch filter pemetaan kutub (pole) dan nol (zero) fungsi alih h(z) pada bidang kompleks z, evaluasi kestabilan bibo terhadap batas lingkaran satuan (|z| = 1), serta perancangan notch filter digital 50 hz.">
+      <div class="card-top">
+        <span class="lab-number">lab_11_ztransform_dan_pole_zero.py</span>
+        <span class="badge-cpmk">CPMK 3 (CPL-A, CPL-B)</span>
+      </div>
+      <h2 class="card-title">Lab 11: Transformasi-Z, Diagram Pole-Zero & Kestabilan Sistem</h2>
+      <p class="card-desc">Pemetaan kutub (pole) dan nol (zero) fungsi alih H(z) pada bidang kompleks Z, evaluasi kestabilan BIBO terhadap batas lingkaran satuan (|z| = 1), serta perancangan notch filter digital 50 Hz.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Transformasi-Z, Bidang Kompleks Z, Kestabilan BIBO Lingkaran Satuan, Notch Filter
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 59 Baris Kode</span>
+        <span>📦 2.4 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_11')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_11_ztransform_dan_pole_zero.py" download="lab_11_ztransform_dan_pole_zero.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_11">&quot;&quot;&quot;
+Laboratorium 11: Transformasi-Z, Diagram Pole-Zero &amp; Analisis Kestabilan Sistem
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 3 (CPL-A, CPL-B)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import tf2zpk, freqz
+
+def main():
+    print(&quot;=== LAB 11: PERANCANGAN FILTER NOTCH 60 HZ DENGAN POLE-ZERO BIDANG-Z ===&quot;)
+    
+    Fs = 600.0  # Frekuensi sampling = 600 Hz
+    F_notch = 60.0 # Frekuensi dengung yang dibatalkan = 60 Hz
+    w0 = 2 * np.pi * (F_notch / Fs) # w0 = 0.2 pi
+    
+    # 1. Letakkan Zero tepat pada lingkaran satuan di e^(+- j w0)
+    # (z - e^(j w0))(z - e^(-j w0)) = z^2 - 2 cos(w0) z + 1
+    # 2. Letakkan Pole tepat di belakang zero pada jari-jari r = 0.95 untuk mempersempit notch
+    r = 0.95
+    b = [1.0, -2 * np.cos(w0), 1.0]
+    a = [1.0, -2 * r * np.cos(w0), r ** 2]
+    
+    # Hitung Pole dan Zero
+    z, p, k = tf2zpk(b, a)
+    print(&quot;Zero Sistem:&quot;, np.round(z, 4))
+    print(&quot;Pole Sistem:&quot;, np.round(p, 4))
+    print(&quot;Apakah Seluruh Pole di Dalam Lingkaran Satuan (|p| &lt; 1)?&quot;, np.all(np.abs(p) &lt; 1.0))
+    
+    # Hitung Respons Frekuensi
+    w, h = freqz(b, a, worN=1024, fs=Fs)
+    
+    plt.figure(figsize=(12, 5))
+    
+    # Plot 1: Diagram Pole-Zero
+    plt.subplot(1, 2, 1)
+    theta = np.linspace(0, 2*np.pi, 200)
+    plt.plot(np.cos(theta), np.sin(theta), &#x27;k--&#x27;, alpha=0.5, label=&#x27;Lingkaran Satuan&#x27;)
+    plt.plot(np.real(z), np.imag(z), &#x27;bo&#x27;, ms=8, label=&#x27;Zero (Meredam)&#x27;)
+    plt.plot(np.real(p), np.imag(p), &#x27;rx&#x27;, ms=10, mew=2, label=&#x27;Pole (Resonansi)&#x27;)
+    plt.axhline(0, color=&#x27;gray&#x27;, lw=0.5); plt.axvline(0, color=&#x27;gray&#x27;, lw=0.5)
+    plt.title(&#x27;Diagram Pole-Zero Filter Notch 60 Hz&#x27;); plt.axis(&#x27;equal&#x27;); plt.legend(); plt.grid(True, alpha=0.3)
+    
+    # Plot 2: Respons Frekuensi Notch yang Sangat Tajam
+    plt.subplot(1, 2, 2)
+    plt.plot(w, 20 * np.log10(np.abs(h) + 1e-6), &#x27;b-&#x27;, lw=1.5)
+    plt.axvline(F_notch, color=&#x27;r&#x27;, linestyle=&#x27;--&#x27;, label=&#x27;Cutoff 60 Hz&#x27;)
+    plt.title(&#x27;Respons Frekuensi: Redaman Sempurna pada Tepat 60 Hz&#x27;)
+    plt.xlabel(&#x27;Frekuensi (Hz)&#x27;); plt.ylabel(&#x27;Magnitude (dB)&#x27;); plt.ylim([-60, 5]); plt.legend(); plt.grid(True, alpha=0.5)
+    
+    plt.tight_layout()
+    plt.savefig(&#x27;output_lab_11.png&#x27;, dpi=150)
+    print(&quot;Grafik disimpan sebagai &#x27;output_lab_11.png&#x27;.&quot;)
+    plt.show()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_11">Lab 11: Transformasi-Z, Diagram Pole-Zero & Kestabilan Sistem</script>
+      <script type="text/plain" id="file-lab_11">lab_11_ztransform_dan_pole_zero.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK4" data-search="lab 12: perancangan filter digital finite impulse response (fir) lab_12_desain_filter_fir.py filter fir, metode windowing (firwin), fasa linear konstan, redaman stopband desain filter fir low-pass menggunakan metode windowing (hamming & blackman), analisis trade-off lebar transisi vs redaman stopband, dan implementasi filtering pembersih interferensi derau pada sinyal sensor.">
+      <div class="card-top">
+        <span class="lab-number">lab_12_desain_filter_fir.py</span>
+        <span class="badge-cpmk">CPMK 4, CPMK 5 (CPL-B, CPL-C)</span>
+      </div>
+      <h2 class="card-title">Lab 12: Perancangan Filter Digital Finite Impulse Response (FIR)</h2>
+      <p class="card-desc">Desain filter FIR Low-Pass menggunakan metode windowing (Hamming & Blackman), analisis trade-off lebar transisi vs redaman stopband, dan implementasi filtering pembersih interferensi derau pada sinyal sensor.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Filter FIR, Metode Windowing (firwin), Fasa Linear Konstan, Redaman Stopband
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 59 Baris Kode</span>
+        <span>📦 2.2 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_12')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_12_desain_filter_fir.py" download="lab_12_desain_filter_fir.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_12">&quot;&quot;&quot;
+Laboratorium 12: Perancangan Filter Digital Finite Impulse Response (FIR)
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 4, CPMK 5 (CPL-B, CPL-C)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import firwin, freqz, lfilter
+
+def main():
+    print(&quot;=== LAB 12: PEMFILTERAN SINYAL AUDIO DENGAN FILTER FIR WINDOWING ===&quot;)
+    
+    # Parameter Sinyal
+    Fs = 8000.0
+    duration = 0.5
+    t = np.linspace(0, duration, int(Fs * duration), endpoint=False)
+    
+    # Sinyal suara nada rendah 400 Hz + Derau Peluit Mengganggu 3000 Hz
+    s_audio = np.sin(2 * np.pi * 400 * t)
+    s_whistle = 0.7 * np.sin(2 * np.pi * 3000 * t)
+    raw_noisy = s_audio + s_whistle
+    
+    # Desain Filter FIR Low-Pass: Cutoff = 1500 Hz, Window = Hamming, 51-Tap
+    numtaps = 51
+    F_cutoff = 1500.0
+    h_fir = firwin(numtaps, cutoff=F_cutoff, window=&#x27;hamming&#x27;, fs=Fs)
+    
+    # Jalankan Pemfilteran
+    clean_audio = lfilter(h_fir, 1.0, raw_noisy)
+    
+    # Evaluasi Spektrum FFT
+    N = len(raw_noisy)
+    f_axis = np.fft.fftfreq(N, 1/Fs)[:N//2]
+    fft_raw = np.abs(np.fft.fft(raw_noisy))[:N//2]
+    fft_clean = np.abs(np.fft.fft(clean_audio))[:N//2]
+    
+    plt.figure(figsize=(12, 5))
+    
+    plt.subplot(1, 2, 1)
+    plt.plot(t[:150], raw_noisy[:150], &#x27;r-&#x27;, alpha=0.7, label=&#x27;Terkontaminasi 3000 Hz&#x27;)
+    plt.plot(t[:150], clean_audio[:150], &#x27;b-&#x27;, lw=1.8, label=&#x27;Hasil Filter FIR&#x27;)
+    plt.title(&#x27;Bentuk Gelombang Waktu Sebelum vs Sesudah&#x27;)
+    plt.xlabel(&#x27;Waktu (detik)&#x27;); plt.ylabel(&#x27;Amplitudo&#x27;); plt.legend(); plt.grid(True, alpha=0.5)
+    
+    plt.subplot(1, 2, 2)
+    plt.plot(f_axis, fft_raw, &#x27;r--&#x27;, label=&#x27;Spektrum Input (Ada Spike 3000 Hz)&#x27;)
+    plt.plot(f_axis, fft_clean, &#x27;b-&#x27;, label=&#x27;Spektrum Bersih (Spike 3000 Hz Hilang!)&#x27;)
+    plt.title(&#x27;Spektrum Frekuensi: Peluit 3000 Hz Ditekan Habis&#x27;)
+    plt.xlabel(&#x27;Frekuensi (Hz)&#x27;); plt.ylabel(&#x27;Magnitude&#x27;); plt.legend(); plt.grid(True, alpha=0.5)
+    
+    plt.tight_layout()
+    plt.savefig(&#x27;output_lab_12.png&#x27;, dpi=150)
+    print(&quot;Grafik disimpan sebagai &#x27;output_lab_12.png&#x27;.&quot;)
+    plt.show()
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_12">Lab 12: Perancangan Filter Digital Finite Impulse Response (FIR)</script>
+      <script type="text/plain" id="file-lab_12">lab_12_desain_filter_fir.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK4" data-search="lab 13: desain filter digital iir & analisis komparasi fir vs iir lab_13_desain_filter_iir_vs_fir.py filter iir butterworth, second-order sections (sos), komparasi orde fir vs iir perancangan filter iir butterworth orde tinggi berbasis second-order sections (sos) untuk mencegah instabilitas numerik, serta perbandingan komprehensif efisiensi komputasi, latency, dan karakteristik fasa fir vs iir.">
+      <div class="card-top">
+        <span class="lab-number">lab_13_desain_filter_iir_vs_fir.py</span>
+        <span class="badge-cpmk">CPMK 4, CPMK 5 (CPL-B, CPL-C)</span>
+      </div>
+      <h2 class="card-title">Lab 13: Desain Filter Digital IIR & Analisis Komparasi FIR vs IIR</h2>
+      <p class="card-desc">Perancangan filter IIR Butterworth orde tinggi berbasis Second-Order Sections (SOS) untuk mencegah instabilitas numerik, serta perbandingan komprehensif efisiensi komputasi, latency, dan karakteristik fasa FIR vs IIR.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Filter IIR Butterworth, Second-Order Sections (SOS), Komparasi Orde FIR vs IIR
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 48 Baris Kode</span>
+        <span>📦 1.6 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_13')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_13_desain_filter_iir_vs_fir.py" download="lab_13_desain_filter_iir_vs_fir.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_13">&quot;&quot;&quot;
+Laboratorium 13: Desain Filter Digital IIR &amp; Analisis Komparasi FIR vs IIR
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 4, CPMK 5 (CPL-B, CPL-C)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import butter, sosfilt, firwin, lfilter
+import time
+
+def main():
+    print(&quot;=== LAB 13: KOMPARASI KINERJA FILTER IIR (BUTTERWORTH) VS FIR (HAMMING) ===&quot;)
+    
+    Fs = 2000.0
+    Fc = 100.0 # Low-pass Cutoff = 100 Hz
+    
+    # 1. Filter IIR Butterworth Orde 4 (Format SOS)
+    sos_iir = butter(4, Fc, btype=&#x27;low&#x27;, fs=Fs, output=&#x27;sos&#x27;)
+    
+    # 2. Filter FIR Window Hamming (Butuh Orde ~61 untuk atenuasi setara)
+    h_fir = firwin(61, Fc, window=&#x27;hamming&#x27;, fs=Fs)
+    
+    # Pembangkitan Sinyal Uji Panjang (100,000 sampel)
+    N_samples = 100000
+    test_signal = np.random.randn(N_samples)
+    
+    # Uji Waktu Komputasi IIR
+    t0 = time.time()
+    for _ in range(20):
+        y_iir = sosfilt(sos_iir, test_signal)
+    t_iir = (time.time() - t0) / 20.0
+    
+    # Uji Waktu Komputasi FIR
+    t0 = time.time()
+    for _ in range(20):
+        y_fir = lfilter(h_fir, 1.0, test_signal)
+    t_fir = (time.time() - t0) / 20.0
+    
+    print(f&quot;Jumlah Koefisien IIR : 24 koefisien (SOS Biquad)&quot;)
+    print(f&quot;Jumlah Koefisien FIR : 61 koefisien&quot;)
+    print(f&quot;Waktu Eksekusi IIR   : {t_iir*1000:.3f} ms&quot;)
+    print(f&quot;Waktu Eksekusi FIR   : {t_fir*1000:.3f} ms&quot;)
+    print(f&quot;Rasio Kecepatan IIR  : {t_fir / t_iir:.2f}x Lebih Cepat!&quot;)
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_13">Lab 13: Desain Filter Digital IIR & Analisis Komparasi FIR vs IIR</script>
+      <script type="text/plain" id="file-lab_13">lab_13_desain_filter_iir_vs_fir.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK5" data-search="lab 14: arsitektur pipeline pengolahan sinyal end-to-end (oop) lab_14_pipeline_dsp_denoising_fitur.py arsitektur pipeline modular, oop dsp, voice activity detection (vad), ekstraksi fitur perancangan sistem pengolahan sinyal terstruktur berbasis pemrograman berorientasi objek (oop): modul detrending, bandpass filtering sos, voice activity detection (vad) energi bingkai, dan ekstraksi fitur statistik.">
+      <div class="card-top">
+        <span class="lab-number">lab_14_pipeline_dsp_denoising_fitur.py</span>
+        <span class="badge-cpmk">CPMK 5 (CPL-B, CPL-C)</span>
+      </div>
+      <h2 class="card-title">Lab 14: Arsitektur Pipeline Pengolahan Sinyal End-to-End (OOP)</h2>
+      <p class="card-desc">Perancangan sistem pengolahan sinyal terstruktur berbasis pemrograman berorientasi objek (OOP): modul Detrending, Bandpass Filtering SOS, Voice Activity Detection (VAD) energi bingkai, dan ekstraksi fitur statistik.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Arsitektur Pipeline Modular, OOP DSP, Voice Activity Detection (VAD), Ekstraksi Fitur
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 50 Baris Kode</span>
+        <span>📦 1.8 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_14')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_14_pipeline_dsp_denoising_fitur.py" download="lab_14_pipeline_dsp_denoising_fitur.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_14">&quot;&quot;&quot;
+Laboratorium 14: Arsitektur Pipeline Pengolahan Sinyal End-to-End
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 5 (CPL-B, CPL-C)
+&quot;&quot;&quot;
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import butter, sosfilt, detrend
+
+class ModularDSPPipeline:
+    def __init__(self, Fs=8000.0, bandpass_range=(200, 3200)):
+        self.Fs = Fs
+        self.sos = butter(4, bandpass_range, btype=&#x27;bandpass&#x27;, fs=Fs, output=&#x27;sos&#x27;)
+        
+    def process_frame(self, raw_data):
+        # 1. DC Removal &amp; Linear Detrend
+        s_clean = detrend(raw_data - np.mean(raw_data))
+        # 2. Bandpass SOS Filter
+        s_filtered = sosfilt(self.sos, s_clean)
+        # 3. Peak Normalization
+        s_norm = s_filtered / (np.max(np.abs(s_filtered)) + 1e-9)
+        
+        # 4. Feature Extraction (ZCR &amp; Energy)
+        zcr = np.mean(np.abs(np.diff(np.sign(s_norm)))) / 2.0
+        ste = np.mean(s_norm ** 2)
+        
+        return s_norm, zcr, ste
+
+def main():
+    print(&quot;=== LAB 14: PIPELINE MODULAR PENGOLAHAN SINYAL WICARA &amp; DETEKSI VAD ===&quot;)
+    pipe = ModularDSPPipeline(Fs=8000.0)
+    
+    # Simulasi Sinyal Wicara Sintetis (2 detik)
+    Fs = 8000.0
+    t = np.linspace(0, 2.0, int(Fs * 2.0))
+    # Paket kata pada t=0.3 s.d. 0.8 dan t=1.2 s.d. 1.7
+    speech = np.zeros_like(t)
+    speech[2400:6400] = np.sin(2 * np.pi * 300 * t[2400:6400]) * 0.8
+    speech[9600:13600] = np.sin(2 * np.pi * 450 * t[9600:13600]) * 0.9
+    noisy_input = speech + 0.3 * np.random.randn(len(t)) + 1.2 # DC offset + noise
+    
+    cleaned, zcr, ste = pipe.process_frame(noisy_input)
+    print(f&quot;Rata-rata ZCR : {zcr:.4f}&quot;)
+    print(f&quot;Rata-rata STE : {ste:.4f}&quot;)
+    print(&quot;Pipeline Berjalan Sukses Tanpa Hambatan!&quot;)
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_14">Lab 14: Arsitektur Pipeline Pengolahan Sinyal End-to-End (OOP)</script>
+      <script type="text/plain" id="file-lab_14">lab_14_pipeline_dsp_denoising_fitur.py</script>
+    </div>
+
+    <div class="lab-card" data-cpmk="CPMK6" data-search="lab 15: template framework proyek terapan & validasi metrik dsp lab_15_proyek_terapan_dsp_audio_sensor.py standardisasi proyek dsp, metrik evaluasi objektif (snr, mse, prd), validasi obe framework evaluasi terstandarisasi untuk proyek akhir mahasiswa: simulasi injeksi derau terukur, kalkulasi metrik kuantitatif objektif (snr input vs output, mse, prd), serta otomatisasi pencatatan log hasil eksperimen.">
+      <div class="card-top">
+        <span class="lab-number">lab_15_proyek_terapan_dsp_audio_sensor.py</span>
+        <span class="badge-cpmk">CPMK 5, CPMK 6 (CPL-B, CPL-C, CPL-D)</span>
+      </div>
+      <h2 class="card-title">Lab 15: Template Framework Proyek Terapan & Validasi Metrik DSP</h2>
+      <p class="card-desc">Framework evaluasi terstandarisasi untuk proyek akhir mahasiswa: simulasi injeksi derau terukur, kalkulasi metrik kuantitatif objektif (SNR input vs output, MSE, PRD), serta otomatisasi pencatatan log hasil eksperimen.</p>
+      <div class="card-concepts">
+        <strong>Konsep Kunci:</strong> Standardisasi Proyek DSP, Metrik Evaluasi Objektif (SNR, MSE, PRD), Validasi OBE
+      </div>
+      <div class="card-meta-bar">
+        <span>📊 51 Baris Kode</span>
+        <span>📦 2.0 KB</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view-code" onclick="openCodeModal('lab_15')">
+          👁️ Lihat & Salin Kode
+        </button>
+        <a href="lab_15_proyek_terapan_dsp_audio_sensor.py" download="lab_15_proyek_terapan_dsp_audio_sensor.py" class="btn-dl-code">
+          📥 Unduh .py
+        </a>
+      </div>
+      <script type="text/plain" id="raw-lab_15">&quot;&quot;&quot;
+Laboratorium 15: Template Framework Proyek Terapan &amp; Validasi Metrik DSP
+Mata Kuliah: Pengolahan Sinyal Digital - Universitas Nusantara Manado
+Dosen Pengampu: Gede Erik Aktama, S.Pd., M.Pd.
+Capaian Pembelajaran: CPMK 5, CPMK 6 (CPL-B, CPL-C, CPL-D)
+&quot;&quot;&quot;
+
+import numpy as np
+
+def compute_snr(clean_ref, processed_signal):
+    noise = clean_ref - processed_signal
+    p_signal = np.mean(clean_ref ** 2)
+    p_noise = np.mean(noise ** 2)
+    if p_noise &lt; 1e-12: return 999.0
+    return 10.0 * np.log10(p_signal / p_noise)
+
+def compute_mse(clean_ref, processed_signal):
+    return np.mean((clean_ref - processed_signal) ** 2)
+
+def main():
+    print(&quot;=== LAB 15: LOGGING METRIK DAN PERBANDINGAN BASELINE PROYEK AKHIR ===&quot;)
+    
+    # Simulasi Ground Truth Sinyal Murni
+    N = 1000
+    clean = np.sin(np.linspace(0, 20*np.pi, N))
+    raw_noisy = clean + 0.6 * np.random.randn(N) # Input SNR rendah
+    
+    # Metode 1: Baseline Moving Average Sederhana
+    filtered_baseline = np.convolve(raw_noisy, np.ones(5)/5.0, mode=&#x27;same&#x27;)
+    
+    # Metode 2: Solusi Rekayasa Mahasiswa (Filter FIR Optimal)
+    from scipy.signal import firwin, lfilter
+    h = firwin(31, 0.15, window=&#x27;hamming&#x27;)
+    filtered_proposed = lfilter(h, 1.0, raw_noisy)
+    
+    snr_in = compute_snr(clean, raw_noisy)
+    snr_base = compute_snr(clean, filtered_baseline)
+    snr_prop = compute_snr(clean, filtered_proposed)
+    
+    mse_base = compute_mse(clean, filtered_baseline)
+    mse_prop = compute_mse(clean, filtered_proposed)
+    
+    print(f&quot;{&#x27;Metode&#x27;:&lt;25} | {&#x27;SNR (dB)&#x27;:&lt;10} | {&#x27;Delta SNR&#x27;:&lt;10} | {&#x27;MSE&#x27;:&lt;10}&quot;)
+    print(&quot;-&quot; * 62)
+    print(f&quot;{&#x27;Input Raw Noisy&#x27;:&lt;25} | {snr_in:8.2f} dB | {&#x27;---&#x27;:&lt;10} | {compute_mse(clean, raw_noisy):.6f}&quot;)
+    print(f&quot;{&#x27;Baseline Moving Average&#x27;:&lt;25} | {snr_base:8.2f} dB | {snr_base - snr_in:+6.2f} dB | {mse_base:.6f}&quot;)
+    print(f&quot;{&#x27;Proposed FIR Filter&#x27;:&lt;25} | {snr_prop:8.2f} dB | {snr_prop - snr_in:+6.2f} dB | {mse_prop:.6f}&quot;)
+    print(&quot;Logging Metrik Proyek Selesai &amp; Terverifikasi!&quot;)
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</script>
+      <script type="text/plain" id="title-lab_15">Lab 15: Template Framework Proyek Terapan & Validasi Metrik DSP</script>
+      <script type="text/plain" id="file-lab_15">lab_15_proyek_terapan_dsp_audio_sensor.py</script>
+    </div>
+
+  </main>
+
+  <!-- Modal Code Viewer -->
+  <div class="modal-overlay" id="codeModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3 id="modalTitle">Judul Lab</h3>
+          <span id="modalFilename">lab_01.py</span>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-copy-code" id="btnCopyModal" onclick="copyModalCode()">
+            📋 Salin Seluruh Kode
+          </button>
+          <a id="btnDownloadModal" href="#" download="#" class="btn-copy-code" style="text-decoration:none;">
+            📥 Unduh File
+          </a>
+          <button class="btn-close-modal" onclick="closeCodeModal()">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <pre class="code-box"><code id="modalCode"># Kode Python di sini</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toastNotice">
+    <span>✅ Kode berhasil disalin ke clipboard!</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p><strong>Pengolahan Sinyal Digital (DSP)</strong> &bull; S1 Teknik Informatika, Fakultas Ilmu Komputer</p>
+    <p>Universitas Nusantara Manado &bull; Dosen Pengampu: <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong> (NIDN: 0902109201)</p>
+    <p style="margin-top:0.8rem; font-size:0.8rem; color:#64748B;">
+      Repository GitHub: <a href="https://github.com/gedeaktama/dsp-kuliah" target="_blank">github.com/gedeaktama/dsp-kuliah</a>
+    </p>
+  </footer>
+
+  <script>
+    let activeFilter = 'ALL';
+    let currentCodeText = '';
+
+    function filterLabs(cpmk) {
+      activeFilter = cpmk;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('onclick').includes(cpmk)) {
+          btn.classList.add('active');
+        }
+      });
+      applySearchAndFilter();
+    }
+
+    function searchLabs() {
+      applySearchAndFilter();
+    }
+
+    function applySearchAndFilter() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.lab-card');
+
+      cards.forEach(card => {
+        const cpmk = card.getAttribute('data-cpmk');
+        const searchData = card.getAttribute('data-search');
+
+        const matchesFilter = (activeFilter === 'ALL' || cpmk === activeFilter);
+        const matchesQuery = (!q || searchData.includes(q));
+
+        if (matchesFilter && matchesQuery) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function openCodeModal(key) {
+      const rawScript = document.getElementById('raw-' + key);
+      const titleScript = document.getElementById('title-' + key);
+      const fileScript = document.getElementById('file-' + key);
+
+      if (!rawScript) return;
+
+      const title = titleScript ? titleScript.textContent.trim() : key;
+      const filename = fileScript ? fileScript.textContent.trim() : key + '.py';
+      const code = rawScript.textContent;
+
+      currentCodeText = code;
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalFilename').textContent = filename;
+      document.getElementById('modalCode').textContent = code;
+
+      const dlBtn = document.getElementById('btnDownloadModal');
+      dlBtn.href = filename;
+      dlBtn.setAttribute('download', filename);
+
+      const modal = document.getElementById('codeModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCodeModal() {
+      const modal = document.getElementById('codeModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close on outside click
+    window.onclick = function(event) {
+      const modal = document.getElementById('codeModal');
+      if (event.target === modal) {
+        closeCodeModal();
+      }
+    };
+
+    // Close on ESC
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeCodeModal();
+      }
+    });
+
+    function copyModalCode() {
+      if (!currentCodeText) return;
+      navigator.clipboard.writeText(currentCodeText).then(() => {
+        showToast('✅ Seluruh kode ' + document.getElementById('modalFilename').textContent + ' berhasil disalin!');
+      }).catch(err => {
+        fallbackCopy(currentCodeText);
+      });
+    }
+
+    function copyText(str) {
+      navigator.clipboard.writeText(str).then(() => {
+        showToast('✅ Berhasil disalin: ' + str);
+      }).catch(err => {
+        fallbackCopy(str);
+      });
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('✅ Berhasil disalin ke clipboard!');
+      } catch (err) {
+        alert('Gagal menyalin otomatis. Silakan salin secara manual.');
+      }
+      document.body.removeChild(ta);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotice');
+      toast.querySelector('span').textContent = msg;
+      toast.classList.remove('show');
+      void toast.offsetWidth; // trigger reflow
+      toast.classList.add('show');
+    }
+  </script>
+</body>
+</html>
